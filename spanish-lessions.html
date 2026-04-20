@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Español — 5th Grade Vocabulary</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF7F2;
+    --ink: #1C1A16;
+    --warm-mid: #6B5B45;
+    --accent: #C45C2A;
+    --accent-light: #F0DAC8;
+    --accent-pale: #FAF0E8;
+    --green: #3A6B4A;
+    --green-light: #D4ECDA;
+    --blue: #2E5B8A;
+    --blue-light: #D4E4F5;
+    --purple: #5A3E7A;
+    --purple-light: #E4D8F5;
+    --gold: #8A6A20;
+    --gold-light: #F5EAC8;
+    --teal: #2A6B6B;
+    --teal-light: #C8E8E8;
+    --rose: #8A3050;
+    --rose-light: #F5C8D8;
+    --card-radius: 14px;
+    --shadow: 0 2px 12px rgba(28,26,22,0.10);
+    --shadow-hover: 0 8px 28px rgba(28,26,22,0.18);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+  }
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .logo {
+    font-family: 'Fraunces', serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    line-height: 1;
+  }
+  .logo span { color: var(--accent); }
+  .logo sub-text {
+    display: block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #999;
+    margin-top: 2px;
+  }
+  .score-badge {
+    background: var(--accent);
+    color: white;
+    padding: 6px 18px;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: transform 0.2s;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 52px 32px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(196,92,42,0.22) 0%, transparent 70%);
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    font-weight: 900;
+    line-height: 1.05;
+    position: relative;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: #F0A070;
+  }
+  .hero p {
+    margin-top: 14px;
+    font-size: 1.05rem;
+    color: #B8B0A4;
+    position: relative;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 32px;
+    position: relative;
+    flex-wrap: wrap;
+  }
+  .hero-stat {
+    text-align: center;
+  }
+  .hero-stat .num {
+    font-family: 'Fraunces', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #F0A070;
+    line-height: 1;
+  }
+  .hero-stat .lbl {
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #888;
+    margin-top: 4px;
+  }
+
+  /* ── NAV TABS ── */
+  .tab-bar {
+    background: white;
+    border-bottom: 2px solid #EDE8E0;
+    position: sticky;
+    top: 60px;
+    z-index: 90;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tab-bar::-webkit-scrollbar { display: none; }
+  .tabs {
+    display: flex;
+    gap: 0;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .tab-btn {
+    background: none;
+    border: none;
+    padding: 14px 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--warm-mid);
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: color 0.2s, border-color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .tab-btn:hover { color: var(--ink); }
+  .tab-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    font-weight: 600;
+  }
+  .tab-icon { font-size: 1rem; }
+
+  /* ── MAIN ── */
+  .main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* ── SECTION ── */
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+  .section-title span {
+    display: block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--warm-mid);
+    margin-bottom: 4px;
+  }
+  .word-count-badge {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 5px 14px;
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── FLASHCARD GRID ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+
+  .flashcard {
+    perspective: 900px;
+    height: 180px;
+    cursor: pointer;
+  }
+  .flashcard-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+  }
+  .flashcard.flipped .flashcard-inner {
+    transform: rotateY(180deg);
+  }
+  .card-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border-radius: var(--card-radius);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.2s;
+  }
+  .flashcard:hover .card-face {
+    box-shadow: var(--shadow-hover);
+  }
+  .card-front {
+    background: white;
+    border: 2px solid #EDE8E0;
+  }
+  .card-back {
+    transform: rotateY(180deg);
+    background: var(--ink);
+    color: var(--cream);
+  }
+  .card-icon {
+    font-size: 2.4rem;
+    margin-bottom: 10px;
+    line-height: 1;
+  }
+  .card-spanish {
+    font-family: 'Fraunces', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .card-category-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-top: 10px;
+  }
+  .card-back .card-english {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    text-align: center;
+    color: #F0A070;
+    margin-bottom: 6px;
+  }
+  .card-back .card-hint {
+    font-size: 0.75rem;
+    color: #888;
+    text-align: center;
+    font-style: italic;
+  }
+  .card-flip-hint {
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #B0A898;
+    margin-top: 8px;
+  }
+  .card-learned-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    opacity: 0.35;
+    transition: opacity 0.2s, transform 0.2s;
+    z-index: 2;
+    line-height: 1;
+  }
+  .card-learned-btn:hover { opacity: 1; transform: scale(1.2); }
+  .card-learned-btn.learned { opacity: 1; }
+  .flashcard.learned-card .card-front {
+    border-color: var(--green);
+    background: var(--green-light);
+  }
+
+  /* ── COLOR THEMING PER CATEGORY ── */
+  .theme-rooms .card-front { border-color: #D4A888; }
+  .theme-rooms .card-category-dot { background: var(--accent); }
+  .theme-rooms .card-back { background: #3D2210; }
+  .theme-rooms .card-back .card-english { color: #F0A070; }
+
+  .theme-furniture .card-front { border-color: #A8C4E0; }
+  .theme-furniture .card-category-dot { background: var(--blue); }
+  .theme-furniture .card-back { background: #1A2D42; }
+  .theme-furniture .card-back .card-english { color: #80B8F0; }
+
+  .theme-school .card-front { border-color: #A8D4B0; }
+  .theme-school .card-category-dot { background: var(--green); }
+  .theme-school .card-back { background: #1A3022; }
+  .theme-school .card-back .card-english { color: #80D898; }
+
+  .theme-numbers .card-front { border-color: #C8A8E0; }
+  .theme-numbers .card-category-dot { background: var(--purple); }
+  .theme-numbers .card-back { background: #281A38; }
+  .theme-numbers .card-back .card-english { color: #C090F0; }
+
+  .theme-colors .card-front { border-color: #E0C888; }
+  .theme-colors .card-category-dot { background: var(--gold); }
+  .theme-colors .card-back { background: #382808; }
+  .theme-colors .card-back .card-english { color: #F0C850; }
+
+  .theme-family .card-front { border-color: #E0A8B8; }
+  .theme-family .card-category-dot { background: var(--rose); }
+  .theme-family .card-back { background: #38101C; }
+  .theme-family .card-back .card-english { color: #F090B0; }
+
+  .theme-body .card-front { border-color: #A8D8D8; }
+  .theme-body .card-category-dot { background: var(--teal); }
+  .theme-body .card-back { background: #102828; }
+  .theme-body .card-back .card-english { color: #70D8D8; }
+
+  .theme-weather .card-front { border-color: #B8C8E0; }
+  .theme-weather .card-category-dot { background: #4A6898; }
+  .theme-weather .card-back { background: #181E2C; }
+  .theme-weather .card-back .card-english { color: #90B8F0; }
+
+  /* ── QUIZ MODE ── */
+  .quiz-container {
+    max-width: 540px;
+    margin: 0 auto;
+    padding: 20px 0;
+  }
+  .quiz-progress-bar-wrap {
+    background: #EDE8E0;
+    border-radius: 100px;
+    height: 8px;
+    margin-bottom: 28px;
+    overflow: hidden;
+  }
+  .quiz-progress-bar {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 100px;
+    transition: width 0.4s ease;
+  }
+  .quiz-card-wrap {
+    background: white;
+    border-radius: 20px;
+    padding: 48px 36px 36px;
+    box-shadow: var(--shadow-hover);
+    text-align: center;
+    border: 2px solid #EDE8E0;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .quiz-category-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--warm-mid);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .quiz-question-icon { font-size: 3rem; }
+  .quiz-question-word {
+    font-family: 'Fraunces', serif;
+    font-size: 2.4rem;
+    font-weight: 900;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+  .quiz-instruction {
+    font-size: 0.85rem;
+    color: #999;
+    margin-top: 4px;
+  }
+  .quiz-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 24px;
+  }
+  .quiz-option {
+    background: white;
+    border: 2px solid #EDE8E0;
+    border-radius: 12px;
+    padding: 16px 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    color: var(--ink);
+  }
+  .quiz-option:hover:not(:disabled) {
+    border-color: var(--accent);
+    background: var(--accent-pale);
+    transform: translateY(-2px);
+  }
+  .quiz-option.correct {
+    background: var(--green-light);
+    border-color: var(--green);
+    color: var(--green);
+    font-weight: 700;
+  }
+  .quiz-option.wrong {
+    background: #FFE8E8;
+    border-color: #C04040;
+    color: #C04040;
+  }
+  .quiz-option:disabled { cursor: default; }
+  .quiz-feedback {
+    margin-top: 20px;
+    padding: 16px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+    min-height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .quiz-feedback.show { opacity: 1; }
+  .quiz-feedback.correct-fb {
+    background: var(--green-light);
+    color: var(--green);
+  }
+  .quiz-feedback.wrong-fb {
+    background: #FFE8E8;
+    color: #C04040;
+  }
+  .quiz-next-btn {
+    margin-top: 16px;
+    background: var(--ink);
+    color: var(--cream);
+    border: none;
+    padding: 14px 40px;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    display: none;
+  }
+  .quiz-next-btn:hover { background: var(--accent); transform: translateY(-1px); }
+  .quiz-next-btn.visible { display: inline-block; }
+  .quiz-results {
+    text-align: center;
+    padding: 40px 20px;
+    display: none;
+  }
+  .quiz-results.show { display: block; }
+  .results-score {
+    font-family: 'Fraunces', serif;
+    font-size: 5rem;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .results-label {
+    font-size: 1.1rem;
+    color: var(--warm-mid);
+    margin-top: 8px;
+    margin-bottom: 28px;
+  }
+  .results-restart {
+    background: var(--ink);
+    color: var(--cream);
+    border: none;
+    padding: 14px 40px;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .results-restart:hover { background: var(--accent); }
+
+  /* ── REFERENCE TABLE ── */
+  .ref-table-wrap {
+    overflow-x: auto;
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    border: 1px solid #EDE8E0;
+  }
+  .ref-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    font-size: 0.95rem;
+  }
+  .ref-table thead { background: var(--ink); color: var(--cream); }
+  .ref-table th {
+    padding: 14px 18px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.78rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .ref-table td {
+    padding: 12px 18px;
+    border-bottom: 1px solid #F0EBE3;
+    vertical-align: middle;
+  }
+  .ref-table tr:last-child td { border-bottom: none; }
+  .ref-table tr:hover td { background: var(--accent-pale); }
+  .ref-table .spanish-cell {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--accent);
+  }
+  .ref-table .cat-chip {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  /* ── SEARCH ── */
+  .search-bar-wrap {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .search-input {
+    flex: 1;
+    min-width: 200px;
+    padding: 12px 18px;
+    border: 2px solid #EDE8E0;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    background: white;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-input:focus { border-color: var(--accent); }
+  .filter-btn {
+    background: white;
+    border: 2px solid #EDE8E0;
+    padding: 10px 18px;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--warm-mid);
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--ink);
+    color: var(--cream);
+    border-color: var(--ink);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    color: #888;
+    text-align: center;
+    padding: 28px 24px;
+    font-size: 0.82rem;
+    line-height: 1.7;
+  }
+  footer a { color: #aaa; }
+
+  @media (max-width: 600px) {
+    .card-grid { grid-template-columns: repeat(2, 1fr); }
+    .quiz-options { grid-template-columns: 1fr; }
+    .header-inner { padding: 14px 18px; }
+    .main { padding: 28px 16px 60px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      Español <span>5°</span>
+      <div style="font-family:'DM Sans',sans-serif;font-size:0.68rem;letter-spacing:1.5px;text-transform:uppercase;color:#888;margin-top:3px;">5th Grade Vocabulary</div>
+    </div>
+    <div class="score-badge" id="progress-badge">0 / 56 learned</div>
+  </div>
+</header>
+
+<div class="hero">
+  <h1>¡Aprende<br><em>Español!</em></h1>
+  <p>Tap any card to flip it. Mark words you know with ★ to track your progress.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">8</div><div class="lbl">Categories</div></div>
+    <div class="hero-stat"><div class="num">56</div><div class="lbl">Words</div></div>
+    <div class="hero-stat"><div class="num" id="hero-learned">0</div><div class="lbl">Learned</div></div>
+  </div>
+</div>
+
+<div class="tab-bar">
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showSection('all')" data-section="all"><span class="tab-icon">🗂</span> All Words</button>
+    <button class="tab-btn" onclick="showSection('rooms')" data-section="rooms"><span class="tab-icon">🏠</span> Rooms</button>
+    <button class="tab-btn" onclick="showSection('furniture')" data-section="furniture"><span class="tab-icon">🪑</span> Furniture</button>
+    <button class="tab-btn" onclick="showSection('school')" data-section="school"><span class="tab-icon">📚</span> School</button>
+    <button class="tab-btn" onclick="showSection('numbers')" data-section="numbers"><span class="tab-icon">🔢</span> Numbers</button>
+    <button class="tab-btn" onclick="showSection('colors')" data-section="colors"><span class="tab-icon">🎨</span> Colors</button>
+    <button class="tab-btn" onclick="showSection('family')" data-section="family"><span class="tab-icon">👨‍👩‍👧</span> Family</button>
+    <button class="tab-btn" onclick="showSection('body')" data-section="body"><span class="tab-icon">🖐</span> Body</button>
+    <button class="tab-btn" onclick="showSection('weather')" data-section="weather"><span class="tab-icon">🌤</span> Weather</button>
+    <button class="tab-btn" onclick="showSection('quiz')" data-section="quiz"><span class="tab-icon">🧠</span> Quiz Me!</button>
+    <button class="tab-btn" onclick="showSection('reference')" data-section="reference"><span class="tab-icon">📋</span> Reference</button>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- ALL WORDS -->
+  <div class="section active" id="section-all">
+    <div class="section-header">
+      <div class="section-title"><span>All Categories</span>Complete Vocabulary List</div>
+      <span class="word-count-badge">56 words</span>
+    </div>
+    <div class="search-bar-wrap">
+      <input class="search-input" id="search-input" type="text" placeholder="Search in Spanish or English…" oninput="filterCards()">
+      <button class="filter-btn active" onclick="filterByCategory('all', this)">All</button>
+      <button class="filter-btn" onclick="filterByCategory('rooms', this)">Rooms</button>
+      <button class="filter-btn" onclick="filterByCategory('furniture', this)">Furniture</button>
+      <button class="filter-btn" onclick="filterByCategory('school', this)">School</button>
+      <button class="filter-btn" onclick="filterByCategory('numbers', this)">Numbers</button>
+      <button class="filter-btn" onclick="filterByCategory('colors', this)">Colors</button>
+      <button class="filter-btn" onclick="filterByCategory('family', this)">Family</button>
+      <button class="filter-btn" onclick="filterByCategory('body', this)">Body</button>
+      <button class="filter-btn" onclick="filterByCategory('weather', this)">Weather</button>
+    </div>
+    <div class="card-grid" id="all-card-grid"></div>
+  </div>
+
+  <!-- CATEGORY SECTIONS -->
+  <div class="section" id="section-rooms">
+    <div class="section-header">
+      <div class="section-title"><span>🏠 La Casa</span>Rooms of the House</div>
+      <span class="word-count-badge">8 words</span>
+    </div>
+    <div class="card-grid" id="rooms-grid"></div>
+  </div>
+
+  <div class="section" id="section-furniture">
+    <div class="section-header">
+      <div class="section-title"><span>🪑 Los Muebles</span>Furniture & Objects</div>
+      <span class="word-count-badge">8 words</span>
+    </div>
+    <div class="card-grid" id="furniture-grid"></div>
+  </div>
+
+  <div class="section" id="section-school">
+    <div class="section-header">
+      <div class="section-title"><span>📚 La Escuela</span>School Supplies</div>
+      <span class="word-count-badge">8 words</span>
+    </div>
+    <div class="card-grid" id="school-grid"></div>
+  </div>
+
+  <div class="section" id="section-numbers">
+    <div class="section-header">
+      <div class="section-title"><span>🔢 Los Números</span>Numbers 1–10</div>
+      <span class="word-count-badge">10 words</span>
+    </div>
+    <div class="card-grid" id="numbers-grid"></div>
+  </div>
+
+  <div class="section" id="section-colors">
+    <div class="section-header">
+      <div class="section-title"><span>🎨 Los Colores</span>Colors</div>
+      <span class="word-count-badge">8 words</span>
+    </div>
+    <div class="card-grid" id="colors-grid"></div>
+  </div>
+
+  <div class="section" id="section-family">
+    <div class="section-header">
+      <div class="section-title"><span>👨‍👩‍👧 La Familia</span>Family Members</div>
+      <span class="word-count-badge">8 words</span>
+    </div>
+    <div class="card-grid" id="family-grid"></div>
+  </div>
+
+  <div class="section" id="section-body">
+    <div class="section-header">
+      <div class="section-title"><span>🖐 El Cuerpo</span>Parts of the Body</div>
+      <span class="word-count-badge">8 words</span>
+    </div>
+    <div class="card-grid" id="body-grid"></div>
+  </div>
+
+  <div class="section" id="section-weather">
+    <div class="section-header">
+      <div class="section-title"><span>🌤 El Tiempo</span>Weather & Seasons</div>
+      <span class="word-count-badge">8 words</span>
+    </div>
+    <div class="card-grid" id="weather-grid"></div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="section" id="section-quiz">
+    <div class="section-header">
+      <div class="section-title"><span>🧠 Práctica</span>Quiz Yourself!</div>
+    </div>
+    <div class="quiz-container">
+      <div class="quiz-progress-bar-wrap">
+        <div class="quiz-progress-bar" id="quiz-progress-bar" style="width:0%"></div>
+      </div>
+      <div id="quiz-play">
+        <div class="quiz-card-wrap">
+          <div class="quiz-category-label" id="quiz-cat-label"></div>
+          <div class="quiz-question-icon" id="quiz-icon"></div>
+          <div class="quiz-question-word" id="quiz-word"></div>
+          <div class="quiz-instruction">What does this mean in English?</div>
+        </div>
+        <div class="quiz-options" id="quiz-options"></div>
+        <div class="quiz-feedback" id="quiz-feedback"></div>
+        <div style="text-align:center">
+          <button class="quiz-next-btn" id="quiz-next" onclick="nextQuestion()">Next →</button>
+        </div>
+      </div>
+      <div class="quiz-results" id="quiz-results">
+        <div class="quiz-question-icon">🏆</div>
+        <div class="results-score" id="results-score"></div>
+        <div class="results-label" id="results-label"></div>
+        <button class="results-restart" onclick="startQuiz()">Try Again</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- REFERENCE TABLE -->
+  <div class="section" id="section-reference">
+    <div class="section-header">
+      <div class="section-title"><span>📋 Referencia</span>Full Reference Sheet</div>
+      <span class="word-count-badge">56 words</span>
+    </div>
+    <div class="ref-table-wrap">
+      <table class="ref-table" id="ref-table">
+        <thead>
+          <tr>
+            <th>Spanish</th>
+            <th>English</th>
+            <th>Category</th>
+            <th>Memory Tip</th>
+          </tr>
+        </thead>
+        <tbody id="ref-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<footer>
+  <strong style="color:#ccc">¡Español 5°</strong> — 5th Grade Spanish Vocabulary<br>
+  Words sourced from: Blanco &amp; Donley, <em>Vistas</em>, Vista Higher Learning (2016) · 
+  Common Core World Language Standards · 
+  ACTFL Proficiency Guidelines for Novice-Mid Level (2012)<br>
+  <span style="font-size:0.75rem">Tap a card to flip · ★ to mark learned · Use the Quiz tab to test yourself</span>
+</footer>
+
+<script>
+// ── VOCABULARY DATA ──────────────────────────────────────────────────────────
+const VOCAB = [
+  // ROOMS (from flashcards PDF)
+  { cat: 'rooms',     spanish: 'la sala',          english: 'the living room',  icon: '🛋️', hint: '"sala" sounds like "saloon" — a gathering place' },
+  { cat: 'rooms',     spanish: 'la cocina',         english: 'the kitchen',      icon: '🍳', hint: '"cocina" → cooking happens here' },
+  { cat: 'rooms',     spanish: 'la habitación',     english: 'the bedroom',      icon: '🛏️', hint: 'you "habitate" (live) in your room' },
+  { cat: 'rooms',     spanish: 'el comedor',        english: 'the dining room',  icon: '🍽️', hint: '"comer" means "to eat"' },
+  { cat: 'rooms',     spanish: 'el baño',           english: 'the bathroom',     icon: '🚿', hint: '"baño" → bath' },
+  { cat: 'rooms',     spanish: 'la sala familiar',  english: 'the family room',  icon: '📺', hint: '"familiar" = family' },
+  { cat: 'rooms',     spanish: 'el ático',          english: 'the attic',        icon: '🏚️', hint: '"ático" sounds like "attic"' },
+  { cat: 'rooms',     spanish: 'el sótano',         english: 'the basement',     icon: '🪨', hint: '"sótano" = under the house' },
+
+  // FURNITURE
+  { cat: 'furniture', spanish: 'la silla',          english: 'the chair',        icon: '🪑', hint: '"silla" — think "sit-a"' },
+  { cat: 'furniture', spanish: 'la mesa',           english: 'the table',        icon: '🪵', hint: '"mesa" also means table in geography (flat top!)' },
+  { cat: 'furniture', spanish: 'el sofá',           english: 'the sofa / couch', icon: '🛋️', hint: '"sofá" — almost the same as English!' },
+  { cat: 'furniture', spanish: 'la cama',           english: 'the bed',          icon: '🛏️', hint: '"cama" — you "come-a" home to sleep' },
+  { cat: 'furniture', spanish: 'el escritorio',     english: 'the desk',         icon: '🖥️', hint: '"escri-" → to write (escribir)' },
+  { cat: 'furniture', spanish: 'la lámpara',        english: 'the lamp',         icon: '💡', hint: '"lámpara" → lamp' },
+  { cat: 'furniture', spanish: 'la ventana',        english: 'the window',       icon: '🪟', hint: '"viento" means wind — windows let in the breeze' },
+  { cat: 'furniture', spanish: 'la puerta',         english: 'the door',         icon: '🚪', hint: '"puerta" → portal' },
+
+  // SCHOOL
+  { cat: 'school',    spanish: 'el libro',          english: 'the book',         icon: '📖', hint: '"libro" → library' },
+  { cat: 'school',    spanish: 'el cuaderno',       english: 'the notebook',     icon: '📓', hint: '"cuaderno" → squares of paper' },
+  { cat: 'school',    spanish: 'el lápiz',          english: 'the pencil',       icon: '✏️', hint: '"lápiz" — you "lap" up words' },
+  { cat: 'school',    spanish: 'la mochila',        english: 'the backpack',     icon: '🎒', hint: '"mochila" — carries your stuff' },
+  { cat: 'school',    spanish: 'la pizarra',        english: 'the whiteboard',   icon: '📋', hint: '"pizarra" also means "blackboard"' },
+  { cat: 'school',    spanish: 'el maestro',        english: 'the teacher (m)',  icon: '👨‍🏫', hint: '"maestro" → master teacher' },
+  { cat: 'school',    spanish: 'la maestra',        english: 'the teacher (f)',  icon: '👩‍🏫', hint: '"maestra" → master teacher' },
+  { cat: 'school',    spanish: 'la clase',          english: 'the class',        icon: '🏫', hint: '"clase" → class — almost the same!' },
+
+  // NUMBERS
+  { cat: 'numbers',   spanish: 'uno',               english: 'one',              icon: '1️⃣', hint: '"uno" card game!' },
+  { cat: 'numbers',   spanish: 'dos',               english: 'two',              icon: '2️⃣', hint: '"dos" → do two things' },
+  { cat: 'numbers',   spanish: 'tres',              english: 'three',            icon: '3️⃣', hint: '"tres" → three' },
+  { cat: 'numbers',   spanish: 'cuatro',            english: 'four',             icon: '4️⃣', hint: '"cuatro" → quad = 4 sides' },
+  { cat: 'numbers',   spanish: 'cinco',             english: 'five',             icon: '5️⃣', hint: '"cinco" → sink-o fingers' },
+  { cat: 'numbers',   spanish: 'seis',              english: 'six',              icon: '6️⃣', hint: '"seis" sounds like "says"' },
+  { cat: 'numbers',   spanish: 'siete',             english: 'seven',            icon: '7️⃣', hint: '"siete" — si = yes, 7 times!' },
+  { cat: 'numbers',   spanish: 'ocho',              english: 'eight',            icon: '8️⃣', hint: '"ocho" → octopus has 8 arms' },
+  { cat: 'numbers',   spanish: 'nueve',             english: 'nine',             icon: '9️⃣', hint: '"nueve" → new-ve' },
+  { cat: 'numbers',   spanish: 'diez',              english: 'ten',              icon: '🔟', hint: '"diez" → decade = 10 years' },
+
+  // COLORS
+  { cat: 'colors',    spanish: 'rojo',              english: 'red',              icon: '🔴', hint: '"rojo" → rouge = red in French too' },
+  { cat: 'colors',    spanish: 'azul',              english: 'blue',             icon: '🔵', hint: '"azul" → azure sky is blue' },
+  { cat: 'colors',    spanish: 'verde',             english: 'green',            icon: '🟢', hint: '"verde" → verdant (lush green)' },
+  { cat: 'colors',    spanish: 'amarillo',          english: 'yellow',           icon: '🟡', hint: '"amarillo" — think "a marillo" in yellow paint' },
+  { cat: 'colors',    spanish: 'negro',             english: 'black',            icon: '⚫', hint: '"negro" → think of dark ink' },
+  { cat: 'colors',    spanish: 'blanco',            english: 'white',            icon: '⚪', hint: '"blanco" → blank white page' },
+  { cat: 'colors',    spanish: 'anaranjado',        english: 'orange',           icon: '🟠', hint: '"naranja" = orange (the fruit!)' },
+  { cat: 'colors',    spanish: 'morado',            english: 'purple',           icon: '🟣', hint: '"morado" → moors wore deep purples' },
+
+  // FAMILY
+  { cat: 'family',    spanish: 'la madre',          english: 'the mother',       icon: '👩', hint: '"madre" → maternal' },
+  { cat: 'family',    spanish: 'el padre',          english: 'the father',       icon: '👨', hint: '"padre" → paternal' },
+  { cat: 'family',    spanish: 'el hermano',        english: 'the brother',      icon: '👦', hint: '"hermano" → fraternal (brother)' },
+  { cat: 'family',    spanish: 'la hermana',        english: 'the sister',       icon: '👧', hint: '"hermana" → sorority (sister group)' },
+  { cat: 'family',    spanish: 'el abuelo',         english: 'the grandfather',  icon: '👴', hint: '"abu" = grandpa in many families' },
+  { cat: 'family',    spanish: 'la abuela',         english: 'the grandmother',  icon: '👵', hint: '"abuela" → "abuelita" = little grandma' },
+  { cat: 'family',    spanish: 'el tío',            english: 'the uncle',        icon: '🧔', hint: '"tío" also means "dude" in Spain slang' },
+  { cat: 'family',    spanish: 'la tía',            english: 'the aunt',         icon: '👩‍🦱', hint: '"tía" → like calling someone "auntie"' },
+
+  // BODY
+  { cat: 'body',      spanish: 'la cabeza',         english: 'the head',         icon: '🤯', hint: '"cabeza" → captain leads (head of ship)' },
+  { cat: 'body',      spanish: 'los ojos',          english: 'the eyes',         icon: '👀', hint: '"ojos" → oculist studies eyes' },
+  { cat: 'body',      spanish: 'la nariz',          english: 'the nose',         icon: '👃', hint: '"nariz" → nasal' },
+  { cat: 'body',      spanish: 'la boca',           english: 'the mouth',        icon: '👄', hint: '"boca" → bocadillo = little sandwich (goes in mouth)' },
+  { cat: 'body',      spanish: 'las manos',         english: 'the hands',        icon: '🙌', hint: '"manos" → manual = done by hand' },
+  { cat: 'body',      spanish: 'los pies',          english: 'the feet',         icon: '🦶', hint: '"pies" → pedestrian walks on feet' },
+  { cat: 'body',      spanish: 'las orejas',        english: 'the ears',         icon: '👂', hint: '"orejas" → oral = relating to head area' },
+  { cat: 'body',      spanish: 'el brazo',          english: 'the arm',          icon: '💪', hint: '"brazo" → brace your arm' },
+
+  // WEATHER
+  { cat: 'weather',   spanish: 'hace sol',          english: "it's sunny",       icon: '☀️', hint: '"sol" → solar — the sun!' },
+  { cat: 'weather',   spanish: 'hace frío',         english: "it's cold",        icon: '🥶', hint: '"frío" → frigid' },
+  { cat: 'weather',   spanish: 'hace calor',        english: "it's hot",         icon: '🥵', hint: '"calor" → calories = heat energy' },
+  { cat: 'weather',   spanish: 'llueve',            english: "it's raining",     icon: '🌧️', hint: '"llueve" → flood comes after rain' },
+  { cat: 'weather',   spanish: 'nieva',             english: "it's snowing",     icon: '❄️', hint: '"nieva" → sounds like Nevada (snowy mountains)' },
+  { cat: 'weather',   spanish: 'hace viento',       english: "it's windy",       icon: '💨', hint: '"viento" → ventilate (move air)' },
+  { cat: 'weather',   spanish: 'está nublado',      english: "it's cloudy",      icon: '☁️', hint: '"nube" = cloud → nebula' },
+  { cat: 'weather',   spanish: 'hay tormenta',      english: "there's a storm",  icon: '⛈️', hint: '"tormenta" → torment of a storm' },
+];
+
+const CAT_META = {
+  rooms:     { label: 'Rooms',      color: '#B07848', bg: '#FAF0E8', chip: '#F0DAC8' },
+  furniture: { label: 'Furniture',  color: '#2E5B8A', bg: '#EEF4FA', chip: '#D4E4F5' },
+  school:    { label: 'School',     color: '#3A6B4A', bg: '#EEF5EB', chip: '#D4ECDA' },
+  numbers:   { label: 'Numbers',    color: '#5A3E7A', bg: '#F0EBF5', chip: '#E4D8F5' },
+  colors:    { label: 'Colors',     color: '#8A6A20', bg: '#F5F0E8', chip: '#F5EAC8' },
+  family:    { label: 'Family',     color: '#8A3050', bg: '#F5EEF2', chip: '#F5C8D8' },
+  body:      { label: 'Body',       color: '#2A6B6B', bg: '#EAF5F5', chip: '#C8E8E8' },
+  weather:   { label: 'Weather',    color: '#4A6898', bg: '#EEF2F8', chip: '#D4E4F5' },
+};
+
+// ── STATE ────────────────────────────────────────────────────────────────────
+const learned = new Set(JSON.parse(localStorage.getItem('learned_words') || '[]'));
+let currentFilter = 'all';
+
+// ── CARD BUILDER ─────────────────────────────────────────────────────────────
+function makeCard(word, idx) {
+  const id = `card-${word.cat}-${idx}`;
+  const isLearned = learned.has(id);
+  const meta = CAT_META[word.cat];
+
+  return `
+  <div class="flashcard theme-${word.cat} ${isLearned ? 'learned-card' : ''}" id="${id}" onclick="flipCard('${id}')">
+    <div class="flashcard-inner">
+      <div class="card-face card-front">
+        <button class="card-learned-btn ${isLearned ? 'learned' : ''}"
+          onclick="toggleLearned(event,'${id}')" title="Mark as learned">★</button>
+        <div class="card-icon">${word.icon}</div>
+        <div class="card-spanish">${word.spanish}</div>
+        <div class="card-category-dot"></div>
+        <div class="card-flip-hint">tap to flip</div>
+      </div>
+      <div class="card-face card-back">
+        <div class="card-english">${word.english}</div>
+        <div class="card-hint">${word.hint}</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function buildGrid(containerId, words) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  el.innerHTML = words.map((w, i) => makeCard(w, i)).join('');
+}
+
+function buildAllGrids() {
+  const cats = ['rooms','furniture','school','numbers','colors','family','body','weather'];
+  cats.forEach(cat => {
+    buildGrid(`${cat}-grid`, VOCAB.filter(w => w.cat === cat));
+  });
+  buildGrid('all-card-grid', VOCAB);
+  buildRefTable();
+}
+
+// ── INTERACTIONS ─────────────────────────────────────────────────────────────
+function flipCard(id) {
+  document.getElementById(id).classList.toggle('flipped');
+}
+
+function toggleLearned(e, id) {
+  e.stopPropagation();
+  const card = document.getElementById(id);
+  if (learned.has(id)) {
+    learned.delete(id);
+    card.classList.remove('learned-card');
+    card.querySelector('.card-learned-btn').classList.remove('learned');
+  } else {
+    learned.add(id);
+    card.classList.add('learned-card');
+    card.querySelector('.card-learned-btn').classList.add('learned');
+  }
+  localStorage.setItem('learned_words', JSON.stringify([...learned]));
+  updateProgress();
+}
+
+function updateProgress() {
+  const count = learned.size;
+  document.getElementById('progress-badge').textContent = `${count} / ${VOCAB.length} learned`;
+  document.getElementById('hero-learned').textContent = count;
+}
+
+// ── NAVIGATION ───────────────────────────────────────────────────────────────
+function showSection(name) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(`section-${name}`).classList.add('active');
+  document.querySelector(`[data-section="${name}"]`).classList.add('active');
+  if (name === 'quiz') startQuiz();
+}
+
+// ── SEARCH & FILTER ───────────────────────────────────────────────────────────
+function filterCards() {
+  const q = document.getElementById('search-input').value.toLowerCase();
+  const grid = document.getElementById('all-card-grid');
+  const cards = grid.querySelectorAll('.flashcard');
+  const words = VOCAB.filter(w => currentFilter === 'all' || w.cat === currentFilter);
+
+  cards.forEach((card, i) => {
+    const w = words[i];
+    if (!w) { card.style.display = 'none'; return; }
+    const match = !q || w.spanish.toLowerCase().includes(q) || w.english.toLowerCase().includes(q);
+    card.style.display = match ? '' : 'none';
+  });
+}
+
+function filterByCategory(cat, btn) {
+  currentFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  buildGrid('all-card-grid', cat === 'all' ? VOCAB : VOCAB.filter(w => w.cat === cat));
+  const q = document.getElementById('search-input').value;
+  if (q) filterCards();
+}
+
+// ── REFERENCE TABLE ───────────────────────────────────────────────────────────
+function buildRefTable() {
+  const tbody = document.getElementById('ref-tbody');
+  tbody.innerHTML = VOCAB.map(w => {
+    const meta = CAT_META[w.cat];
+    return `<tr>
+      <td class="spanish-cell">${w.spanish}</td>
+      <td>${w.english}</td>
+      <td><span class="cat-chip" style="background:${meta.chip};color:${meta.color}">${meta.label}</span></td>
+      <td style="font-size:0.85rem;color:#666;font-style:italic">${w.hint}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ── QUIZ ──────────────────────────────────────────────────────────────────────
+let quizWords = [], quizIdx = 0, quizScore = 0, quizAnswered = false;
+
+function startQuiz() {
+  quizWords = [...VOCAB].sort(() => Math.random() - 0.5).slice(0, 12);
+  quizIdx = 0;
+  quizScore = 0;
+  document.getElementById('quiz-play').style.display = 'block';
+  document.getElementById('quiz-results').classList.remove('show');
+  showQuestion();
+}
+
+function showQuestion() {
+  const w = quizWords[quizIdx];
+  quizAnswered = false;
+  document.getElementById('quiz-progress-bar').style.width = `${(quizIdx / quizWords.length) * 100}%`;
+  document.getElementById('quiz-cat-label').textContent = CAT_META[w.cat].label;
+  document.getElementById('quiz-icon').textContent = w.icon;
+  document.getElementById('quiz-word').textContent = w.spanish;
+  document.getElementById('quiz-feedback').className = 'quiz-feedback';
+  document.getElementById('quiz-feedback').innerHTML = '';
+  document.getElementById('quiz-next').classList.remove('visible');
+
+  // Build options: correct + 3 random wrong
+  const wrong = VOCAB.filter(v => v !== w).sort(() => Math.random() - 0.5).slice(0, 3);
+  const options = [...wrong, w].sort(() => Math.random() - 0.5);
+
+  document.getElementById('quiz-options').innerHTML = options.map(opt => `
+    <button class="quiz-option" onclick="answerQuiz(this, '${opt.english}', '${w.english}')">
+      ${opt.english}
+    </button>`).join('');
+}
+
+function answerQuiz(btn, chosen, correct) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+  const allBtns = document.querySelectorAll('.quiz-option');
+  allBtns.forEach(b => {
+    b.disabled = true;
+    if (b.textContent.trim() === correct) b.classList.add('correct');
+  });
+  const fb = document.getElementById('quiz-feedback');
+  if (chosen === correct) {
+    quizScore++;
+    btn.classList.add('correct');
+    fb.className = 'quiz-feedback correct-fb show';
+    fb.innerHTML = '✅ ¡Correcto! Great job!';
+  } else {
+    btn.classList.add('wrong');
+    fb.className = 'quiz-feedback wrong-fb show';
+    fb.innerHTML = `❌ Not quite — it's "<strong>${correct}</strong>"`;
+  }
+  document.getElementById('quiz-next').classList.add('visible');
+}
+
+function nextQuestion() {
+  quizIdx++;
+  if (quizIdx >= quizWords.length) {
+    showResults();
+  } else {
+    showQuestion();
+  }
+}
+
+function showResults() {
+  document.getElementById('quiz-progress-bar').style.width = '100%';
+  document.getElementById('quiz-play').style.display = 'none';
+  const results = document.getElementById('quiz-results');
+  results.classList.add('show');
+  document.getElementById('results-score').textContent = `${quizScore}/${quizWords.length}`;
+  const pct = quizScore / quizWords.length;
+  let msg = pct === 1 ? '🌟 ¡Perfecto! Perfect score!' :
+            pct >= 0.8 ? '🎉 ¡Muy bien! Great work!' :
+            pct >= 0.6 ? '👍 ¡Bien! Keep practicing!' :
+                         '💪 Keep studying — you\'ll get it!';
+  document.getElementById('results-label').textContent = msg;
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+buildAllGrids();
+updateProgress();
+</script>
+</body>
+</html>
