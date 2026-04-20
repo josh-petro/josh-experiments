@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kristen's GF Dinner Menu — One Month</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ─── TOKENS ───────────────────────────────────────────────── */
+:root{
+  --bg:#F4F1EC; --card:#FEFCF8; --border:#E0D6C8; --text:#1C1812;
+  --muted:#7A6D5E; --gold:#B07D2A; --gold-lt:#FBF3DE;
+  --chicken:#7B2D2D; --chicken-lt:#FAECEA; --chicken-bd:#E5A8A8;
+  --beef:#2A4A1E;   --beef-lt:#EAF3E6;   --beef-bd:#93C47D;
+  --salmon:#1B3F6E; --salmon-lt:#E5EEF9; --salmon-bd:#7AAAD4;
+  --pasta:#5C3317;  --pasta-lt:#FBF0E6;  --pasta-bd:#D4A070;
+  --df:#5B348B;     --df-lt:#F0EAF9;     --df-bd:#B699D8;
+  --sh:0 2px 14px rgba(28,24,18,.08);
+  --sh-lg:0 8px 34px rgba(28,24,18,.14);
+  --r:18px; --rsm:11px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.65;font-size:16px;}
+
+/* ─── LAYOUT ───────────────────────────────────────────────── */
+.wrap{max-width:1140px;margin:0 auto;padding:0 16px;}
+@media(min-width:600px){.wrap{padding:0 24px;}}
+
+/* ─── NAV ──────────────────────────────────────────────────── */
+#nav{
+  position:sticky;top:0;z-index:200;
+  background:rgba(28,24,18,.97);backdrop-filter:blur(10px);
+  display:flex;align-items:center;gap:12px;padding:0 16px;
+  overflow-x:auto;scrollbar-width:none;min-height:50px;
+  -webkit-overflow-scrolling:touch;
+}
+#nav::-webkit-scrollbar{display:none;}
+.nav-logo{font-family:'Lora',serif;color:var(--gold);font-size:.88rem;font-weight:700;white-space:nowrap;flex-shrink:0;letter-spacing:.03em;}
+.nav-links{display:flex;gap:4px;flex-shrink:0;}
+.nl{font-size:.63rem;font-weight:600;text-decoration:none;padding:5px 9px;border-radius:20px;white-space:nowrap;transition:all .18s;border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.72);}
+.nl:hover,.nl:focus{background:rgba(255,255,255,.18);color:#fff;outline:none;}
+.nl.chicken{border-color:var(--chicken-bd);}
+.nl.beef   {border-color:var(--beef-bd);}
+.nl.salmon {border-color:var(--salmon-bd);}
+
+/* ─── HERO ─────────────────────────────────────────────────── */
+#hero{
+  background:linear-gradient(138deg,#1C1812 0%,#452A14 48%,#2C1A0C 100%);
+  padding:clamp(38px,9vw,76px) 16px clamp(34px,6vw,62px);
+  text-align:center;position:relative;overflow:hidden;
+}
+#hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(176,125,42,.22) 0%,transparent 65%);}
+#hero h1{font-family:'Lora',serif;font-size:clamp(1.9rem,5.5vw,3.8rem);color:#fff;font-weight:700;line-height:1.1;position:relative;}
+#hero h1 em{color:var(--gold);font-style:italic;}
+.hero-sub{color:rgba(255,255,255,.62);font-size:clamp(.78rem,2.2vw,.92rem);margin-top:10px;position:relative;font-weight:300;}
+.hero-pills{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;}
+.hp{padding:5px 14px;border-radius:20px;font-size:.68rem;font-weight:700;border:1px solid;}
+.hp.gf {background:rgba(42,74,30,.25);border-color:#93C47D;color:#b8e699;}
+.hp.df {background:rgba(91,52,139,.22);border-color:var(--df-bd);color:#d3b8f5;}
+.hp.imp{background:rgba(176,125,42,.22);border-color:var(--gold);color:var(--gold);}
+.hp.src{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.22);color:rgba(255,255,255,.68);}
+
+/* ─── FILTER ───────────────────────────────────────────────── */
+#filters{padding:20px 16px 0;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;}
+.fpill{display:flex;align-items:center;gap:7px;padding:7px 16px;border-radius:24px;font-size:.75rem;font-weight:700;border:1.5px solid;cursor:pointer;transition:all .18s;font-family:'Inter',sans-serif;min-height:40px;-webkit-tap-highlight-color:transparent;}
+.fpill:focus-visible{outline:3px solid var(--gold);outline-offset:2px;}
+.fpill.all    {background:var(--text);color:#fff;border-color:var(--text);}
+.fpill.chicken{background:var(--chicken-lt);color:var(--chicken);border-color:var(--chicken-bd);}
+.fpill.beef   {background:var(--beef-lt);color:var(--beef);border-color:var(--beef-bd);}
+.fpill.salmon {background:var(--salmon-lt);color:var(--salmon);border-color:var(--salmon-bd);}
+
+/* ─── CALENDAR ─────────────────────────────────────────────── */
+#cal-sec{padding:28px 0 0;}
+#cal-sec h2{font-family:'Lora',serif;font-size:clamp(1.3rem,3vw,1.65rem);font-weight:700;padding:0 16px;margin-bottom:14px;}
+.cal-outer{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:0 16px;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(40px,1fr));gap:5px;background:var(--card);border-radius:var(--r);padding:14px;border:1px solid var(--border);box-shadow:var(--sh);min-width:320px;}
+.cal-hd{text-align:center;font-size:.58rem;font-weight:700;color:var(--muted);padding:3px 0;text-transform:uppercase;letter-spacing:.07em;}
+.cday{aspect-ratio:1;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.62rem;padding:3px;transition:transform .14s;}
+.cday.empty{opacity:0;pointer-events:none;}
+.cday.rest{background:#eeead3;color:var(--muted);}
+.cday.cook{cursor:pointer;}
+.cday.cook:hover,.cday.cook:focus{transform:scale(1.08);box-shadow:var(--sh);outline:none;}
+.cday .cn{font-size:clamp(.76rem,.88vw,.86rem);font-weight:800;}
+.cday .cl{font-size:.48rem;text-align:center;margin-top:1px;line-height:1.25;max-width:44px;word-break:break-word;}
+.cday.chicken{background:var(--chicken-lt);color:var(--chicken);border:1.5px solid var(--chicken-bd);}
+.cday.beef   {background:var(--beef-lt);color:var(--beef);border:1.5px solid var(--beef-bd);}
+.cday.salmon {background:var(--salmon-lt);color:var(--salmon);border:1.5px solid var(--salmon-bd);}
+.cal-leg{display:flex;gap:12px;padding:10px 16px 0;flex-wrap:wrap;}
+.leg{display:flex;align-items:center;gap:6px;font-size:.72rem;color:var(--muted);}
+.ld{width:12px;height:12px;border-radius:3px;flex-shrink:0;}
+
+/* ─── RECIPES ──────────────────────────────────────────────── */
+#rec-sec{padding:28px 0;}
+#rec-sec h2{font-family:'Lora',serif;font-size:clamp(1.3rem,3vw,1.65rem);font-weight:700;margin-bottom:22px;padding:0 16px;}
+.rgrid{display:grid;gap:22px;padding:0 16px;}
+.rcard{background:var(--card);border-radius:var(--r);overflow:hidden;border:1px solid var(--border);box-shadow:var(--sh);transition:box-shadow .18s;}
+.rcard:hover{box-shadow:var(--sh-lg);}
+.rcard.hidden{display:none;}
+
+/* recipe header */
+.rhead{padding:18px 20px 14px;border-bottom:1px solid var(--border);}
+@media(min-width:600px){.rhead{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;}}
+.rdaylabel{font-size:.66rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.09em;margin-bottom:4px;}
+.rtitle-area h3{font-family:'Lora',serif;font-size:clamp(1.05rem,2.5vw,1.42rem);font-weight:700;line-height:1.22;}
+.rdesc{font-size:.79rem;color:var(--muted);margin-top:5px;line-height:1.58;max-width:520px;}
+.rtags{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;}
+.tag{padding:3px 9px;border-radius:11px;font-size:.63rem;font-weight:800;border:1px solid;letter-spacing:.03em;}
+.tag.chicken{background:var(--chicken-lt);color:var(--chicken);border-color:var(--chicken-bd);}
+.tag.beef   {background:var(--beef-lt);color:var(--beef);border-color:var(--beef-bd);}
+.tag.salmon {background:var(--salmon-lt);color:var(--salmon);border-color:var(--salmon-bd);}
+.tag.gf     {background:#e6f4ee;color:#1a5c40;border-color:#8ecab0;}
+.tag.df     {background:var(--df-lt);color:var(--df);border-color:var(--df-bd);}
+.tag.pasta  {background:var(--pasta-lt);color:var(--pasta);border-color:var(--pasta-bd);}
+
+.rmeta{margin-top:14px;display:flex;flex-direction:column;gap:9px;}
+@media(min-width:600px){.rmeta{margin-top:0;align-items:flex-end;flex-shrink:0;}}
+.srcbtn{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:20px;font-size:.69rem;font-weight:700;text-decoration:none;border:1.5px solid var(--gold);color:var(--gold);transition:all .18s;white-space:nowrap;min-height:38px;}
+.srcbtn:hover{background:var(--gold);color:#fff;}
+.tbadges{display:flex;gap:6px;flex-wrap:wrap;}
+@media(min-width:600px){.tbadges{justify-content:flex-end;}}
+.tb{display:flex;align-items:center;gap:4px;padding:4px 9px;background:#f0e8da;border-radius:8px;font-size:.65rem;color:var(--muted);font-weight:600;white-space:nowrap;}
+.tb span{font-weight:800;color:var(--text);}
+
+/* recipe body */
+.rbody{display:grid;}
+@media(min-width:720px){.rbody{grid-template-columns:282px 1fr;}}
+.ingcol{padding:18px;border-bottom:1px solid var(--border);background:#FDFAF4;}
+@media(min-width:720px){.ingcol{border-bottom:none;border-right:1px solid var(--border);}}
+.ingcol h4,.stepscol h4{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:11px;}
+.iglabel{font-size:.62rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-top:10px;margin-bottom:4px;padding-bottom:2px;border-bottom:1px solid var(--border);}
+.igitem{display:flex;gap:6px;padding:3px 0;font-size:.79rem;line-height:1.45;align-items:baseline;}
+.igitem::before{content:'·';color:var(--gold);font-weight:800;flex-shrink:0;}
+.dfbox{margin-top:13px;padding:10px 12px;background:var(--df-lt);border-radius:9px;border-left:3px solid var(--df);font-size:.72rem;color:#3d1f6e;line-height:1.55;}
+.dfbox strong{display:block;margin-bottom:3px;color:#2d1256;font-size:.69rem;text-transform:uppercase;letter-spacing:.05em;}
+
+.stepscol{padding:18px 20px;}
+.step{display:flex;gap:12px;margin-bottom:13px;align-items:flex-start;}
+.snum{min-width:26px;height:26px;border-radius:50%;background:var(--text);color:#fff;font-size:.67rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.scontent{flex:1;}
+.stext{font-size:.84rem;line-height:1.62;}
+.tbtn{display:inline-flex;align-items:center;gap:5px;margin-top:7px;padding:6px 12px;border-radius:16px;font-size:.68rem;font-weight:700;border:1.5px solid;cursor:pointer;font-family:'Inter',sans-serif;transition:all .18s;background:transparent;min-height:36px;-webkit-tap-highlight-color:transparent;}
+.tbtn.idle  {border-color:#6B5E52;color:#6B5E52;}
+.tbtn.idle:hover{background:#6B5E52;color:#fff;}
+.tbtn.running{border-color:#C04A00;color:#C04A00;animation:blink 1.1s infinite;}
+.tbtn.done  {border-color:#1A6B30;color:#1A6B30;background:rgba(26,107,48,.08);}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.45}}
+.tdisp{font-size:.84rem;font-weight:800;min-width:46px;}
+
+/* ─── SHOPPING ─────────────────────────────────────────────── */
+#shop-sec{padding:28px 0 60px;border-top:1px solid var(--border);}
+#shop-sec h2{font-family:'Lora',serif;font-size:clamp(1.3rem,3vw,1.65rem);font-weight:700;margin-bottom:8px;padding:0 16px;}
+.stabs{display:flex;gap:6px;padding:0 16px;margin-bottom:18px;flex-wrap:wrap;}
+.stab{padding:7px 16px;border-radius:20px;border:1.5px solid var(--border);background:var(--card);cursor:pointer;font-size:.74rem;font-weight:700;font-family:'Inter',sans-serif;color:var(--muted);transition:all .18s;line-height:1.3;min-height:40px;-webkit-tap-highlight-color:transparent;}
+.stab:focus-visible{outline:3px solid var(--gold);outline-offset:2px;}
+.stab.active{background:var(--text);color:#fff;border-color:var(--text);}
+.spanel{display:none;padding:0 16px;}
+.spanel.active{display:block;}
+.smeal{font-size:.78rem;color:var(--muted);margin-bottom:14px;font-style:italic;}
+.sgrid{display:grid;grid-template-columns:1fr;gap:13px;}
+@media(min-width:480px){.sgrid{grid-template-columns:repeat(2,1fr);}}
+@media(min-width:900px){.sgrid{grid-template-columns:repeat(3,1fr);}}
+.scat{background:var(--card);border-radius:var(--rsm);border:1px solid var(--border);overflow:hidden;box-shadow:var(--sh);}
+.scat-hd{padding:10px 14px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;}
+.scat-hd.produce{background:var(--beef-lt);color:var(--beef);}
+.scat-hd.protein{background:var(--chicken-lt);color:var(--chicken);}
+.scat-hd.grains {background:var(--pasta-lt);color:var(--pasta);}
+.scat-hd.dairy  {background:var(--gold-lt);color:#7a5400;}
+.scat-hd.pantry {background:var(--salmon-lt);color:var(--salmon);}
+.scat-hd.spices {background:var(--df-lt);color:var(--df);}
+.scat-hd.dfswaps{background:#F3EAF8;color:#5B1A8B;}
+.sitems{padding:8px 14px;}
+.sitem{display:flex;align-items:flex-start;gap:9px;padding:6px 0;border-bottom:1px solid #f0ebe0;font-size:.79rem;line-height:1.4;}
+.sitem:last-child{border-bottom:none;}
+.sitem input[type=checkbox]{margin-top:3px;accent-color:var(--beef);width:16px;height:16px;flex-shrink:0;cursor:pointer;}
+.sitem label{cursor:pointer;flex:1;}
+.sitem input:checked+label{text-decoration:line-through;color:var(--muted);}
+.sactions{display:flex;gap:10px;padding:16px 16px 0;flex-wrap:wrap;}
+.abtn{padding:9px 22px;border-radius:22px;border:1.5px solid;font-size:.79rem;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:all .18s;min-height:42px;-webkit-tap-highlight-color:transparent;}
+.abtn.print{border-color:var(--text);color:var(--text);background:transparent;}
+.abtn.print:hover{background:var(--text);color:#fff;}
+.abtn.clr{border-color:#c0392b;color:#c0392b;background:transparent;}
+.abtn.clr:hover{background:#c0392b;color:#fff;}
+
+/* ─── BACK TOP ─────────────────────────────────────────────── */
+#btop{position:fixed;bottom:20px;right:20px;z-index:300;width:48px;height:48px;border-radius:50%;background:var(--chicken);color:#fff;border:none;cursor:pointer;font-size:1.25rem;box-shadow:0 4px 18px rgba(123,45,45,.4);display:flex;align-items:center;justify-content:center;transition:all .18s;opacity:0;pointer-events:none;-webkit-tap-highlight-color:transparent;}
+#btop.show{opacity:1;pointer-events:all;}
+#btop:hover{background:var(--gold);transform:translateY(-3px);}
+
+/* ─── PRINT ────────────────────────────────────────────────── */
+@media print{
+  #nav,#hero,#filters,#cal-sec,#rec-sec,#btop,.stabs,.sactions{display:none!important;}
+  body{background:#fff;}
+  #shop-sec{padding:0;}
+  .spanel{display:block!important;}
+  .scat{break-inside:avoid;box-shadow:none;border:1px solid #ccc;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo">🍽 Kristen's GF Menu</div>
+  <div class="nav-links" id="nav-links"></div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="wrap">
+    <h1>Kristen's<br><em>Gluten-Free</em><br>Dinner Menu</h1>
+    <p class="hero-sub">Chicken · Ground Beef · Salmon · GF Pasta &nbsp;·&nbsp; One Month · Every Other Day · 15 Meals</p>
+    <div class="hero-pills">
+      <span class="hp gf">✓ Always Gluten-Free</span>
+      <span class="hp df">◎ Dairy-Free Option on Every Meal</span>
+      <span class="hp imp">⚖ Imperial Measurements</span>
+      <span class="hp src">Sources: Milk Street · Salt &amp; Lavender · What Molly Made · Southern Living · Allrecipes</span>
+    </div>
+  </div>
+</section>
+
+<!-- FILTER PILLS -->
+<div id="filters">
+  <button class="fpill all" onclick="fp('all',this)">All Proteins</button>
+  <button class="fpill chicken" onclick="fp('chicken',this)">🍗 Chicken</button>
+  <button class="fpill beef" onclick="fp('beef',this)">🥩 Ground Beef</button>
+  <button class="fpill salmon" onclick="fp('salmon',this)">🐟 Salmon</button>
+</div>
+
+<!-- CALENDAR -->
+<section id="cal-sec">
+  <div class="wrap">
+    <h2>Monthly Meal Calendar</h2>
+    <div class="cal-outer">
+      <div class="cal-grid" id="cal-grid"></div>
+    </div>
+    <div class="cal-leg">
+      <div class="leg"><div class="ld" style="background:var(--chicken-lt);border:1.5px solid var(--chicken-bd)"></div>Chicken</div>
+      <div class="leg"><div class="ld" style="background:var(--beef-lt);border:1.5px solid var(--beef-bd)"></div>Ground Beef</div>
+      <div class="leg"><div class="ld" style="background:var(--salmon-lt);border:1.5px solid var(--salmon-bd)"></div>Salmon</div>
+      <div class="leg"><div class="ld" style="background:#eeead3;border:1px solid #ccc"></div>Rest / Leftovers</div>
+    </div>
+  </div>
+</section>
+
+<!-- RECIPES -->
+<section id="rec-sec">
+  <div class="wrap">
+    <h2>Recipes</h2>
+    <div class="rgrid" id="rgrid"></div>
+  </div>
+</section>
+
+<!-- SHOPPING LISTS -->
+<section id="shop-sec">
+  <div class="wrap">
+    <h2>🛒 Weekly Shopping Lists</h2>
+    <div class="stabs" id="stabs"></div>
+    <div id="spanels"></div>
+    <div class="sactions">
+      <button class="abtn print" onclick="window.print()">🖨 Print List</button>
+      <button class="abtn clr" onclick="clearAll()">✕ Clear All</button>
+    </div>
+  </div>
+</section>
+
+<button id="btop" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+/* ════════════════════════════════════════════════════════════
+   KRISTEN'S RECIPE DATA — 15 meals
+   5 chicken / 5 ground beef / 5 salmon
+   Every recipe: GF always, dairy option + DF swap noted
+════════════════════════════════════════════════════════════ */
+const R=[
+// ── WEEK 1 ───────────────────────────────────────────────────
+{id:1,day:1,week:1,p:'chicken',pasta:false,
+ title:'Milk Street Pan-Roasted Chicken with Summer Vegetables',
+ src:'Milk Street',url:'https://www.177milkstreet.com/recipes/pan-roasted-chicken-summer-vegetables',
+ prep:15,cook:35,extra:0,
+ desc:'Seared skin-on chicken breasts roasted on a bed of Herbes de Provence–scented vegetables — capers, tomatoes, zucchini, and bell pepper — with a briny pan sauce.',
+ igs:[
+  {l:'Chicken',i:['4 bone-in skin-on chicken breasts (12 oz each) OR 6 thighs','Salt & black pepper','1 tbsp olive oil']},
+  {l:'Vegetables',i:['2 cloves garlic, smashed','1 medium onion, cut into wedges','1 red bell pepper, stemmed and cut into 1-inch pieces','1 pint cherry tomatoes, halved','1 medium zucchini, cut into ½-inch rounds','2 tbsp capers, drained','2 tbsp olive oil','1½ tsp Herbes de Provence']},
+  {l:'Pan Sauce',i:['¼ cup dry white wine or GF chicken broth','2 tbsp caper brine','1 tbsp fresh lemon juice','Salt & pepper to finish']}
+ ],
+ df:'Naturally dairy-free — no butter or cream in this Milk Street recipe. The pan sauce is built entirely from the roasting juices, wine, and caper brine.',
+ steps:[
+  {t:'Heat oven to 475°F. Season chicken all over with salt and pepper.',s:null},
+  {t:'Toss garlic, onion, bell pepper, tomatoes, zucchini, and capers with 2 tbsp olive oil, Herbes de Provence, ¼ tsp salt, and 1 tsp pepper in a large bowl. Set aside.',s:null},
+  {t:'Heat 1 tbsp olive oil in a 12-inch oven-safe skillet over medium-high until shimmering. Add chicken skin-side down; sear without moving until golden brown.',s:7},
+  {t:'Transfer chicken skin-side up to a plate. Pour off and discard all but 1 tbsp fat from the skillet.',s:null},
+  {t:'Add the vegetable mixture to the skillet. Set chicken on top, skin-side up. Transfer to oven and roast until chicken is cooked through (160°F breasts / 175°F thighs).',s:20},
+  {t:'Transfer chicken and vegetables to a serving platter. Set skillet over high heat. Add wine, scraping up browned bits. Stir in caper brine and lemon juice; simmer 1–2 min until slightly thickened.',s:2},
+  {t:'Taste sauce and season. Pour around and over chicken. Serve immediately.',s:null}
+ ]},
+{id:2,day:3,week:1,p:'beef',pasta:true,
+ title:'GF Beef & Mushroom Pasta Skillet',
+ src:'Allrecipes / The Roasted Root',url:'https://www.theroastedroot.net/gluten-free-dairy-free-ground-beef-stroganoff/',
+ prep:15,cook:35,extra:0,
+ desc:'Ground beef, earthy mushrooms, and a savory pan sauce tossed right in the skillet with GF rotini — a deeply satisfying weeknight dinner in one pan.',
+ igs:[
+  {l:'Beef & Vegetables',i:['1½ lbs 80/20 ground beef','10 oz cremini mushrooms, sliced','1 medium yellow onion, diced','4 cloves garlic, minced','2 tbsp olive oil']},
+  {l:'Sauce',i:['2 tbsp GF all-purpose flour (Bob\'s Red Mill 1-to-1)','1½ cups GF beef broth','1 tbsp GF Worcestershire sauce','1 tbsp GF Dijon mustard','Salt & black pepper']},
+  {l:'Dairy Options',i:['½ cup sour cream (dairy) OR ½ cup full-fat coconut cream (DF)','12 oz GF rotini or penne (Jovial brown rice)','Fresh parsley, chopped']}
+ ],
+ df:'🌿 DF Swap: Use ½ cup full-fat canned coconut cream in place of sour cream — adds richness and a subtle sweetness that balances the Worcestershire perfectly.',
+ steps:[
+  {t:'Cook GF pasta in well-salted boiling water per package (slightly under al dente). Drain and set aside.',s:null},
+  {t:'Heat olive oil in a large deep skillet over medium-high. Sauté onion until golden. Add mushrooms and garlic; cook until mushrooms release liquid and brown.',s:8},
+  {t:'Push vegetables to edges. Add ground beef in the center; season with salt and pepper. Break up and cook until browned.',s:7},
+  {t:'Sprinkle GF flour over everything; stir constantly for 1½ minutes to cook out the raw flour taste.',s:90},
+  {t:'Whisk in beef broth, Worcestershire, and Dijon, scraping up the browned bits. Bring to a simmer until sauce thickens.',s:5},
+  {t:'Remove from heat. Stir in sour cream or coconut cream until silky. Taste and season.',s:null},
+  {t:'Add cooked pasta to the skillet; toss to coat in the sauce. Serve topped with fresh parsley.',s:null}
+ ]},
+{id:3,day:5,week:1,p:'salmon',pasta:true,
+ title:'Salmon Pesto Pasta with Asparagus & Peas',
+ src:'What Molly Made / Food Network',url:'https://whatmollymade.com/salmon-pesto-pasta/',
+ prep:15,cook:25,extra:0,
+ desc:'Pan-seared salmon resting on GF fusilli tossed with bright pesto, asparagus, and sweet peas — light, elegant, and on the table in 40 minutes.',
+ igs:[
+  {l:'Salmon',i:['4 salmon fillets (6 oz each), skin-on','Salt & black pepper','1 tbsp avocado oil']},
+  {l:'Pasta & Sauce',i:['12 oz GF fusilli or penne (Jovial or Barilla GF)','1 bunch asparagus, cut into 2-inch pieces','½ cup frozen peas, thawed','⅓ cup dry white wine or GF vegetable broth','½ cup pesto (store-bought or homemade, GF)','¼ cup heavy cream (dairy) OR coconut cream (DF)','Juice of ½ lemon','¼ cup reserved pasta water']},
+  {l:'Optional Finish',i:['Freshly grated Parmesan OR Violife vegan Parmesan (DF)','Fresh basil, cracked black pepper']}
+ ],
+ df:'🌿 DF Swap: Replace heavy cream with ¼ cup full-fat coconut cream and use a dairy-free pesto (most store-bought pesto contains Parmesan — look for Trader Joe\'s Vegan Pesto or make your own). Top with Violife vegan Parmesan.',
+ steps:[
+  {t:'Cook GF pasta in well-salted water per package until al dente. Reserve ¼ cup pasta water before draining.',s:null},
+  {t:'Pat salmon dry; season both sides with salt and pepper. Heat oil in a large deep skillet over medium-high. Sear salmon flesh-side down until golden.',s:4},
+  {t:'Flip salmon; cook until just cooked through. Transfer to a plate to rest.',s:3},
+  {t:'In the same skillet, sauté asparagus over medium heat until bright green and just tender-crisp.',s:3},
+  {t:'Add peas. Pour in wine (or broth); scrape up any browned bits from the bottom of the pan.',s:null},
+  {t:'Stir in pesto, cream (or coconut cream), and lemon juice. Simmer 2 min. Add drained pasta and pasta water; toss until sauce coats the noodles.',s:2},
+  {t:'Flake salmon into large chunks and fold gently into the pasta. Serve topped with Parmesan (or DF alternative) and fresh basil.',s:null}
+ ]},
+{id:4,day:7,week:1,p:'chicken',pasta:false,
+ title:'Crispy Skillet Chicken Thighs with Garlic Herb Cream Sauce',
+ src:'Two Peas & Their Pod / Southern Living',url:'https://www.twopeasandtheirpod.com/easy-skillet-chicken-thighs/',
+ prep:10,cook:35,extra:0,
+ desc:'Cast-iron seared bone-in chicken thighs — impossibly crispy skin, tender juicy meat — with a rich garlic cream sauce made in the same pan.',
+ igs:[
+  {l:'Chicken',i:['6–8 bone-in skin-on chicken thighs (about 3 lbs)','1 tsp garlic powder','1 tsp onion powder','1 tsp smoked paprika','Salt & black pepper','1 tbsp olive oil']},
+  {l:'Garlic Cream Sauce',i:['2 tbsp butter (dairy) OR 2 tbsp vegan butter (Miyoko\'s) for DF','4 cloves garlic, minced','1 shallot, finely minced','½ cup GF chicken broth','½ cup heavy cream (dairy) OR ½ cup full-fat coconut cream (DF)','1 tsp fresh lemon juice','1 tsp fresh thyme leaves','Salt & pepper']}
+ ],
+ df:'🌿 DF Swap: Use Miyoko\'s vegan butter and swap heavy cream for ½ cup full-fat canned coconut cream. The sauce remains luxuriously rich and the garlic-thyme flavors shine through beautifully.',
+ steps:[
+  {t:'Mix garlic powder, onion powder, paprika, 1 tsp salt, and ½ tsp pepper. Pat chicken dry; rub spice mix all over both sides.',s:null},
+  {t:'Heat olive oil in a 12-inch cast-iron skillet over medium heat. Place chicken skin-side down. Cook undisturbed until skin is deeply golden and releases easily from the pan.',s:8},
+  {t:'Flip chicken. Reduce heat to medium-low. Continue cooking until chicken is fully cooked through (internal temp 175°F).',s:22},
+  {t:'Transfer chicken to a plate. Pour off all but 1 tbsp fat from the skillet.',s:null},
+  {t:'Melt butter over medium heat. Add shallot and garlic; sauté until softened and fragrant.',s:2},
+  {t:'Add broth; scrape up all browned bits. Pour in cream (or coconut cream), lemon juice, and thyme. Simmer until sauce reduces by about one-third and coats the back of a spoon.',s:4},
+  {t:'Return chicken to the skillet, spooning sauce over the top. Rest 5 minutes before serving with sauce drizzled generously over each piece.',s:5}
+ ]},
+// ── WEEK 2 ──────────────────────────────────────────────────
+{id:5,day:9,week:2,p:'beef',pasta:false,
+ title:'GF Korean-Spiced Ground Beef Stuffed Sweet Potatoes',
+ src:'Allrecipes / Southern Living-inspired',url:'https://www.allrecipes.com',
+ prep:15,cook:50,extra:0,
+ desc:'Fluffy baked sweet potatoes loaded with savory Korean-spiced ground beef and crispy vegetables — a naturally gluten-free dinner that\'s easy to customize.',
+ igs:[
+  {l:'Sweet Potatoes',i:['4 large sweet potatoes, scrubbed and pricked','2 tsp olive oil']},
+  {l:'Korean Beef Filling',i:['1½ lbs 80/20 ground beef','4 cloves garlic, minced','1 tsp fresh ginger, grated','3 scallions (whites and greens separated)','1 tbsp vegetable oil']},
+  {l:'Sauce',i:['¼ cup GF tamari or coconut aminos','2 tbsp honey or brown sugar','1 tsp sesame oil','½ tsp red pepper flakes','2 tsp cornstarch + 2 tbsp cold water']},
+  {l:'Toppings',i:['Sesame seeds','Shredded carrots','Sliced cucumber','Greek yogurt (dairy) OR coconut yogurt (DF)','Fresh cilantro']}
+ ],
+ df:'🌿 DF Swap: Top with Forager Project coconut-based plain yogurt or simply drizzle with a sesame-lime dressing instead of dairy yogurt for a bright, creamy finish.',
+ steps:[
+  {t:'Preheat oven to 400°F. Rub sweet potatoes with olive oil; place on a foil-lined baking sheet. Bake until a knife inserts easily.',s:50},
+  {t:'When potatoes have about 20 minutes left: heat vegetable oil in a skillet over medium-high. Add scallion whites, garlic, and ginger; stir 1 minute.',s:60},
+  {t:'Add ground beef; break up and cook until browned and caramelized.',s:7},
+  {t:'Whisk sauce ingredients (tamari, honey, sesame oil, red pepper flakes) together. Pour over beef.',s:null},
+  {t:'Add cornstarch slurry; stir until sauce thickens and coats the beef.',s:2},
+  {t:'Remove potatoes from oven. Slice each lengthwise down the center and fluff the insides with a fork.',s:null},
+  {t:'Divide beef filling among the potatoes. Top with scallion greens, sesame seeds, shredded carrots, cucumber, and a dollop of yogurt (or DF alternative).',s:null}
+ ]},
+{id:6,day:11,week:2,p:'salmon',pasta:false,
+ title:'Lemon-Herb Sheet Pan Salmon with Baby Potatoes & Green Beans',
+ src:'Taste of Home / Allrecipes',url:'https://www.tasteofhome.com/recipes/sheet-pan-lemon-garlic-chicken/',
+ prep:15,cook:35,extra:0,
+ desc:'Everything on one pan: tender salmon fillets, crispy baby potatoes, and green beans all roasted together with a bright lemon-garlic-herb marinade.',
+ igs:[
+  {l:'Salmon',i:['4 salmon fillets (6 oz each), skin-on','Salt & black pepper']},
+  {l:'Lemon-Herb Marinade',i:['¼ cup olive oil','3 tbsp fresh lemon juice (about 1 large lemon)','Zest of 1 lemon','3 cloves garlic, minced','2 tsp fresh thyme OR 1 tsp dried','1 tsp fresh rosemary OR ½ tsp dried','½ tsp smoked paprika','1 tsp salt, ½ tsp pepper']},
+  {l:'Vegetables',i:['1 lb baby red or Yukon gold potatoes, halved','8 oz fresh green beans, trimmed','1 tbsp olive oil','Lemon slices for garnish','2 tbsp fresh flat-leaf parsley']}
+ ],
+ df:'Naturally dairy-free — the marinade is purely olive oil, lemon, and herbs. Nothing to swap!',
+ steps:[
+  {t:'Preheat oven to 425°F. Whisk together all marinade ingredients in a small bowl.',s:null},
+  {t:'Toss halved potatoes with 1 tbsp olive oil, salt, and pepper on a large rimmed baking sheet. Spread in an even layer. Roast until just starting to crisp.',s:20},
+  {t:'While potatoes roast, combine salmon fillets and green beans in a bowl. Pour ¾ of the marinade over them; toss gently to coat.',s:null},
+  {t:'After potatoes have roasted, push them to the sides of the pan. Place salmon fillets in the center and arrange green beans around them.',s:null},
+  {t:'Drizzle remaining marinade over potatoes. Lay lemon slices on top of salmon.',s:null},
+  {t:'Return pan to oven. Roast until salmon flakes easily and green beans are tender-crisp.',s:14},
+  {t:'Scatter fresh parsley over everything. Serve directly from the sheet pan.',s:null}
+ ]},
+{id:7,day:13,week:2,p:'chicken',pasta:true,
+ title:'Tuscan Chicken GF Pasta (Sun-Dried Tomato & Spinach)',
+ src:'Allrecipes / Healthy Fitness Meals',url:'https://healthyfitnessmeals.com/tuscan-chicken-pasta/',
+ prep:15,cook:30,extra:0,
+ desc:'The viral Tuscan chicken — tender chicken breast in a creamy sun-dried tomato and spinach sauce — tossed with GF penne for a restaurant-level weeknight dinner.',
+ igs:[
+  {l:'Chicken',i:['1½ lbs boneless skinless chicken breast, cut into 1½-inch pieces','1 tsp Italian seasoning','½ tsp garlic powder','Salt & black pepper','2 tbsp olive oil']},
+  {l:'Sauce',i:['5 cloves garlic, minced','⅓ cup sun-dried tomatoes in oil, drained and sliced','1 cup GF chicken broth','¾ cup heavy cream (dairy) OR ¾ cup full-fat coconut cream (DF)','2 cups fresh baby spinach','¼ cup Parmesan, freshly grated (dairy) OR 2 tbsp nutritional yeast (DF)','1 tsp cornstarch + 2 tbsp cold water']},
+  {l:'Pasta',i:['12 oz GF penne (dry — Jovial or Barilla GF)','Reserved pasta water (¼ cup)']}
+ ],
+ df:'🌿 DF Swap: Swap heavy cream for ¾ cup full-fat coconut cream (Thai Kitchen brand) and use 2 tbsp nutritional yeast instead of Parmesan. The sun-dried tomatoes provide bold umami that masks any coconut flavor completely.',
+ steps:[
+  {t:'Cook GF pasta per package. Reserve ¼ cup pasta water before draining. Set aside.',s:null},
+  {t:'Toss chicken with Italian seasoning, garlic powder, salt, and pepper. Heat olive oil in a large deep skillet over medium-high. Cook chicken until golden on all sides and cooked through.',s:7},
+  {t:'Remove chicken. In the same skillet, add garlic and sun-dried tomatoes; cook 1 minute until fragrant.',s:60},
+  {t:'Add broth; scrape up any browned bits. Pour in cream (or coconut cream); bring to a simmer.',s:null},
+  {t:'Whisk cornstarch slurry; stir into the sauce. Simmer until it thickens enough to coat a spoon.',s:3},
+  {t:'Stir in spinach until wilted. Stir in Parmesan or nutritional yeast. Return chicken and its juices to the pan.',s:2},
+  {t:'Add cooked pasta and a splash of pasta water; toss everything together. Taste, season, and serve immediately.',s:null}
+ ]},
+{id:8,day:15,week:2,p:'beef',pasta:true,
+ title:'GF Ground Beef Chili Mac',
+ src:'Allrecipes / Southern Living-inspired',url:'https://www.allrecipes.com',
+ prep:15,cook:35,extra:0,
+ desc:'A hearty one-skillet meal that\'s half chili, half mac — spiced ground beef in a smoky tomato sauce tossed with GF elbow pasta and melted cheddar on top.',
+ igs:[
+  {l:'Ground Beef',i:['1½ lbs 80/20 ground beef','1 medium yellow onion, diced','1 green bell pepper, diced','3 cloves garlic, minced','1 tbsp olive oil']},
+  {l:'Chili Sauce',i:['1 can (15 oz) fire-roasted diced tomatoes','1 can (15 oz) tomato sauce','1 cup GF beef broth','1 tsp chili powder','1 tsp smoked paprika','½ tsp ground cumin','½ tsp garlic powder','Salt & pepper to taste']},
+  {l:'Pasta & Cheese',i:['10 oz GF elbow macaroni or small shells (Jovial or Barilla GF)','1 cup shredded sharp cheddar (dairy) OR 1 cup Violife cheddar shreds (DF)','Fresh cilantro or sliced scallions']}
+ ],
+ df:'🌿 DF Swap: Use Violife or Daiya cheddar-style shreds in place of dairy cheddar. They melt just as well over the hot pasta. The chili sauce itself contains zero dairy.',
+ steps:[
+  {t:'Cook GF pasta in salted water to just under al dente per package. Drain and set aside.',s:null},
+  {t:'Heat olive oil in a large deep skillet over medium-high. Sauté onion and bell pepper until softened.',s:5},
+  {t:'Add garlic; stir 30 seconds. Add ground beef; break it up and cook until well browned.',s:7},
+  {t:'Drain any excess fat. Add chili powder, paprika, cumin, and garlic powder; stir and cook 1 minute to toast the spices.',s:60},
+  {t:'Pour in diced tomatoes, tomato sauce, and broth. Stir to combine. Bring to a simmer and cook until the sauce reduces slightly.',s:8},
+  {t:'Add cooked pasta to the skillet; toss to coat everything in the chili sauce.',s:null},
+  {t:'Sprinkle cheddar (or DF shreds) evenly over the top. Cover with a lid for 2 minutes until the cheese melts. Serve topped with cilantro or scallions.',s:2}
+ ]},
+// ── WEEK 3 ──────────────────────────────────────────────────
+{id:9,day:17,week:3,p:'salmon',pasta:false,
+ title:'Milk Street Sheet Pan Chicken — here: Honey-Soy Glazed Salmon with Roasted Broccoli',
+ src:'Milk Street / Allrecipes adapted',url:'https://www.177milkstreet.com/recipes/honey-miso-salmon-broccolini-traybake',
+ prep:15,cook:25,extra:20,extraLabel:'marinate',
+ desc:'Sweet-savory honey-soy glazed salmon over a bed of caramelized broccoli — Milk Street\'s traybake approach brought together in one pan with a vibrant miso-orange finishing sauce.',
+ igs:[
+  {l:'Salmon & Glaze',i:['4 salmon fillets (6 oz each), skin-on','3 tbsp white miso paste','3 tbsp GF tamari','3 tbsp honey','2 tsp rice vinegar','1 tsp sesame oil','Pinch of cayenne','Zest and juice of 1 orange (for finishing sauce)']},
+  {l:'Broccoli',i:['1½ lbs broccoli, cut into florets','2 tbsp vegetable oil','Salt & black pepper']},
+  {l:'Serve',i:['2 cups dry jasmine rice, cooked','Sesame seeds and sliced scallions for garnish']}
+ ],
+ df:'Naturally dairy-free. The richness comes entirely from the miso glaze and salmon\'s natural omega-3 oils. No substitutions needed.',
+ steps:[
+  {t:'Whisk miso, tamari, honey, rice vinegar, sesame oil, and cayenne together. Remove 2 tbsp and brush onto salmon. Marinate at room temp while oven heats.',s:20},
+  {t:'Stir orange zest and juice into the remaining miso mixture to make the finishing sauce. Set aside.',s:null},
+  {t:'Heat oven to 425°F. Cook jasmine rice per package instructions. Keep warm.',s:18},
+  {t:'Toss broccoli with vegetable oil, salt, and pepper on a large rimmed baking sheet. Roast until beginning to char at the edges.',s:10},
+  {t:'Flip broccoli and push to the edges of the pan. Place salmon skin-side down in the center.',s:null},
+  {t:'Roast until salmon flakes easily at its thickest point and broccoli is tender with charred edges.',s:10},
+  {t:'Transfer to a platter. Drizzle miso-orange finishing sauce over the salmon. Scatter scallions and sesame seeds. Serve with rice.',s:null}
+ ]},
+{id:10,day:19,week:3,p:'chicken',pasta:true,
+ title:'GF Dairy-Free Creamy Lemon Coconut Chicken Pasta',
+ src:'The Roasted Root',url:'https://www.theroastedroot.net/30-minute-gluten-free-dairy-free-creamy-chicken-pasta/',
+ prep:15,cook:30,extra:0,
+ desc:'A creamy, lemony coconut milk sauce coats tender chicken and GF pasta — impossibly rich without a drop of dairy. Bright, herbaceous, and absolutely addictive.',
+ igs:[
+  {l:'Chicken',i:['1½ lbs boneless skinless chicken breasts, cut into 1-inch pieces','1 tsp Italian seasoning','½ tsp garlic powder','Salt & pepper','2 tbsp olive oil']},
+  {l:'Coconut Cream Sauce',i:['5 cloves garlic, minced','1 can (13.5 oz) full-fat coconut milk (Thai Kitchen)','1 cup GF chicken broth','Zest of 2 lemons','3 tbsp fresh lemon juice','1 tsp GF Dijon mustard','1 tsp cornstarch whisked with 1 tbsp water']},
+  {l:'Pasta & Finish',i:['12 oz GF penne or rigatoni (Jovial or Barilla GF)','2 cups fresh baby spinach','¼ cup fresh flat-leaf parsley, chopped','Red pepper flakes (optional)']},
+  {l:'Optional Dairy Add-In',i:['¼ cup freshly grated Parmesan (if not DF) — stir in at the end']}
+ ],
+ df:'Designed dairy-free from the ground up. The full-fat coconut milk makes a sauce that is every bit as creamy as heavy cream. Add Parmesan at the end if dairy is welcomed.',
+ steps:[
+  {t:'Cook GF pasta per package in salted water. Reserve ⅓ cup pasta water before draining.',s:null},
+  {t:'Toss chicken with Italian seasoning, garlic powder, salt, and pepper. Heat olive oil in a large skillet over medium-high; cook chicken until golden and cooked through. Remove to a plate.',s:7},
+  {t:'In the same skillet over medium, cook garlic 1 minute. Add coconut milk, broth, lemon zest, lemon juice, and Dijon mustard. Stir to combine.',s:60},
+  {t:'Add cornstarch slurry. Simmer, stirring, until the sauce thickens enough to coat a spoon.',s:4},
+  {t:'Stir in baby spinach until wilted.',s:90},
+  {t:'Return chicken and its juices to the skillet. Add cooked pasta; toss to coat. Loosen with pasta water as needed.',s:null},
+  {t:'Taste and season. Stir in Parmesan if using. Scatter fresh parsley and red pepper flakes over the top.',s:null}
+ ]},
+{id:11,day:21,week:3,p:'beef',pasta:false,
+ title:'GF Ground Beef Taco Bowls with Avocado Crema',
+ src:'Southern Living / Allrecipes',url:'https://www.allrecipes.com',
+ prep:15,cook:25,extra:0,
+ desc:'Perfectly seasoned taco beef over cilantro-lime rice with all the toppings — pico de gallo, shredded cabbage, and a 3-ingredient avocado crema that\'s both dairy and dairy-free friendly.',
+ igs:[
+  {l:'Taco Beef',i:['1½ lbs 80/20 ground beef','1 tsp chili powder','1 tsp smoked paprika','1 tsp ground cumin','½ tsp garlic powder','½ tsp onion powder','¼ tsp cayenne','Salt & black pepper','1 tbsp olive oil','½ cup GF beef broth or water']},
+  {l:'Cilantro-Lime Rice',i:['2 cups dry long-grain white rice, cooked','Juice of 1 lime','¼ cup fresh cilantro, chopped']},
+  {l:'Avocado Crema',i:['2 ripe avocados','Juice of 1 lime','3 tbsp sour cream (dairy) OR 3 tbsp plain coconut yogurt (DF)','Pinch of salt, pinch of garlic powder']},
+  {l:'Bowl Toppings',i:['1 cup shredded purple cabbage','Fresh pico de gallo or jarred GF salsa','1 lime, cut into wedges','Shredded cheddar (optional, dairy)']}
+ ],
+ df:'🌿 DF Swap: Make the avocado crema with plain coconut yogurt (Forager Project or Kite Hill brands) instead of sour cream — the tang and creaminess is nearly identical.',
+ steps:[
+  {t:'Cook rice per package. Fluff; stir in lime juice and cilantro. Keep warm.',s:18},
+  {t:'Heat olive oil in a skillet over medium-high. Add ground beef; break it up. Cook until starting to brown.',s:5},
+  {t:'Add all spices; stir to coat. Cook until beef is well browned and fragrant.',s:3},
+  {t:'Pour in broth or water; stir and simmer until liquid reduces and beef is saucy but not wet.',s:3},
+  {t:'Make avocado crema: blend or mash avocados, lime juice, sour cream (or coconut yogurt), salt, and garlic powder until smooth. Season to taste.',s:null},
+  {t:'Build bowls: cilantro-lime rice base, taco beef, shredded cabbage, pico de gallo, and a generous scoop of avocado crema.',s:null},
+  {t:'Serve with lime wedges and optional cheese for those who enjoy dairy.',s:null}
+ ]},
+{id:12,day:23,week:3,p:'salmon',pasta:true,
+ title:'Creamy Salmon & GF Pasta with Capers & Lemon',
+ src:'Salt & Lavender / Allrecipes',url:'https://www.saltandlavender.com/salmon-pesto-pasta/',
+ prep:15,cook:25,extra:0,
+ desc:'Flaky pan-seared salmon in a silky cream-and-lemon sauce with capers and fresh dill, tossed with GF pasta — a refined dinner that comes together in 40 minutes.',
+ igs:[
+  {l:'Salmon',i:['4 salmon fillets (6 oz each)','Salt & black pepper','GF all-purpose flour for dredging (2 tbsp)','1 tbsp olive oil + 1 tbsp butter (dairy) OR olive oil only (DF)']},
+  {l:'Cream Sauce',i:['3 cloves garlic, minced','½ cup dry white wine or GF vegetable broth','½ cup GF chicken or vegetable broth','½ cup heavy cream (dairy) OR ½ cup coconut cream (DF)','2 tbsp capers, drained','Juice of ½ lemon','2 tbsp fresh dill, chopped','Salt & pepper']},
+  {l:'Pasta',i:['12 oz GF linguine or spaghetti (Jovial or Barilla GF)','Reserved pasta water (¼ cup)','Extra fresh dill and lemon wedges to serve']}
+ ],
+ df:'🌿 DF Swap: Omit butter; use 2 tbsp olive oil for searing. Replace heavy cream with ½ cup full-fat canned coconut cream — the lemon and capers balance any coconut flavor perfectly.',
+ steps:[
+  {t:'Cook GF pasta in salted water per package. Reserve ¼ cup pasta water before draining.',s:null},
+  {t:'Dredge salmon in GF flour; shake off excess. Heat olive oil (and butter if using) in a large skillet over medium-high.',s:null},
+  {t:'Sear salmon about 3 min per side until golden and just cooked through. Transfer to a plate.',s:6},
+  {t:'In the same pan, cook garlic 30 seconds over medium heat. Add wine (or broth); scrape up browned bits. Simmer 1 minute.',s:60},
+  {t:'Add remaining broth and cream (or coconut cream). Bring to a gentle simmer until slightly thickened.',s:4},
+  {t:'Stir in capers, lemon juice, and dill. Taste and season with salt and pepper.',s:null},
+  {t:'Break salmon into chunks; return to pan. Add drained pasta and a splash of pasta water. Toss gently and serve with extra dill and lemon wedges.',s:null}
+ ]},
+// ── WEEK 4 ──────────────────────────────────────────────────
+{id:13,day:25,week:4,p:'chicken',pasta:true,
+ title:'"Marry Me" Chicken GF Pasta — Coconut Cream Version',
+ src:'What Molly Made / Milk Street-inspired',url:'https://www.maryswholelife.com/easy-marry-me-chicken-pasta/',
+ prep:10,cook:35,extra:0,
+ desc:'The beloved viral pasta — sun-dried tomatoes, garlic cream sauce, chicken and spinach — done completely dairy-free with coconut cream, while remaining just as luscious.',
+ igs:[
+  {l:'Chicken',i:['1½ lbs boneless skinless chicken thighs, halved','1 tsp Italian seasoning','½ tsp smoked paprika','Salt & pepper','2 tbsp olive oil']},
+  {l:'Sauce',i:['5 cloves garlic, minced','½ cup sun-dried tomatoes in oil, drained and sliced','1 tsp Italian seasoning','½ tsp red pepper flakes','1 cup GF chicken broth','¾ cup full-fat coconut cream (DF base) OR heavy cream (dairy)']},
+  {l:'Pasta & Finish',i:['12 oz GF penne, dry (Jovial or Barilla GF — uncooked)','2 cups fresh baby spinach','¼ cup Parmesan (dairy) OR 2 tbsp nutritional yeast (DF)','Fresh basil to garnish']}
+ ],
+ df:'🌿 DF Approach: This recipe was built with coconut cream as the default. The sun-dried tomatoes and garlic create such bold flavors that coconut cream tastes every bit as indulgent as heavy cream. Skip Parmesan; finish with nutritional yeast instead.',
+ steps:[
+  {t:'Season chicken with Italian seasoning, paprika, salt, and pepper. Heat oil in a large deep skillet over medium-high. Sear chicken golden on both sides but not fully cooked. Remove.',s:6},
+  {t:'In the same pan, cook garlic 30 seconds. Add sun-dried tomatoes, Italian seasoning, and red pepper flakes; stir 1 minute.',s:60},
+  {t:'Pour in broth. Add DRY GF pasta — stir everything together and bring to a boil.',s:null},
+  {t:'Nestle chicken on top of the pasta. Cover and simmer over medium heat, stirring every few minutes, until pasta is cooked through.',s:15},
+  {t:'Remove chicken and slice. Stir coconut cream (or heavy cream) and Parmesan (or nutritional yeast) into the pasta.',s:null},
+  {t:'Add spinach; stir until wilted. Return sliced chicken to the pan.',s:90},
+  {t:'Toss gently to combine. Scatter fresh basil over the top and serve immediately.',s:null}
+ ]},
+{id:14,day:27,week:4,p:'beef',pasta:true,
+ title:'GF Beef Bolognese — Classic Red Sauce',
+ src:'Southern Living / Allrecipes',url:'https://www.allrecipes.com',
+ prep:20,cook:60,extra:0,
+ desc:'A rich, slow-simmered Italian meat sauce with ground beef, San Marzano tomatoes, white wine, and warm aromatics — spooned over wide GF noodles.',
+ igs:[
+  {l:'Bolognese',i:['1½ lbs 80/20 ground beef','1 medium yellow onion, finely diced','2 medium carrots, finely diced','2 ribs celery, finely diced','4 cloves garlic, minced','2 tbsp olive oil']},
+  {l:'Liquids & Aromatics',i:['½ cup dry white wine','1 can (28 oz) crushed San Marzano tomatoes','2 tbsp tomato paste','½ cup GF beef broth','1 bay leaf','1 tsp dried oregano','Pinch of nutmeg','Salt & black pepper']},
+  {l:'Dairy/DF Finish',i:['½ cup whole milk OR ½ cup oat milk (DF) — added at the end','12 oz GF tagliatelle or pappardelle (Jovial GF)','Parmesan (dairy) OR Violife vegan Parmesan (DF) for serving','Fresh basil']}
+ ],
+ df:'🌿 DF Swap: Classic Bolognese finishes with a splash of milk to tenderize and add richness. Use ½ cup unsweetened oat milk or omit entirely — the sauce is deeply flavorful without it. Top with Violife vegan Parmesan.',
+ steps:[
+  {t:'Heat olive oil in a Dutch oven over medium-high. Sauté onion, carrots, and celery until softened and golden.',s:10},
+  {t:'Add garlic; stir 1 minute. Push vegetables to the edges. Add ground beef; season and cook, breaking it up, until browned.',s:8},
+  {t:'Pour in wine; stir and scrape up browned bits. Reduce until wine is almost gone.',s:3},
+  {t:'Add crushed tomatoes, tomato paste, broth, bay leaf, oregano, and nutmeg. Bring to a boil.',s:null},
+  {t:'Reduce to the lowest simmer. Cook uncovered, stirring every 10–15 minutes, until the sauce is thick and rich.',s:35},
+  {t:'Stir in milk (or oat milk). Simmer 5 more minutes. Remove bay leaf. Season well.',s:5},
+  {t:'Cook GF pasta per package in salted water. Drain; toss with sauce. Serve with Parmesan (or DF alternative) and fresh basil.',s:null}
+ ]},
+{id:15,day:29,week:4,p:'salmon',pasta:true,
+ title:'Baked Garlic Herb Salmon with GF Lemon Orzo',
+ src:'Allrecipes / Fed & Fit',url:'https://fedandfit.com/salmon-pesto-pasta-recipe/',
+ prep:20,cook:35,extra:0,
+ desc:'Oven-baked salmon fillets resting on a bed of creamy GF orzo with garlic, herbs, and lemon — the ultimate finish to a month of delicious, gluten-free meals.',
+ igs:[
+  {l:'Salmon',i:['4 salmon fillets (6 oz each)','2 tbsp olive oil','4 cloves garlic, minced','2 tbsp fresh dill, chopped','1 tbsp fresh parsley, chopped','Zest and juice of 1 lemon','Salt & black pepper']},
+  {l:'Lemon-Herb GF Orzo',i:['10 oz GF orzo or small shells (Banza or Tolerant brand)','3 tbsp butter (dairy) OR 3 tbsp Miyoko\'s vegan butter (DF)','3 cloves garlic, minced','1 cup GF chicken or vegetable broth','¾ cup heavy cream (dairy) OR ¾ cup coconut cream (DF)','Juice and zest of 1 large lemon','2 cups fresh baby spinach','¼ cup Parmesan (dairy) OR 2 tbsp nutritional yeast (DF)','Salt & pepper']}
+ ],
+ df:'🌿 DF Swap: Use Miyoko\'s vegan butter, swap heavy cream for ¾ cup full-fat coconut cream, and use nutritional yeast in place of Parmesan. The lemon juice and fresh dill make any coconut notes completely undetectable.',
+ steps:[
+  {t:'Preheat oven to 400°F. Mix olive oil, garlic, dill, parsley, lemon zest, and lemon juice in a small bowl.',s:null},
+  {t:'Place salmon on a parchment-lined baking sheet. Spoon herb mixture evenly over each fillet. Season with salt and pepper. Bake until salmon flakes easily.',s:15},
+  {t:'While salmon bakes: melt butter in a deep skillet over medium. Add garlic; cook 1 minute.',s:60},
+  {t:'Add dry GF orzo; stir and toast 2 minutes in the butter until lightly golden.',s:2},
+  {t:'Add broth and cream (or coconut cream). Bring to a boil, then reduce to medium. Cook, stirring frequently, until orzo is tender and most liquid is absorbed.',s:12},
+  {t:'Stir in spinach until wilted. Add lemon zest, lemon juice, and Parmesan or nutritional yeast. Season generously with salt and pepper.',s:2},
+  {t:'Serve orzo in shallow bowls. Place a salmon fillet on top. Scatter extra fresh dill and a squeeze of lemon over each bowl.',s:null}
+ ]}
+];
+
+/* ════════════════════════════════════════════════════════════
+   SHOPPING LIST DATA
+════════════════════════════════════════════════════════════ */
+const S=[
+{label:'Week 1',sub:'Days 1, 3, 5, 7',meals:'Pan-Roasted Chicken · Beef & Mushroom Pasta · Salmon Pesto Pasta · Crispy Chicken Thighs',
+ cats:[
+  {n:'Fresh Produce',t:'produce',i:['1 medium onion (Chicken Veg)','1 red bell pepper','1 pint cherry tomatoes','1 medium zucchini','2 tbsp capers + caper brine','1 bunch asparagus','Fresh thyme (small bunch)','4 shallots (2 for chicken sauce, 2 for crispy thighs)','3 heads garlic','2 lemons','Fresh parsley (large bunch)','2 cups fresh baby spinach (Salmon Pasta)','½ cup frozen peas']},
+  {n:'Proteins',t:'protein',i:['4 bone-in skin-on chicken breasts OR 6 thighs (Pan-Roasted)','1½ lbs 80/20 ground beef (Beef Pasta)','4 salmon fillets 6 oz each (Salmon Pesto Pasta)','6–8 bone-in skin-on chicken thighs (Crispy Skillet)']},
+  {n:'GF Pasta & Grains',t:'grains',i:['12 oz GF rotini or penne — Jovial brown rice (Beef Pasta)','12 oz GF fusilli or penne — Jovial or Barilla GF (Salmon Pesto)']},
+  {n:'Dairy / DF Options',t:'dairy',i:['½ cup sour cream OR full-fat canned coconut cream (Beef Pasta)','¼ cup heavy cream OR coconut cream (Salmon Pesto)','2–3 tbsp butter OR Miyoko\'s vegan butter (Crispy Chicken Sauce)','½ cup heavy cream OR coconut cream (Crispy Chicken Sauce)','Parmesan wedge OR Violife vegan Parmesan (Salmon Pesto finish)']},
+  {n:'Pantry & Sauces',t:'pantry',i:['Olive oil (large bottle)','GF all-purpose flour — Bob\'s Red Mill 1-to-1','GF beef broth (14 oz can)','GF chicken broth (two 14 oz cans)','GF Worcestershire sauce (Lea & Perrins is GF)','GF Dijon mustard','Dry white wine (½ bottle — or use extra GF broth)','Store-bought GF pesto (or homemade)','Heavy cream or coconut cream (Salmon Pesto)','Sun-dried tomatoes in oil (jar)','Cornstarch','Herbes de Provence']},
+  {n:'Spices',t:'spices',i:['Smoked paprika','Garlic powder','Onion powder','Italian seasoning','Red pepper flakes','Salt & pepper']},
+  {n:'DF Swap Products (Week 1)',t:'dfswaps',i:['Full-fat canned coconut cream — Thai Kitchen or Arroy-D (2 cans)','Miyoko\'s vegan butter sticks','Violife vegan Parmesan block or grated','Trader Joe\'s Vegan Pesto or Seggiano DF pesto']}
+ ]},
+{label:'Week 2',sub:'Days 9, 11, 13, 15',meals:'Korean Beef Stuffed Sweet Potatoes · Lemon Herb Salmon · Tuscan Chicken Pasta · Beef Chili Mac',
+ cats:[
+  {n:'Fresh Produce',t:'produce',i:['4 large sweet potatoes (Stuffed)','3 scallions (Stuffed Potatoes)','Shredded carrots (Stuffed Potatoes)','1 English cucumber (Stuffed Potatoes)','Fresh cilantro (large bunch)','1 lb baby red potatoes (Salmon Sheet Pan)','8 oz fresh green beans (Salmon Sheet Pan)','2 lemons + zest','Fresh thyme and rosemary (sheet pan)','2 cups fresh baby spinach (Tuscan Pasta)','1 medium yellow onion (Chili Mac)','1 green bell pepper (Chili Mac)','4 heads garlic (4 recipes)','Fresh parsley']},
+  {n:'Proteins',t:'protein',i:['1½ lbs 80/20 ground beef (Korean Stuffed Potatoes)','4 salmon fillets 6 oz each (Lemon Herb Sheet Pan)','1½ lbs boneless skinless chicken breast (Tuscan Pasta)','1½ lbs 80/20 ground beef (Chili Mac)']},
+  {n:'GF Pasta & Grains',t:'grains',i:['12 oz GF penne — Jovial or Barilla GF (Tuscan Pasta)','10 oz GF elbow macaroni or small shells — Jovial or Barilla GF (Chili Mac)']},
+  {n:'Dairy / DF Options',t:'dairy',i:['¾ cup heavy cream OR coconut cream (Tuscan Pasta)','Parmesan OR nutritional yeast (Tuscan Pasta)','Greek yogurt OR Forager coconut yogurt (Sweet Potatoes topping)','1 cup shredded cheddar OR Violife cheddar shreds (Chili Mac)']},
+  {n:'Pantry & Cans',t:'pantry',i:['GF tamari — San-J brand (Sweet Potatoes)','Honey (Sweet Potatoes)','Sesame oil and sesame seeds (Sweet Potatoes)','GF chicken broth (two 14 oz cans)','GF beef broth (14 oz can)','1 can diced fire-roasted tomatoes (Chili Mac)','1 can (15 oz) tomato sauce (Chili Mac)','Sun-dried tomatoes in oil (Tuscan Pasta)','GF Dijon mustard','Cornstarch','Olive oil']},
+  {n:'DF Swap Products (Week 2)',t:'dfswaps',i:['Full-fat canned coconut cream (Tuscan Pasta cream swap)','Nutritional yeast (Parmesan replacement)','Forager Project or Kite Hill coconut yogurt (Sweet Potatoes)','Violife cheddar shreds (Chili Mac topping)']}
+ ]},
+{label:'Week 3',sub:'Days 17, 19, 21, 23',meals:'Honey-Soy Glazed Salmon · Lemon Coconut Chicken Pasta · Ground Beef Taco Bowls · Creamy Salmon & Capers Pasta',
+ cats:[
+  {n:'Fresh Produce',t:'produce',i:['1½ lbs broccoli (Salmon Sheet Pan)','1 orange (Salmon glaze)','2 scallions (Salmon garnish)','2 cups baby spinach (Lemon Chicken Pasta)','2 lemons (Chicken Pasta + Salmon Capers Pasta)','2 avocados (Taco Bowls)','1 lime (Taco Bowls + Crema)','Fresh cilantro (large bunch — Taco Bowls)','1 cup purple cabbage, shredded (Taco Bowls)','Fresh pico de gallo or salsa (Taco Bowls)','Fresh dill (1 bunch — Capers Pasta)','4 heads garlic']},
+  {n:'Proteins',t:'protein',i:['4 salmon fillets 6 oz each (Honey-Soy Glazed)','1½ lbs boneless skinless chicken breast (Lemon Coconut Pasta)','1½ lbs 80/20 ground beef (Taco Bowls)','4 salmon fillets 6 oz each (Creamy Capers Pasta)']},
+  {n:'GF Pasta & Grains',t:'grains',i:['12 oz GF penne or rigatoni — Jovial or Barilla GF (Chicken Pasta)','2 cups dry long-grain white rice (Taco Bowls)','12 oz GF linguine or spaghetti — Jovial or Barilla GF (Capers Pasta)','2 cups dry jasmine rice (Salmon Sheet Pan)']},
+  {n:'Dairy / DF Options',t:'dairy',i:['1 can full-fat coconut milk — 13.5 oz Thai Kitchen (Lemon Chicken Pasta)','½ cup full-fat coconut cream (Capers Pasta cream swap)','3 tbsp sour cream OR coconut yogurt (Taco Bowl Crema)','1 tbsp butter OR olive oil for Capers Pasta','Shredded cheddar — optional dairy (Taco Bowls)']},
+  {n:'Pantry & Cans',t:'pantry',i:['White miso paste (small container — Salmon Glaze)','GF tamari (Salmon Glaze)','Honey (Salmon Glaze)','Rice vinegar','Sesame oil and sesame seeds','GF chicken broth (14 oz can — Lemon Chicken Pasta)','Dry white wine or GF broth (Capers Pasta)','Capers — 2 tbsp jar (Capers Pasta)','Chili powder, cumin, smoked paprika (Taco Bowls)','GF Dijon mustard','Olive oil']},
+  {n:'DF Swap Products (Week 3)',t:'dfswaps',i:['Full-fat canned coconut milk — Thai Kitchen (Lemon Chicken Pasta sauce)','Full-fat coconut cream — 1 can (Capers Pasta swap)','Forager Project plain coconut yogurt (Taco Bowl crema)']}
+ ]},
+{label:'Week 4',sub:'Days 25, 27, 29',meals:'Marry Me Chicken GF Pasta · GF Beef Bolognese · Baked Salmon with GF Lemon Orzo',
+ cats:[
+  {n:'Fresh Produce',t:'produce',i:['2 cups fresh baby spinach (Marry Me Pasta)','Fresh basil (large bunch — Marry Me + Bolognese)','1 medium yellow onion (Bolognese)','2 medium carrots (Bolognese soffritto)','2 ribs celery (Bolognese soffritto)','4 heads garlic','2 lemons (Orzo + Salmon)','2 cups fresh baby spinach (Salmon Orzo)','Fresh dill (1 bunch — Baked Salmon)','Fresh parsley (Bolognese)']},
+  {n:'Proteins',t:'protein',i:['1½ lbs boneless skinless chicken thighs (Marry Me Pasta)','1½ lbs 80/20 ground beef (Bolognese)','4 salmon fillets 6 oz each (Baked Salmon with Orzo)']},
+  {n:'GF Pasta & Grains',t:'grains',i:['12 oz GF penne — Jovial or Barilla GF (Marry Me Pasta — dry, uncooked)','12 oz GF tagliatelle or pappardelle — Jovial GF (Bolognese)','10 oz GF orzo or small shells — Banza or Tolerant brand (Salmon Orzo)']},
+  {n:'Dairy / DF Options',t:'dairy',i:['¾ cup full-fat coconut cream OR heavy cream (Marry Me Pasta)','Parmesan OR Violife vegan Parmesan OR nutritional yeast (Marry Me + Bolognese + Orzo)','3 tbsp butter OR Miyoko\'s vegan butter (Salmon Orzo)','¾ cup heavy cream OR coconut cream (Salmon Orzo)','½ cup whole milk OR oat milk (Bolognese finish)']},
+  {n:'Pantry & Cans',t:'pantry',i:['Sun-dried tomatoes in oil — 1 jar (Marry Me Pasta)','GF chicken broth (two 14 oz cans)','GF beef broth (14 oz can — Bolognese)','1 can 28 oz crushed San Marzano tomatoes (Bolognese)','Tomato paste (Bolognese)','Dry white wine ½ bottle (Bolognese)','Bay leaf','Dried oregano','Ground nutmeg (Bolognese)','Red pepper flakes','Italian seasoning','Cornstarch','Olive oil']},
+  {n:'DF Swap Products (Week 4)',t:'dfswaps',i:['Full-fat coconut cream — 2 cans (Marry Me + Orzo swaps)','Miyoko\'s vegan butter (Salmon Orzo)','Nutritional yeast — large container (Parmesan replacement in all 3 meals)','Violife vegan Parmesan block (Bolognese topping)','Unsweetened oat milk — 1 carton (Bolognese finish swap)']}
+ ]}
+];
+
+/* ════════════════════════════════════════════════════════════
+   CALENDAR — June 2026 (June 1 = Monday = DOW 1)
+════════════════════════════════════════════════════════════ */
+const COOK={1:1,3:2,5:3,7:4,9:5,11:6,13:7,15:8,17:9,19:10,21:11,23:12,25:13,27:14,29:15};
+const DAYS=30, START=1; // June starts on Monday
+
+/* ─── TIMERS ───────────────────────────────────────────────── */
+const TM={};
+function startT(btn,min){
+  const id=btn.dataset.tid;
+  if(TM[id])clearInterval(TM[id]);
+  let rem=min*60;
+  btn.className='tbtn running';
+  btn.querySelector('.tdisp').textContent=ft(rem);
+  TM[id]=setInterval(()=>{
+    rem--;
+    const d=btn.querySelector('.tdisp');
+    if(d)d.textContent=ft(rem);
+    if(rem<=0){clearInterval(TM[id]);btn.className='tbtn done';btn.innerHTML='<span style="font-weight:800;font-size:.82rem">✓ Done!</span>';}
+  },1000);
+}
+function ft(s){return`${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;}
+
+/* ─── RENDER RECIPES ───────────────────────────────────────── */
+function renderR(){
+  const grid=document.getElementById('rgrid');
+  const nav=document.getElementById('nav-links');
+  let nh='';
+  grid.innerHTML=R.map(r=>{
+    const tot=r.prep+r.cook+(r.extra||0);
+    const ex=r.extra?`<div class="tb">⏱ ${r.extraLabel||'extra'} <span>${r.extra}m</span></div>`:'';
+    const titleShort=r.title.replace(/Milk Street |GF |"/g,'').split(' ').slice(0,4).join(' ');
+    nh+=`<a class="nl ${r.p}" href="#r${r.id}" aria-label="${r.title}">${r.id}. ${titleShort}…</a>`;
+    const igs=r.igs.map(g=>`<div class="iglabel">${g.l}</div>`+g.i.map(x=>`<div class="igitem">${x}</div>`).join('')).join('');
+    const steps=r.steps.map((s,i)=>{
+      let btn='';
+      if(s.s){const tid=`t${r.id}_${i}`;btn=`<button class="tbtn idle" data-tid="${tid}" onclick="startT(this,${s.s})">⏱ Start <span class="tdisp">${ft(s.s*60)}</span></button>`;}
+      return`<div class="step"><div class="snum">${i+1}</div><div class="scontent"><div class="stext">${s.t}</div>${btn}</div></div>`;
+    }).join('');
+    const ptag=r.pasta?'<span class="tag pasta">🍝 GF Pasta</span>':'';
+    return`<article class="rcard" id="r${r.id}" data-p="${r.p}" data-tot="${tot}">
+      <div class="rhead">
+        <div class="rtitle-area">
+          <div class="rdaylabel">Day ${r.day} · Week ${r.week}</div>
+          <h3>${r.title}</h3>
+          <p class="rdesc">${r.desc}</p>
+          <div class="rtags">
+            <span class="tag ${r.p}">${r.p==='chicken'?'🍗 Chicken':r.p==='beef'?'🥩 Ground Beef':'🐟 Salmon'}</span>
+            ${ptag}<span class="tag gf">✓ GF</span><span class="tag df">◎ DF Option</span>
+          </div>
+        </div>
+        <div class="rmeta">
+          <a class="srcbtn" href="${r.url}" target="_blank" rel="noopener">🔗 ${r.src}</a>
+          <div class="tbadges">
+            <div class="tb">🔪 <span>${r.prep}m</span></div>
+            <div class="tb">🔥 <span>${r.cook}m</span></div>
+            ${ex}
+            <div class="tb" style="font-weight:800;color:var(--text)">⏲ <span>${tot}m</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="rbody">
+        <div class="ingcol"><h4>Ingredients · Serves 4–5</h4>${igs}<div class="dfbox"><strong>◎ Dairy-Free Option</strong>${r.df}</div></div>
+        <div class="stepscol"><h4>Preparation Steps</h4>${steps}</div>
+      </div>
+    </article>`;
+  }).join('');
+  nav.innerHTML=nh;
+}
+
+/* ─── RENDER CALENDAR ──────────────────────────────────────── */
+function renderC(){
+  const grid=document.getElementById('cal-grid');
+  const DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  let h=DOW.map(d=>`<div class="cal-hd">${d}</div>`).join('');
+  for(let i=0;i<START;i++)h+=`<div class="cday empty"></div>`;
+  for(let d=1;d<=DAYS;d++){
+    if(COOK[d]){
+      const r=R[COOK[d]-1];
+      const lbl=r.title.replace('GF ','').replace('Milk Street ','').replace('"','').split(' ').slice(0,3).join(' ');
+      h+=`<div class="cday cook ${r.p}" tabindex="0" role="button" aria-label="Day ${d}: ${r.title}"
+        onclick="document.getElementById('r${r.id}').scrollIntoView({behavior:'smooth'})"
+        onkeydown="if(event.key==='Enter')document.getElementById('r${r.id}').scrollIntoView({behavior:'smooth'})">
+        <div class="cn">${d}</div><div class="cl">${lbl}</div></div>`;
+    }else{
+      h+=`<div class="cday rest"><div class="cn">${d}</div><div class="cl">rest</div></div>`;
+    }
+  }
+  grid.innerHTML=h;
+}
+
+/* ─── FILTER ───────────────────────────────────────────────── */
+function fp(type,btn){
+  document.querySelectorAll('.fpill').forEach(b=>{b.style.opacity='.5';b.setAttribute('aria-pressed','false');});
+  btn.style.opacity='1';btn.setAttribute('aria-pressed','true');
+  document.querySelectorAll('.rcard').forEach(c=>{
+    if(type==='all')c.classList.remove('hidden');
+    else c.classList.toggle('hidden',c.dataset.p!==type);
+  });
+}
+
+/* ─── SHOPPING ─────────────────────────────────────────────── */
+let CK={};
+try{CK=JSON.parse(localStorage.getItem('kristen_gf')||'{}');}catch(e){}
+function save(){try{localStorage.setItem('kristen_gf',JSON.stringify(CK));}catch(e){}}
+function clearAll(){CK={};save();document.querySelectorAll('.sitem input').forEach(c=>c.checked=false);}
+let ctr=0;
+
+function renderS(){
+  const tabs=document.getElementById('stabs');
+  const panels=document.getElementById('spanels');
+  tabs.innerHTML=S.map((w,i)=>`<button class="stab ${i===0?'active':''}" onclick="swTab(${i})" aria-selected="${i===0}">${w.label}<br><small style="font-size:.62rem;font-weight:400">${w.sub}</small></button>`).join('');
+  panels.innerHTML=S.map((w,wi)=>{
+    const cats=w.cats.map(cat=>{
+      const items=cat.i.map(item=>{
+        const id=`c_${wi}_${ctr++}`;
+        return`<div class="sitem"><input type="checkbox" id="${id}" ${CK[id]?'checked':''} onchange="CK['${id}']=this.checked;save()"><label for="${id}">${item}</label></div>`;
+      }).join('');
+      return`<div class="scat"><div class="scat-hd ${cat.t}">${cat.n}</div><div class="sitems">${items}</div></div>`;
+    }).join('');
+    return`<div class="spanel ${wi===0?'active':''}" data-w="${wi}"><p class="smeal">${w.meals}</p><div class="sgrid">${cats}</div></div>`;
+  }).join('');
+}
+function swTab(i){
+  document.querySelectorAll('.stab').forEach((t,j)=>{t.classList.toggle('active',j===i);t.setAttribute('aria-selected',j===i);});
+  document.querySelectorAll('.spanel').forEach((p,j)=>p.classList.toggle('active',j===i));
+}
+
+/* ─── BACK TOP / INIT ──────────────────────────────────────── */
+window.addEventListener('scroll',()=>document.getElementById('btop').classList.toggle('show',scrollY>400),{passive:true});
+renderR();renderC();renderS();
+document.querySelectorAll('.fpill').forEach(b=>{b.style.opacity='1';b.setAttribute('aria-pressed','false');});
+document.querySelector('.fpill.all').setAttribute('aria-pressed','true');
+</script>
+</body>
+</html>

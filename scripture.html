@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Critical Scripture to Memorize</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Variables ──────────────────────────────────── */
+    :root {
+      --bg:          #0C1520;
+      --bg-card:     #13202F;
+      --bg-card2:    #162636;
+      --gold:        #C9952B;
+      --gold-light:  #E4B95A;
+      --text:        #EAE0CE;
+      --text-muted:  #9BA8B5;
+      --border:      rgba(201, 149, 43, 0.25);
+      --glow:        rgba(201, 149, 43, 0.08);
+      --shadow:      0 4px 32px rgba(0,0,0,0.5);
+    }
+
+    /* ── Reset ──────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 18px; -webkit-text-size-adjust: 100%; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Lora', Georgia, serif;
+      min-height: 100dvh;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    /* ── Background texture ─────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 120% 60% at 50% 0%,   rgba(201,149,43,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 80%  80% at 80% 100%, rgba(30,60,100,0.3)   0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Layout wrapper ─────────────────────────────── */
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 0 0 3rem;
+    }
+
+    /* ── Header ─────────────────────────────────────── */
+    header {
+      text-align: center;
+      padding: 3rem 1.5rem 2rem;
+    }
+
+    .header-rule {
+      width: 48px;
+      height: 2px;
+      background: var(--gold);
+      margin: 0 auto 1.4rem;
+      border-radius: 2px;
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 700;
+      font-size: 1.65rem;
+      color: var(--text);
+      line-height: 1.25;
+      letter-spacing: 0.01em;
+    }
+
+    header h1 span {
+      color: var(--gold-light);
+    }
+
+    .header-sub {
+      margin-top: 0.75rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-family: 'Lora', serif;
+      font-style: italic;
+    }
+
+    .header-rule-bottom {
+      width: 72px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 1.4rem auto 0;
+    }
+
+    /* ── Verse cards ─────────────────────────────────── */
+    .verses {
+      padding: 0 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .verse-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.4rem 1.35rem 1.35rem;
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.04);
+      opacity: 0;
+      transform: translateY(18px);
+      animation: fadeUp 0.55s ease forwards;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Alternating subtle background tint */
+    .verse-card:nth-child(even) {
+      background: var(--bg-card2);
+    }
+
+    /* Gold left-accent bar */
+    .verse-card::before {
+      content: '';
+      position: absolute;
+      top: 18px;
+      left: 0;
+      width: 3px;
+      height: calc(100% - 36px);
+      background: linear-gradient(180deg, var(--gold), transparent);
+      border-radius: 0 2px 2px 0;
+    }
+
+    /* Corner glow */
+    .verse-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 120px; height: 120px;
+      background: radial-gradient(circle at 0 0, var(--glow), transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Staggered animation delays */
+    .verse-card:nth-child(1) { animation-delay: 0.10s; }
+    .verse-card:nth-child(2) { animation-delay: 0.20s; }
+    .verse-card:nth-child(3) { animation-delay: 0.30s; }
+    .verse-card:nth-child(4) { animation-delay: 0.38s; }
+    .verse-card:nth-child(5) { animation-delay: 0.46s; }
+    .verse-card:nth-child(6) { animation-delay: 0.54s; }
+    .verse-card:nth-child(7) { animation-delay: 0.62s; }
+
+    .verse-ref {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--gold-light);
+      margin-bottom: 0.65rem;
+      letter-spacing: 0.02em;
+    }
+
+    .verse-dash {
+      color: var(--gold);
+      margin: 0 0.2em;
+    }
+
+    .verse-text {
+      font-family: 'Lora', Georgia, serif;
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--text);
+    }
+
+    /* ── Footer ──────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 2.5rem 1.5rem 1rem;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-style: italic;
+    }
+
+    /* ── Animation ───────────────────────────────────── */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Tap highlight ───────────────────────────────── */
+    .verse-card:active {
+      transform: scale(0.985);
+      transition: transform 0.12s ease;
+    }
+
+    /* ── Safe area (notch/home bar) ──────────────────── */
+    @supports (padding: env(safe-area-inset-bottom)) {
+      .page { padding-bottom: calc(3rem + env(safe-area-inset-bottom)); }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="header-rule"></div>
+      <h1>Critical Scripture<br /><span>to Memorize</span></h1>
+      <p class="header-sub">Share Jesus Without Fear</p>
+      <div class="header-rule-bottom"></div>
+    </header>
+
+    <main class="verses">
+
+      <article class="verse-card">
+        <div class="verse-ref">Romans 3:23</div>
+        <p class="verse-text">
+          For all have sinned and fall short of the glory of God,
+        </p>
+      </article>
+
+      <article class="verse-card">
+        <div class="verse-ref">Romans 6:23</div>
+        <p class="verse-text">
+          For the wages of sin is death, but the gift of God is eternal life
+          in Christ Jesus our Lord.
+        </p>
+      </article>
+
+      <article class="verse-card">
+        <div class="verse-ref">John 3:3</div>
+        <p class="verse-text">
+          Jesus replied, &#8220;Very truly I tell you, no one can see the
+          kingdom of God unless they are born again.&#8221;
+        </p>
+      </article>
+
+      <article class="verse-card">
+        <div class="verse-ref">John 14:6</div>
+        <p class="verse-text">
+          Jesus answered, &#8220;I am the way and the truth and the life.
+          No one comes to the Father except through me.&#8221;
+        </p>
+      </article>
+
+      <article class="verse-card">
+        <div class="verse-ref">Romans 10:9&#8211;10</div>
+        <p class="verse-text">
+          If you declare with your mouth, &#8220;Jesus is Lord,&#8221; and
+          believe in your heart that God raised him from the dead, you will
+          be saved. For it is with your heart that you believe and are
+          justified, and it is with your mouth that you profess your faith
+          and are saved.
+        </p>
+      </article>
+
+      <article class="verse-card">
+        <div class="verse-ref">2 Corinthians 5:15</div>
+        <p class="verse-text">
+          And he died for all, that those who live should no longer live for
+          themselves but for Him who died for them and was raised again.
+        </p>
+      </article>
+
+      <article class="verse-card">
+        <div class="verse-ref">Revelation 3:20</div>
+        <p class="verse-text">
+          Here I am! I stand at the door and knock. If anyone hears my voice
+          and opens the door, I will come in and eat with that person, and
+          they with me.
+        </p>
+      </article>
+
+    </main>
+
+    <footer>
+      Based on &ldquo;Share Jesus Without Fear&rdquo; &mdash; William Fay
+    </footer>
+  </div>
+</body>
+</html>

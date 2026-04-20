@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Josh's Experiments and Projects</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Tokens ─────────────────────────────── */
+    :root {
+      --bg:         #0B1520;
+      --bg2:        #111E2E;
+      --bg3:        #162030;
+      --gold:       #C9952B;
+      --gold-lt:    #E4B95A;
+      --gold-dim:   rgba(201,149,43,0.18);
+      --text:       #EAE0CE;
+      --text-muted: #8B9BAD;
+      --border:     rgba(201,149,43,0.20);
+      --border-hov: rgba(201,149,43,0.55);
+      --card-glow:  rgba(201,149,43,0.06);
+      --pill-faith: #1E3A5F;
+      --pill-faith-text: #7BBCF0;
+      --pill-food:  #1F3B25;
+      --pill-food-text: #6ECF82;
+      --pill-learn: #3B2060;
+      --pill-learn-text: #BE90F5;
+      --shadow:     0 6px 36px rgba(0,0,0,0.55);
+    }
+
+    /* ── Reset ──────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-text-size-adjust: 100%; font-size: 17px; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', system-ui, sans-serif;
+      min-height: 100dvh;
+      overflow-x: hidden;
+    }
+
+    /* ── Ambient background ─────────────────── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 140% 55% at 50% 0%,   rgba(201,149,43,0.06) 0%, transparent 65%),
+        radial-gradient(ellipse 70%  70% at 85% 100%, rgba(20,50,100,0.35)  0%, transparent 60%),
+        radial-gradient(ellipse 60%  60% at 10% 60%,  rgba(10,30,70,0.25)   0%, transparent 55%);
+      pointer-events: none;
+    }
+
+    /* ── Layout ─────────────────────────────── */
+    .page {
+      position: relative; z-index: 1;
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 0 1rem 4rem;
+    }
+
+    /* ── Header ─────────────────────────────── */
+    header {
+      text-align: center;
+      padding: 3.2rem 1rem 2.4rem;
+    }
+
+    .logo-mark {
+      width: 44px; height: 44px;
+      margin: 0 auto 1.3rem;
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.15rem;
+      color: var(--gold-lt);
+      box-shadow: 0 0 22px rgba(201,149,43,0.22);
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.9rem;
+      font-weight: 700;
+      line-height: 1.18;
+      letter-spacing: 0.01em;
+    }
+
+    header h1 em {
+      font-style: italic;
+      color: var(--gold-lt);
+    }
+
+    .header-rule {
+      width: 56px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 1.2rem auto 0.9rem;
+    }
+
+    .header-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-style: italic;
+      font-family: 'Lora', serif;
+    }
+
+    /* ── Section headers ────────────────────── */
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin: 2rem 0 0.75rem;
+      padding: 0 0.1rem;
+    }
+
+    .section-label-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--border), transparent);
+    }
+
+    .section-label span {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    /* ── Cards ──────────────────────────────── */
+    .cards {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .card {
+      position: relative;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.25rem 1.3rem 1.2rem;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      overflow: hidden;
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.04);
+      transition: border-color 0.22s ease, transform 0.18s ease, box-shadow 0.22s ease;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: riseIn 0.5s ease forwards;
+    }
+
+    .card:nth-child(1) { animation-delay: 0.08s; }
+    .card:nth-child(2) { animation-delay: 0.16s; }
+    .card:nth-child(3) { animation-delay: 0.24s; }
+    .card:nth-child(4) { animation-delay: 0.30s; }
+    .card:nth-child(5) { animation-delay: 0.36s; }
+    .card:nth-child(6) { animation-delay: 0.42s; }
+    .card:nth-child(7) { animation-delay: 0.48s; }
+    .card:nth-child(8) { animation-delay: 0.54s; }
+
+    /* Gold left accent */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 16px; left: 0;
+      width: 3px;
+      height: calc(100% - 32px);
+      border-radius: 0 2px 2px 0;
+      transition: opacity 0.22s;
+    }
+
+    .card.faith::before  { background: linear-gradient(180deg, #5B9FD8, transparent); }
+    .card.food::before   { background: linear-gradient(180deg, #5DC470, transparent); }
+    .card.learn::before  { background: linear-gradient(180deg, #A978F0, transparent); }
+
+    /* Corner glow */
+    .card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 130px; height: 130px;
+      background: radial-gradient(circle at 0 0, var(--card-glow), transparent 72%);
+      pointer-events: none;
+    }
+
+    .card:hover, .card:focus-visible {
+      border-color: var(--border-hov);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow), 0 0 0 1px rgba(201,149,43,0.12), inset 0 1px 0 rgba(255,255,255,0.06);
+      outline: none;
+    }
+
+    .card:active {
+      transform: scale(0.978) translateY(0);
+      transition: transform 0.1s ease;
+    }
+
+    /* Card internals */
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      line-height: 1.25;
+      color: var(--text);
+      letter-spacing: 0.01em;
+    }
+
+    .card-arrow {
+      font-size: 0.85rem;
+      color: var(--gold);
+      opacity: 0.6;
+      transition: opacity 0.2s, transform 0.2s;
+      flex-shrink: 0;
+      margin-top: 0.15rem;
+    }
+
+    .card:hover .card-arrow {
+      opacity: 1;
+      transform: translateX(3px);
+    }
+
+    .card-desc {
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin-bottom: 0.8rem;
+    }
+
+    .pill {
+      display: inline-block;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.28em 0.7em;
+      border-radius: 20px;
+    }
+
+    .pill.faith  { background: var(--pill-faith);  color: var(--pill-faith-text); }
+    .pill.food   { background: var(--pill-food);   color: var(--pill-food-text); }
+    .pill.learn  { background: var(--pill-learn);  color: var(--pill-learn-text); }
+
+    /* ── Footer ─────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 2.5rem 1rem 0.5rem;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-style: italic;
+      font-family: 'Lora', serif;
+    }
+
+    /* ── Animation ───────────────────────────── */
+    @keyframes riseIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Safe area ───────────────────────────── */
+    @supports (padding: env(safe-area-inset-bottom)) {
+      .page { padding-bottom: calc(4rem + env(safe-area-inset-bottom)); }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <header>
+      <div class="logo-mark">✦</div>
+      <h1>Josh's <em>Experiments</em><br>& Projects</h1>
+      <div class="header-rule"></div>
+      <p class="header-sub">Cloudflare Pages</p>
+    </header>
+
+    <!-- ── Faith & Bible ──────────────────── -->
+    <div class="section-label">
+      <span>Faith &amp; Bible</span>
+      <div class="section-label-line"></div>
+    </div>
+
+    <div class="cards">
+
+      <a class="card faith" href="scripture.html">
+        <div class="card-top">
+          <div class="card-title">Critical Scripture to Memorize</div>
+          <div class="card-arrow">→</div>
+        </div>
+        <p class="card-desc">Seven key verses for sharing the gospel, based on William Fay's <em>Share Jesus Without Fear</em>. Optimized for smartphone reading.</p>
+        <span class="pill faith">Bible · Reference</span>
+      </a>
+
+      <a class="card faith" href="siab-memory.html">
+        <div class="card-top">
+          <div class="card-title">SIAB Bible Study — Memory Verse App</div>
+          <div class="card-arrow">→</div>
+        </div>
+        <p class="card-desc">Interactive memory verse tool for the 2026 SIAB Study. Fill-in-the-blank practice, ElevenLabs read-aloud, and 12-session progress tracking.</p>
+        <span class="pill faith">Bible · Interactive</span>
+      </a>
+
+    </div>
+
+    <!-- ── Learning ────────────────────────── -->
+    <div class="section-label">
+      <span>Learning</span>
+      <div class="section-label-line"></div>
+    </div>
+
+    <div class="cards">
+
+      <a class="card learn" href="spanish-lessons.html">
+        <div class="card-top">
+          <div class="card-title">Basic Spanish — 5 Lessons</div>
+          <div class="card-arrow">→</div>
+        </div>
+        <p class="card-desc">Five interactive 15-minute lessons in conversational Spanish. Phrase cards with pronunciation guides, dialogue practice, and Web Speech API audio.</p>
+        <span class="pill learn">Language · Interactive</span>
+      </a>
+
+      <a class="card learn" href="spanish-matching-game.html">
+        <div class="card-top">
+          <div class="card-title">Spanish Vocabulary Matching Game</div>
+          <div class="card-arrow">→</div>
+        </div>
+        <p class="card-desc">Flip-card matching game for Spanish vocabulary practice. Match English words to their Spanish translations against the clock.</p>
+        <span class="pill learn">Language · Game</span>
+      </a>
+
+      <a class="card learn" href="ivr-soundboard.html">
+        <div class="card-top">
+          <div class="card-title">IVR Soundboard</div>
+          <div class="card-arrow">→</div>
+        </div>
+        <p class="card-desc">Interactive soundboard for IVR audio clip playback. One-tap buttons to trigger and preview individual audio prompts.</p>
+        <span class="pill learn">Telephony · Audio</span>
+      </a>
+
+    </div>
+
+    <!-- ── Food & Meal Plans ──────────────── -->
+    <div class="section-label">
+      <span>Food &amp; Meal Plans</span>
+      <div class="section-label-line"></div>
+    </div>
+
+    <div class="cards">
+
+      <a class="card food" href="denise-menu.html">
+        <div class="card-top">
+          <div class="card-title">Denise's GF Dinner Plan</div>
+          <div class="card-arrow">→</div>
+        </div>
+        <p class="card-desc">One-month gluten-free dinner menu with chicken, GF pasta, ground beef, and salmon. Step timers, weekly shopping lists, and recipe source links.</p>
+        <span class="pill food">Gluten-Free · Meal Plan</span>
+      </a>
+
+      <a class="card food" href="kristen-menu.html">
+        <div class="card-top">
+          <div class="card-title">Kristen's GF Dinner Menu</div>
+          <div class="card-arrow">→</div>
+        </div>
+        <p class="card-desc">Thirty-day gluten-free plan with dairy and dairy-free options on every recipe. Chicken, salmon, and ground beef with calendar view and shopping lists.</p>
+        <span class="pill food">Gluten-Free · Dairy Options</span>
+      </a>
+
+    </div>
+
+    <footer>
+      Hosted on Cloudflare Pages
+    </footer>
+
+  </div>
+</body>
+</html>

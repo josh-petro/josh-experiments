@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>¡Empareja! – Spanish Matching Game</title>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg:       #fff9ef;
+      --panel:    #ffffff;
+      --accent1:  #ff6b6b;
+      --accent2:  #ffd166;
+      --accent3:  #06d6a0;
+      --accent4:  #118ab2;
+      --accent5:  #845ec2;
+      --text:     #1a1a2e;
+      --muted:    #8d8daa;
+      --radius:   14px;
+      --shadow:   0 4px 18px rgba(0,0,0,.10);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── Confetti canvas ───────────────────────────── */
+    #confetti-canvas {
+      position: fixed; inset: 0;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* ── Header ────────────────────────────────────── */
+    header {
+      background: linear-gradient(135deg, var(--accent4) 0%, var(--accent5) 100%);
+      color: #fff;
+      text-align: center;
+      padding: 28px 20px 22px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        rgba(255,255,255,.06) 0px,
+        rgba(255,255,255,.06) 4px,
+        transparent 4px,
+        transparent 20px
+      );
+    }
+    header h1 {
+      font-family: 'Baloo 2', cursive;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -.5px;
+      position: relative;
+    }
+    header p {
+      font-size: 1rem;
+      opacity: .85;
+      margin-top: 4px;
+      position: relative;
+    }
+
+    /* ── Score bar ──────────────────────────────────── */
+    .score-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 28px;
+      padding: 14px 20px;
+      background: var(--accent2);
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.05rem;
+      font-weight: 600;
+      border-bottom: 3px solid rgba(0,0,0,.08);
+    }
+    .score-bar span { color: var(--text); }
+    .score-bar strong { color: var(--accent4); font-size: 1.3rem; }
+
+    /* ── Main layout ────────────────────────────────── */
+    main {
+      max-width: 960px;
+      margin: 30px auto;
+      padding: 0 16px 60px;
+    }
+
+    .instructions {
+      background: var(--panel);
+      border-left: 6px solid var(--accent3);
+      border-radius: var(--radius);
+      padding: 14px 20px;
+      margin-bottom: 28px;
+      font-size: .95rem;
+      box-shadow: var(--shadow);
+      line-height: 1.6;
+    }
+    .instructions strong { color: var(--accent4); }
+
+    /* ── Columns ────────────────────────────────────── */
+    .columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .col-label {
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.1rem;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 12px;
+      padding: 6px 0;
+      border-radius: 8px;
+      letter-spacing: .5px;
+    }
+    .col-label.spanish { background: var(--accent1); color: #fff; }
+    .col-label.english  { background: var(--accent4); color: #fff; }
+
+    /* ── Word cards ─────────────────────────────────── */
+    .word-card {
+      display: block;
+      width: 100%;
+      background: var(--panel);
+      border: 3px solid #e0e0f0;
+      border-radius: var(--radius);
+      padding: 13px 18px;
+      margin-bottom: 9px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: left;
+      transition: transform .15s, box-shadow .15s, border-color .15s, background .15s;
+      box-shadow: 0 2px 8px rgba(0,0,0,.07);
+      position: relative;
+      color: var(--text);
+    }
+    .word-card:hover:not(.matched):not(.disabled) {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 6px 18px rgba(0,0,0,.13);
+      border-color: var(--accent2);
+    }
+    .word-card.selected-spanish {
+      border-color: var(--accent1);
+      background: #fff0f0;
+      box-shadow: 0 0 0 4px rgba(255,107,107,.2);
+    }
+    .word-card.selected-english {
+      border-color: var(--accent4);
+      background: #edf6ff;
+      box-shadow: 0 0 0 4px rgba(17,138,178,.2);
+    }
+    .word-card.matched {
+      border-color: var(--accent3);
+      background: linear-gradient(135deg, #e8fff8, #d0fdf0);
+      cursor: default;
+      opacity: .85;
+    }
+    .word-card.matched::after {
+      content: "✓";
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--accent3);
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
+    .word-card.wrong-flash {
+      animation: wrongShake .4s ease;
+      border-color: var(--accent1);
+      background: #ffe0e0;
+    }
+    @keyframes wrongShake {
+      0%,100% { transform: translateX(0); }
+      20%     { transform: translateX(-6px); }
+      40%     { transform: translateX(6px); }
+      60%     { transform: translateX(-4px); }
+      80%     { transform: translateX(4px); }
+    }
+    .word-card .article {
+      font-size: .75rem;
+      font-weight: 600;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 1px;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+    }
+
+    /* ── Feedback toast ─────────────────────────────── */
+    #toast {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--text);
+      color: #fff;
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.1rem;
+      font-weight: 600;
+      z-index: 1000;
+      transition: transform .3s ease, opacity .3s ease;
+      opacity: 0;
+      pointer-events: none;
+    }
+    #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    #toast.correct { background: var(--accent3); }
+    #toast.wrong   { background: var(--accent1); }
+
+    /* ── Win screen ─────────────────────────────────── */
+    #win-screen {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(26,26,46,.7);
+      z-index: 998;
+      align-items: center;
+      justify-content: center;
+    }
+    #win-screen.show { display: flex; }
+    .win-card {
+      background: var(--panel);
+      border-radius: 24px;
+      padding: 48px 56px;
+      text-align: center;
+      box-shadow: 0 24px 60px rgba(0,0,0,.3);
+      max-width: 460px;
+      animation: popIn .4s cubic-bezier(.175,.885,.32,1.275);
+    }
+    @keyframes popIn {
+      from { transform: scale(.7); opacity: 0; }
+      to   { transform: scale(1);  opacity: 1; }
+    }
+    .win-card h2 {
+      font-family: 'Baloo 2', cursive;
+      font-size: 2.4rem;
+      color: var(--accent5);
+      margin-bottom: 8px;
+    }
+    .win-card p {
+      font-size: 1.1rem;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+    .win-card .score-display {
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.4rem;
+      color: var(--text);
+      margin-bottom: 28px;
+    }
+    .btn-play-again {
+      background: linear-gradient(135deg, var(--accent4), var(--accent5));
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 14px 40px;
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.2rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .15s, box-shadow .15s;
+      box-shadow: 0 4px 18px rgba(17,138,178,.35);
+    }
+    .btn-play-again:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(17,138,178,.4);
+    }
+
+    /* ── References ─────────────────────────────────── */
+    footer {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 16px 40px;
+      font-size: .82rem;
+      color: var(--muted);
+      border-top: 2px dashed #e0e0f0;
+      padding-top: 20px;
+    }
+    footer h3 {
+      font-family: 'Baloo 2', cursive;
+      font-size: 1rem;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    footer ol { padding-left: 20px; }
+    footer li { margin-bottom: 5px; line-height: 1.5; }
+    footer a { color: var(--accent4); }
+
+    @media (max-width: 600px) {
+      .columns { grid-template-columns: 1fr; }
+      .word-card { font-size: .92rem; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="confetti-canvas"></canvas>
+
+<header>
+  <h1>¡Empareja las Palabras! 🏠</h1>
+  <p>Match the Spanish word to its English meaning</p>
+</header>
+
+<div class="score-bar">
+  <span>✅ Matched: <strong id="matched-count">0</strong> / 19</span>
+  <span>❌ Mistakes: <strong id="mistake-count">0</strong></span>
+</div>
+
+<main>
+  <div class="instructions">
+    <strong>How to play:</strong> Click a <span style="color:var(--accent1);font-weight:700;">Spanish</span> word on the left,
+    then click its matching <span style="color:var(--accent4);font-weight:700;">English</span> word on the right.
+    Get all 19 correct to win! 🎉
+  </div>
+
+  <div class="columns">
+    <div id="spanish-col">
+      <div class="col-label spanish">🇪🇸 Español</div>
+    </div>
+    <div id="english-col">
+      <div class="col-label english">🇺🇸 English</div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <h3>📚 References</h3>
+  <ol>
+    <li>Real Academia Española. (2023). <em>Diccionario de la lengua española</em> (23rd ed.). <a href="https://dle.rae.es" target="_blank">https://dle.rae.es</a></li>
+    <li>Merriam-Webster. (2024). <em>Spanish-English Dictionary</em>. <a href="https://www.merriam-webster.com" target="_blank">https://www.merriam-webster.com</a></li>
+    <li>SpanishDict. (2024). <em>Spanish vocabulary: The home</em>. <a href="https://www.spanishdict.com/topics/spanish-vocabulary-the-home" target="_blank">https://www.spanishdict.com</a></li>
+    <li>Transparent Language. (2024). <em>Household vocabulary in Spanish</em>. <a href="https://www.transparent.com/learn-spanish" target="_blank">https://www.transparent.com/learn-spanish</a></li>
+  </ol>
+</footer>
+
+<div id="toast"></div>
+
+<div id="win-screen">
+  <div class="win-card">
+    <div style="font-size:3rem;margin-bottom:8px;">🎊</div>
+    <h2>¡Excelente!</h2>
+    <p>You matched all the words!</p>
+    <div class="score-display" id="win-stats"></div>
+    <button class="btn-play-again" onclick="resetGame()">🔄 Play Again</button>
+  </div>
+</div>
+
+<script>
+  const PAIRS = [
+    { spanish: "el refrigerador",   article: "el",  english: "Refrigerator" },
+    { spanish: "el congelador",      article: "el",  english: "Freezer" },
+    { spanish: "la estufa",          article: "la",  english: "Stove" },
+    { spanish: "el horno",           article: "el",  english: "Oven" },
+    { spanish: "el lavaplatos",      article: "el",  english: "Dishwasher" },
+    { spanish: "el microondas",      article: "el",  english: "Microwave" },
+    { spanish: "el sofá",            article: "el",  english: "Couch" },
+    { spanish: "el sillón",          article: "el",  english: "Sofa / Love seat" },
+    { spanish: "las cortinas",       article: "las", english: "Curtains" },
+    { spanish: "la lámpara",         article: "la",  english: "Lamp" },
+    { spanish: "la cama",            article: "la",  english: "Bed" },
+    { spanish: "el clóset",          article: "el",  english: "Closet" },
+    { spanish: "el espejo",          article: "el",  english: "Mirror" },
+    { spanish: "la alfombra",        article: "la",  english: "Rug" },
+    { spanish: "la lavadora",        article: "la",  english: "Washer" },
+    { spanish: "la secadora",        article: "la",  english: "Dryer" },
+    { spanish: "los juguetes",       article: "los", english: "Toys" },
+    { spanish: "la televisión",      article: "la",  english: "Television" },
+    { spanish: "la muñeca",          article: "la",  english: "Doll" },
+  ];
+
+  let selectedSpanish = null;
+  let matchedCount    = 0;
+  let mistakeCount    = 0;
+
+  function shuffle(arr) {
+    return [...arr].sort(() => Math.random() - .5);
+  }
+
+  function buildColumns() {
+    const spanishCol = document.getElementById('spanish-col');
+    const englishCol = document.getElementById('english-col');
+
+    // Clear previous cards (keep label)
+    [...spanishCol.querySelectorAll('.word-card')].forEach(c => c.remove());
+    [...englishCol.querySelectorAll('.word-card')].forEach(c => c.remove());
+
+    const shuffledSpanish = shuffle(PAIRS);
+    const shuffledEnglish = shuffle(PAIRS);
+
+    shuffledSpanish.forEach(pair => {
+      const btn = document.createElement('button');
+      btn.className = 'word-card';
+      btn.dataset.spanish = pair.spanish;
+      btn.innerHTML = `<span class="article">${pair.article}</span>${pair.spanish.replace(/^(el|la|los|las)\s/, '')}`;
+      btn.addEventListener('click', () => onSpanishClick(btn, pair.spanish));
+      spanishCol.appendChild(btn);
+    });
+
+    shuffledEnglish.forEach(pair => {
+      const btn = document.createElement('button');
+      btn.className = 'word-card';
+      btn.dataset.english = pair.english;
+      btn.textContent = pair.english;
+      btn.addEventListener('click', () => onEnglishClick(btn, pair.english));
+      englishCol.appendChild(btn);
+    });
+  }
+
+  function onSpanishClick(btn, spanish) {
+    if (btn.classList.contains('matched')) return;
+    // Deselect previous
+    document.querySelectorAll('.word-card.selected-spanish')
+      .forEach(c => c.classList.remove('selected-spanish'));
+    selectedSpanish = spanish;
+    btn.classList.add('selected-spanish');
+  }
+
+  function onEnglishClick(btn, english) {
+    if (btn.classList.contains('matched')) return;
+    if (!selectedSpanish) {
+      showToast('👆 Pick a Spanish word first!', 'wrong');
+      return;
+    }
+
+    // Find the correct english for the selected spanish
+    const pair = PAIRS.find(p => p.spanish === selectedSpanish);
+    if (pair && pair.english === english) {
+      // ✅ Correct
+      markMatched(selectedSpanish, english);
+      selectedSpanish = null;
+      matchedCount++;
+      updateScorebar();
+      showToast('¡Correcto! ✓', 'correct');
+      if (matchedCount === PAIRS.length) setTimeout(showWinScreen, 600);
+    } else {
+      // ❌ Wrong
+      mistakeCount++;
+      updateScorebar();
+      showToast('¡Inténtalo de nuevo! ✗', 'wrong');
+
+      // Flash both selected cards
+      const spanishBtn = [...document.querySelectorAll('#spanish-col .word-card')]
+        .find(c => c.dataset.spanish === selectedSpanish);
+      if (spanishBtn) triggerWrongFlash(spanishBtn);
+      triggerWrongFlash(btn);
+
+      // Clear selection
+      document.querySelectorAll('.word-card.selected-spanish')
+        .forEach(c => c.classList.remove('selected-spanish'));
+      selectedSpanish = null;
+    }
+  }
+
+  function markMatched(spanish, english) {
+    document.querySelectorAll('#spanish-col .word-card').forEach(c => {
+      if (c.dataset.spanish === spanish) {
+        c.classList.remove('selected-spanish');
+        c.classList.add('matched');
+        c.disabled = true;
+      }
+    });
+    document.querySelectorAll('#english-col .word-card').forEach(c => {
+      if (c.dataset.english === english) {
+        c.classList.add('matched');
+        c.disabled = true;
+      }
+    });
+  }
+
+  function triggerWrongFlash(btn) {
+    btn.classList.add('wrong-flash');
+    setTimeout(() => btn.classList.remove('wrong-flash'), 450);
+  }
+
+  function updateScorebar() {
+    document.getElementById('matched-count').textContent = matchedCount;
+    document.getElementById('mistake-count').textContent = mistakeCount;
+  }
+
+  let toastTimer;
+  function showToast(msg, type) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = `show ${type}`;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { t.className = ''; }, 1800);
+  }
+
+  function showWinScreen() {
+    document.getElementById('win-stats').textContent =
+      `Score: ${PAIRS.length} matched • ${mistakeCount} mistake${mistakeCount !== 1 ? 's' : ''}`;
+    document.getElementById('win-screen').classList.add('show');
+    launchConfetti();
+  }
+
+  function resetGame() {
+    selectedSpanish = null;
+    matchedCount    = 0;
+    mistakeCount    = 0;
+    updateScorebar();
+    document.getElementById('win-screen').classList.remove('show');
+    buildColumns();
+  }
+
+  // ── Confetti ─────────────────────────────────────────
+  function launchConfetti() {
+    const canvas = document.getElementById('confetti-canvas');
+    const ctx    = canvas.getContext('2d');
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const colors = ['#ff6b6b','#ffd166','#06d6a0','#118ab2','#845ec2','#f8b500'];
+    const pieces = Array.from({length: 140}, () => ({
+      x:  Math.random() * canvas.width,
+      y: -Math.random() * canvas.height * .6,
+      r:  Math.random() * 7 + 4,
+      d:  Math.random() * 3 + 1,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      tilt: Math.random() * 10 - 5,
+      tiltSpeed: Math.random() * .08 + .02,
+      angle: 0,
+    }));
+
+    let frame;
+    let elapsed = 0;
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      pieces.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+        p.y    += p.d + 1;
+        p.x    += Math.sin(p.angle) * 1.5;
+        p.angle += .06;
+        p.tilt  += p.tiltSpeed;
+        if (p.y > canvas.height) {
+          p.y = -10;
+          p.x = Math.random() * canvas.width;
+        }
+      });
+      elapsed++;
+      if (elapsed < 220) frame = requestAnimationFrame(draw);
+      else ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    cancelAnimationFrame(frame);
+    draw();
+  }
+
+  // Init
+  buildColumns();
+</script>
+</body>
+</html>

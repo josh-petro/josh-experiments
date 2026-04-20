@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Denise's GF Dinner Plan — One Month</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #FAF6F1;
+  --card:     #FFFEFB;
+  --border:   #E8DECE;
+  --text:     #221810;
+  --muted:    #7C6B5A;
+  --gold:     #B8860B;
+  --gold-lt:  #F5EDD5;
+  --burg:     #8B1A2C;
+  --burg-lt:  #FAEAED;
+  --burg-bd:  #E8A0A9;
+  --teal:     #1A5C5C;
+  --teal-lt:  #E6F4F4;
+  --teal-bd:  #8ECECE;
+  --olive:    #4A5E1A;
+  --olive-lt: #EDF2E0;
+  --olive-bd: #AECA70;
+  --rust:     #9B4321;
+  --rust-lt:  #FDF0EB;
+  --rust-bd:  #EDAF95;
+  --shadow:   0 2px 18px rgba(34,24,16,0.08);
+  --shadow-lg:0 8px 36px rgba(34,24,16,0.14);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);line-height:1.65;}
+
+/* NAV */
+#top-nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(34,24,16,0.97);backdrop-filter:blur(8px);
+  display:flex;align-items:center;gap:14px;padding:0 20px;
+  overflow-x:auto;scrollbar-width:none;height:50px;
+}
+#top-nav::-webkit-scrollbar{display:none;}
+.nav-brand{font-family:'Cormorant Garamond',serif;color:var(--gold);font-size:1rem;font-weight:700;white-space:nowrap;letter-spacing:.02em;}
+.nav-links{display:flex;gap:5px;flex-shrink:0;}
+.nav-link{
+  font-size:.7rem;font-weight:700;text-decoration:none;padding:5px 10px;
+  border-radius:20px;white-space:nowrap;transition:all .2s;
+  border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.75);letter-spacing:.03em;
+}
+.nav-link:hover{background:rgba(255,255,255,.18);color:#fff;}
+.nav-link.chicken{border-color:var(--burg-bd);}
+.nav-link.beef{border-color:var(--olive-bd);}
+.nav-link.salmon{border-color:var(--teal-bd);}
+.nav-link.pasta{border-color:var(--rust-bd);}
+
+/* HERO */
+#hero{
+  background:linear-gradient(135deg,#221810 0%,#5C2A14 45%,#3D1F10 100%);
+  padding:60px 24px 52px;text-align:center;position:relative;overflow:hidden;
+}
+#hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 55% at 50% 0%,rgba(184,134,11,.22) 0%,transparent 68%);
+}
+#hero h1{
+  font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,5.5vw,4rem);
+  color:#fff;font-weight:700;line-height:1.1;position:relative;letter-spacing:.01em;
+}
+#hero h1 em{color:var(--gold);font-style:italic;}
+#hero .hero-sub{color:rgba(255,255,255,.68);font-size:.96rem;margin-top:10px;position:relative;font-weight:300;}
+.hero-tags{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin-top:22px;position:relative;}
+.hero-tag{
+  padding:5px 15px;border-radius:20px;font-size:.75rem;font-weight:700;border:1px solid;
+}
+.hero-tag.gf{background:rgba(26,92,92,.22);border-color:var(--teal-bd);color:#9de0e0;}
+.hero-tag.dairy{background:rgba(184,134,11,.18);border-color:var(--gold);color:var(--gold);}
+.hero-tag.imp{background:rgba(139,26,44,.18);border-color:var(--burg-bd);color:#f2a0ae;}
+.hero-tag.src{background:rgba(74,94,26,.18);border-color:var(--olive-bd);color:#c2e075;}
+
+/* PROTEIN LEGEND */
+.protein-legend{
+  display:flex;gap:10px;justify-content:center;flex-wrap:wrap;
+  padding:20px 24px 0;max-width:900px;margin:0 auto;
+}
+.pleg{
+  display:flex;align-items:center;gap:8px;padding:6px 16px;
+  border-radius:24px;font-size:.78rem;font-weight:700;border:1.5px solid;cursor:pointer;
+  transition:all .2s;font-family:'Nunito',sans-serif;
+}
+.pleg.chicken{background:var(--burg-lt);color:var(--burg);border-color:var(--burg-bd);}
+.pleg.beef{background:var(--olive-lt);color:var(--olive);border-color:var(--olive-bd);}
+.pleg.salmon{background:var(--teal-lt);color:var(--teal);border-color:var(--teal-bd);}
+.pleg.pasta{background:var(--rust-lt);color:var(--rust);border-color:var(--rust-bd);}
+.pleg.all{background:var(--text);color:#fff;border-color:var(--text);}
+
+/* CALENDAR */
+#calendar-section{padding:28px 24px 0;max-width:1100px;margin:0 auto;}
+#calendar-section h2{font-family:'Cormorant Garamond',serif;font-size:1.75rem;font-weight:700;margin-bottom:16px;}
+.calendar-grid{
+  display:grid;grid-template-columns:repeat(7,1fr);gap:6px;
+  background:var(--card);border-radius:18px;padding:18px;
+  border:1px solid var(--border);box-shadow:var(--shadow);
+}
+.cal-header{text-align:center;font-size:.68rem;font-weight:700;color:var(--muted);padding:4px 0;text-transform:uppercase;letter-spacing:.07em;}
+.cal-day{
+  aspect-ratio:1;border-radius:10px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;font-size:.72rem;padding:4px;
+  transition:transform .15s;
+}
+.cal-day.empty{opacity:0;pointer-events:none;}
+.cal-day.rest{background:#f2ece4;color:var(--muted);}
+.cal-day.cook{cursor:pointer;font-weight:700;}
+.cal-day.cook:hover{transform:scale(1.07);box-shadow:var(--shadow);}
+.cal-day .cal-num{font-size:.88rem;font-weight:800;}
+.cal-day .cal-label{font-size:.56rem;text-align:center;margin-top:2px;line-height:1.25;max-width:52px;}
+.cal-day.chicken{background:var(--burg-lt);color:var(--burg);border:1.5px solid var(--burg-bd);}
+.cal-day.beef{background:var(--olive-lt);color:var(--olive);border:1.5px solid var(--olive-bd);}
+.cal-day.salmon{background:var(--teal-lt);color:var(--teal);border:1.5px solid var(--teal-bd);}
+.cal-day.pasta{background:var(--rust-lt);color:var(--rust);border:1.5px solid var(--rust-bd);}
+.cal-legend{display:flex;gap:14px;margin-top:12px;flex-wrap:wrap;}
+.leg{display:flex;align-items:center;gap:7px;font-size:.78rem;color:var(--muted);}
+.leg-dot{width:13px;height:13px;border-radius:4px;}
+
+/* RECIPES */
+#recipes-section{padding:32px 24px;max-width:1100px;margin:0 auto;}
+#recipes-section>h2{font-family:'Cormorant Garamond',serif;font-size:1.75rem;font-weight:700;margin-bottom:26px;}
+.recipes-grid{display:grid;gap:28px;}
+.recipe-card{
+  background:var(--card);border-radius:22px;overflow:hidden;
+  border:1px solid var(--border);box-shadow:var(--shadow);transition:box-shadow .2s;
+}
+.recipe-card:hover{box-shadow:var(--shadow-lg);}
+.recipe-card.hidden{display:none;}
+
+.recipe-header{
+  padding:22px 26px 16px;border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;
+}
+.recipe-day-label{font-size:.72rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;}
+.recipe-title-area h3{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:700;line-height:1.2;}
+.recipe-desc{font-size:.85rem;color:var(--muted);margin-top:6px;line-height:1.5;max-width:520px;}
+.recipe-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px;}
+.tag{padding:3px 10px;border-radius:12px;font-size:.68rem;font-weight:800;border:1px solid;letter-spacing:.03em;}
+.tag.chicken{background:var(--burg-lt);color:var(--burg);border-color:var(--burg-bd);}
+.tag.beef{background:var(--olive-lt);color:var(--olive);border-color:var(--olive-bd);}
+.tag.salmon{background:var(--teal-lt);color:var(--teal);border-color:var(--teal-bd);}
+.tag.pasta{background:var(--rust-lt);color:var(--rust);border-color:var(--rust-bd);}
+.tag.gf{background:#e6f4f0;color:#1a5c40;border-color:#8ecab0;}
+.tag.dairy{background:var(--gold-lt);color:var(--gold);border-color:#d4b060;}
+
+.recipe-meta-right{text-align:right;flex-shrink:0;}
+.source-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 15px;border-radius:22px;font-size:.73rem;font-weight:700;
+  text-decoration:none;border:1.5px solid var(--gold);color:var(--gold);
+  transition:all .2s;white-space:nowrap;letter-spacing:.02em;
+}
+.source-btn:hover{background:var(--gold);color:#fff;}
+.time-badges{display:flex;gap:8px;margin-top:10px;justify-content:flex-end;flex-wrap:wrap;}
+.time-badge{
+  display:flex;align-items:center;gap:5px;padding:4px 11px;
+  background:#f2ece4;border-radius:10px;font-size:.7rem;color:var(--muted);font-weight:600;
+}
+.time-badge span{font-weight:800;color:var(--text);}
+
+/* RECIPE BODY */
+.recipe-body{display:grid;grid-template-columns:290px 1fr;}
+@media(max-width:720px){.recipe-body{grid-template-columns:1fr;}}
+.ingredients-col{
+  padding:22px 20px;border-right:1px solid var(--border);background:#FDFAF5;
+}
+@media(max-width:720px){.ingredients-col{border-right:none;border-bottom:1px solid var(--border);}}
+.ingredients-col h4{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin-bottom:13px;}
+.ing-section-label{
+  font-size:.68rem;font-weight:800;color:var(--muted);text-transform:uppercase;
+  letter-spacing:.07em;margin-top:12px;margin-bottom:5px;
+  border-bottom:1px solid var(--border);padding-bottom:3px;
+}
+.ing-item{display:flex;align-items:baseline;gap:7px;padding:3px 0;font-size:.83rem;line-height:1.45;}
+.ing-item::before{content:'·';color:var(--gold);font-weight:800;flex-shrink:0;}
+.dairy-note{
+  margin-top:13px;padding:10px 12px;background:var(--gold-lt);
+  border-radius:9px;border-left:3px solid var(--gold);font-size:.75rem;color:#7a5800;line-height:1.55;
+}
+.dairy-note strong{display:block;margin-bottom:3px;color:#5a4000;}
+
+.steps-col{padding:22px 26px;}
+.steps-col h4{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin-bottom:15px;}
+.step{display:flex;gap:14px;margin-bottom:15px;align-items:flex-start;}
+.step-num{
+  min-width:27px;height:27px;border-radius:50%;
+  background:var(--text);color:#fff;font-size:.7rem;font-weight:800;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;
+}
+.step-content{flex:1;}
+.step-text{font-size:.88rem;line-height:1.6;}
+.timer-btn{
+  display:inline-flex;align-items:center;gap:6px;margin-top:8px;
+  padding:4px 13px;border-radius:16px;font-size:.7rem;font-weight:700;
+  border:1.5px solid;cursor:pointer;font-family:'Nunito',sans-serif;
+  transition:all .2s;background:transparent;letter-spacing:.02em;
+}
+.timer-btn.idle{border-color:#6B5E52;color:#6B5E52;}
+.timer-btn.idle:hover{background:#6B5E52;color:#fff;}
+.timer-btn.running{border-color:#C45A00;color:#C45A00;animation:pulse 1.1s infinite;}
+.timer-btn.done{border-color:#1E6B3A;color:#1E6B3A;background:rgba(30,107,58,.08);}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.55}}
+.timer-display{font-size:.88rem;font-weight:800;min-width:46px;}
+
+/* SHOPPING */
+#shopping-section{padding:32px 24px 60px;max-width:1100px;margin:0 auto;}
+#shopping-section h2{font-family:'Cormorant Garamond',serif;font-size:1.75rem;font-weight:700;margin-bottom:8px;}
+.shop-tabs{display:flex;gap:7px;margin-bottom:22px;flex-wrap:wrap;}
+.shop-tab{
+  padding:8px 20px;border-radius:22px;border:1.5px solid var(--border);
+  background:var(--card);cursor:pointer;font-size:.8rem;font-weight:700;
+  font-family:'Nunito',sans-serif;color:var(--muted);transition:all .2s;line-height:1.3;
+}
+.shop-tab.active{background:var(--text);color:#fff;border-color:var(--text);}
+.shop-panel{display:none;}
+.shop-panel.active{display:block;}
+.shop-week-meals{font-size:.82rem;color:var(--muted);margin-bottom:18px;font-style:italic;}
+.shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:16px;}
+.shop-category{background:var(--card);border-radius:15px;border:1px solid var(--border);overflow:hidden;box-shadow:var(--shadow);}
+.shop-cat-header{padding:12px 16px;font-size:.73rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;}
+.shop-cat-header.produce{background:var(--teal-lt);color:var(--teal);}
+.shop-cat-header.protein{background:var(--burg-lt);color:var(--burg);}
+.shop-cat-header.pasta-grains{background:var(--rust-lt);color:var(--rust);}
+.shop-cat-header.dairy-cat{background:var(--gold-lt);color:#7a5800;}
+.shop-cat-header.pantry{background:var(--olive-lt);color:var(--olive);}
+.shop-cat-header.spices{background:#f5eef8;color:#6b1a8b;}
+.shop-items{padding:10px 16px;}
+.shop-item{display:flex;align-items:flex-start;gap:10px;padding:6px 0;border-bottom:1px solid #f0ebe3;font-size:.83rem;line-height:1.4;}
+.shop-item:last-child{border-bottom:none;}
+.shop-item input[type=checkbox]{margin-top:3px;accent-color:var(--teal);width:15px;height:15px;flex-shrink:0;cursor:pointer;}
+.shop-item label{cursor:pointer;flex:1;}
+.shop-item input:checked+label{text-decoration:line-through;color:var(--muted);}
+.shop-actions{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;}
+.action-btn{
+  padding:8px 22px;border-radius:22px;border:1.5px solid;font-size:.82rem;font-weight:700;
+  cursor:pointer;font-family:'Nunito',sans-serif;transition:all .2s;
+}
+.action-btn.print{border-color:var(--text);color:var(--text);background:transparent;}
+.action-btn.print:hover{background:var(--text);color:#fff;}
+.action-btn.clear{border-color:#c0392b;color:#c0392b;background:transparent;}
+.action-btn.clear:hover{background:#c0392b;color:#fff;}
+
+.section-divider{height:1px;background:var(--border);max-width:1100px;margin:0 auto;}
+
+#back-top{
+  position:fixed;bottom:24px;right:24px;z-index:200;
+  width:46px;height:46px;border-radius:50%;background:var(--burg);color:#fff;
+  border:none;cursor:pointer;font-size:1.2rem;box-shadow:0 4px 18px rgba(139,26,44,.35);
+  display:flex;align-items:center;justify-content:center;transition:all .2s;opacity:0;pointer-events:none;
+}
+#back-top.visible{opacity:1;pointer-events:all;}
+#back-top:hover{background:var(--gold);transform:translateY(-3px);}
+
+@media print{
+  #top-nav,#hero,.protein-legend,#calendar-section,#recipes-section,#back-top,.shop-tabs,.shop-actions{display:none!important;}
+  #shopping-section{padding:0;}
+  .shop-panel{display:block!important;}
+  .shop-category{break-inside:avoid;box-shadow:none;border:1px solid #ccc;}
+}
+</style>
+</head>
+<body>
+
+<nav id="top-nav">
+  <div class="nav-brand">🍽 Denise's GF Plan</div>
+  <div class="nav-links" id="nav-links"></div>
+</nav>
+
+<section id="hero">
+  <h1>Denise's<br><em>Gluten-Free</em> Dinner Plan</h1>
+  <p class="hero-sub">Chicken · GF Pasta · Ground Beef · Salmon &nbsp;·&nbsp; One Month · Every Other Day</p>
+  <div class="hero-tags">
+    <span class="hero-tag gf">✓ Always Gluten-Free</span>
+    <span class="hero-tag dairy">🧀 Dairy Permitted</span>
+    <span class="hero-tag imp">⚖ Imperial Measurements</span>
+    <span class="hero-tag src">Sources: Milk Street · Southern Living · Iowa Girl Eats</span>
+  </div>
+</section>
+
+<div class="protein-legend">
+  <button class="pleg all" onclick="filterRecipes('all',this)">All Proteins</button>
+  <button class="pleg chicken" onclick="filterRecipes('chicken',this)">🍗 Chicken</button>
+  <button class="pleg beef" onclick="filterRecipes('beef',this)">🥩 Ground Beef</button>
+  <button class="pleg salmon" onclick="filterRecipes('salmon',this)">🐟 Salmon</button>
+  <button class="pleg pasta" onclick="filterRecipes('pasta',this)">🍝 Includes GF Pasta</button>
+</div>
+
+<section id="calendar-section">
+  <h2>Monthly Meal Calendar</h2>
+  <div class="calendar-grid" id="calendar-grid"></div>
+  <div class="cal-legend">
+    <div class="leg"><div class="leg-dot" style="background:var(--burg-lt);border:1.5px solid var(--burg-bd)"></div>Chicken</div>
+    <div class="leg"><div class="leg-dot" style="background:var(--olive-lt);border:1.5px solid var(--olive-bd)"></div>Ground Beef</div>
+    <div class="leg"><div class="leg-dot" style="background:var(--teal-lt);border:1.5px solid var(--teal-bd)"></div>Salmon</div>
+    <div class="leg"><div class="leg-dot" style="background:var(--rust-lt);border:1.5px solid var(--rust-bd)"></div>GF Pasta Feature</div>
+    <div class="leg"><div class="leg-dot" style="background:#f2ece4;border:1px solid #ddd"></div>Rest / Leftovers</div>
+  </div>
+</section>
+
+<section id="recipes-section">
+  <h2>Recipes</h2>
+  <div class="recipes-grid" id="recipes-grid"></div>
+</section>
+
+<div class="section-divider"></div>
+
+<section id="shopping-section">
+  <h2>🛒 Weekly Shopping Lists</h2>
+  <div class="shop-tabs" id="shop-tabs"></div>
+  <div id="shop-panels"></div>
+  <div class="shop-actions">
+    <button class="action-btn print" onclick="window.print()">🖨 Print Current List</button>
+    <button class="action-btn clear" onclick="clearChecks()">✕ Clear Checkboxes</button>
+  </div>
+</section>
+
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// ═══════════════════════════════════════════════════
+// RECIPE DATA
+// ═══════════════════════════════════════════════════
+const RECIPES = [
+// ── WEEK 1 ──────────────────────────────────────────
+{
+  id:1, day:1, week:1,
+  title:"Milk Street Browned Butter & Lemon Pasta with Chicken",
+  protein:"chicken", hasPasta:true,
+  source:"Milk Street", sourceUrl:"https://www.177milkstreet.com/recipes/browned-butter-lemon-pasta-chicken",
+  prepMin:15, cookMin:30, extraMin:0,
+  desc:"Nutty browned butter and bright lemon transform a simple pasta into something truly special — tossed with pan-seared chicken and Parmesan.",
+  ingredientGroups:[
+    {label:"Pasta & Chicken",items:["12 oz GF penne or rigatoni (Jovial or Barilla GF)","1½ lbs boneless skinless chicken breasts or thighs, cut into 1-inch pieces","1 tbsp olive oil","Salt & black pepper"]},
+    {label:"Brown Butter Sauce",items:["6 tbsp unsalted butter","1 bunch scallions (whites & greens separated) OR 2 shallots, thinly sliced","Zest of 2 lemons","3 tbsp fresh lemon juice","1 cup reserved pasta water"]},
+    {label:"Finish",items:["2 oz Parmesan, finely grated (about 1 cup)","¼ cup fresh flat-leaf parsley, chopped","Red pepper flakes — optional"]}
+  ],
+  dairyNote:"Dairy welcome! Use real Parmesan and good unsalted butter — both make this dish shine.",
+  steps:[
+    {text:"Bring a large pot of well-salted water to a boil. Cook GF pasta until just shy of al dente per package instructions. Reserve 1 cup of pasta water before draining. Drain and return pasta to pot.",timer:null},
+    {text:"While pasta cooks, heat olive oil in a 12-inch skillet over medium-high. Season chicken with ½ tsp salt and ¼ tsp pepper. Cook, stirring occasionally, until golden brown all over and cooked through.",timer:8},
+    {text:"Transfer chicken to a plate. Reduce heat to medium. Wipe out any burned bits. Add butter and cook, swirling, until the milk solids turn golden and nutty and a toasty aroma fills the kitchen.",timer:4},
+    {text:"Add scallion whites (or shallots). Cook, stirring, until softened.",timer:2},
+    {text:"Add the lemon zest. Off heat, carefully add the lemon juice — it will spatter.",timer:null},
+    {text:"Add the drained pasta, chicken, and ½ cup of the reserved pasta water. Toss over medium heat. Add more pasta water as needed until sauce coats the pasta. Cook, tossing, until the sauce clings.",timer:3},
+    {text:"Remove from heat. Fold in Parmesan and scallion greens (or parsley). Taste and adjust seasoning. Serve immediately with a pinch of red pepper flakes if desired.",timer:null}
+  ]
+},
+{
+  id:2, day:3, week:1,
+  title:"Classic Beef Bolognese with GF Pappardelle",
+  protein:"beef", hasPasta:true,
+  source:"Milk Street", sourceUrl:"https://www.177milkstreet.com/recipes",
+  prepMin:20, cookMin:60, extraMin:0,
+  desc:"A proper slow-simmered Italian meat sauce with ground beef, rich tomato, dry white wine, and a finish of cream — served over wide GF pappardelle.",
+  ingredientGroups:[
+    {label:"Bolognese",items:["1½ lbs 80/20 ground beef","1 medium yellow onion, finely diced","2 medium carrots, finely diced","2 ribs celery, finely diced","4 cloves garlic, minced","2 tbsp olive oil"]},
+    {label:"Sauce Liquids",items:["½ cup dry white wine","1 can (28 oz) crushed San Marzano tomatoes","1 cup whole milk or heavy cream","¼ cup tomato paste","½ cup GF beef broth","1 bay leaf"]},
+    {label:"Seasoning & Pasta",items:["1 tsp dried oregano","Pinch of nutmeg","Salt & black pepper","12 oz GF pappardelle or tagliatelle (Jovial GF)","Parmesan, freshly grated, for serving","Fresh basil leaves"]}
+  ],
+  dairyNote:"Finish with whole milk or heavy cream — both add richness. Shower generously with freshly grated Parmigiano-Reggiano.",
+  steps:[
+    {text:"Heat olive oil in a large Dutch oven or heavy pot over medium-high. Add onion, carrots, and celery with a pinch of salt. Cook, stirring occasionally, until softened and starting to caramelize.",timer:10},
+    {text:"Add garlic; stir until fragrant, about 1 minute. Push vegetables to the edges. Add ground beef to the center, season with salt and pepper. Cook, breaking up the meat, until browned with no pink remaining.",timer:8},
+    {text:"Pour in white wine. Stir and scrape up any browned bits. Let wine reduce almost completely.",timer:3},
+    {text:"Stir in crushed tomatoes, tomato paste, beef broth, bay leaf, oregano, and nutmeg. Bring to a gentle boil.",timer:null},
+    {text:"Reduce heat to the lowest simmer. Cook uncovered, stirring every 10–15 minutes, until the sauce is thick and the fat has separated to the surface. The long simmer deepens flavor.",timer:35},
+    {text:"Stir in the cream or whole milk. Simmer 5 more minutes. Remove bay leaf. Taste and season well.",timer:5},
+    {text:"Cook GF pasta in well-salted boiling water per package. Reserve ½ cup pasta water; drain. Toss pasta with sauce, loosening with pasta water as needed. Serve topped with freshly grated Parmesan and basil.",timer:null}
+  ]
+},
+{
+  id:3, day:5, week:1,
+  title:"Milk Street Honey-Miso Salmon & Broccolini Traybake",
+  protein:"salmon", hasPasta:false,
+  source:"Milk Street", sourceUrl:"https://www.177milkstreet.com/recipes/honey-miso-salmon-broccolini-traybake",
+  prepMin:15, cookMin:25, extraMin:20, extraLabel:"marinate",
+  desc:"A weeknight showstopper — salmon glazed in sweet-savory miso and honey, roasted alongside crispy broccolini, finished with a miso-orange drizzle.",
+  ingredientGroups:[
+    {label:"Miso Marinade & Sauce",items:["3 tbsp white (shiro) miso paste","5 tsp honey (divided)","2 tbsp GF soy sauce or tamari","1 tbsp toasted sesame oil","1 tbsp vegetable oil","Pinch of cayenne pepper","Zest and juice of 1 orange"]},
+    {label:"Salmon & Vegetables",items:["4 center-cut salmon fillets (6 oz each), skin-on","1 lb broccolini, trimmed (or substitute broccoli florets)","2 tbsp vegetable oil","Salt & black pepper"]},
+    {label:"Serve With",items:["Steamed jasmine rice","Sesame seeds (optional)","Thinly sliced scallions (optional)"]}
+  ],
+  dairyNote:"No dairy in this recipe — it's naturally dairy-free but fully GF and packed with umami.",
+  steps:[
+    {text:"In a small bowl, whisk miso, 4 tsp honey, soy sauce, sesame oil, 1 tbsp vegetable oil, and cayenne. Transfer half to a wide shallow dish; add salmon skin-side up. Marinate at room temperature.",timer:20},
+    {text:"Into the remaining miso mixture, whisk orange zest, orange juice, and remaining 1 tsp honey; set aside as the finishing sauce.",timer:null},
+    {text:"Heat oven to 425°F with a rack in the middle. Start cooking jasmine rice per package instructions.",timer:18},
+    {text:"On a large rimmed baking sheet, toss broccolini with 2 tbsp vegetable oil, salt, and pepper. Spread in an even layer. Roast until starting to char at the edges.",timer:10},
+    {text:"Flip the broccolini and push to the edges. Remove salmon from marinade; place skin-side down in the center of the pan.",timer:null},
+    {text:"Roast until salmon flakes easily when tested with a fork and broccolini is tender-crisp and lightly charred.",timer:9},
+    {text:"Transfer to a platter. Drizzle the miso-orange sauce over the top. Serve over rice with sesame seeds and scallions.",timer:null}
+  ]
+},
+{
+  id:4, day:7, week:1,
+  title:"Parmesan-Crusted Chicken Thighs with Roasted Cherry Tomatoes",
+  protein:"chicken", hasPasta:false,
+  source:"Southern Living", sourceUrl:"https://www.southernliving.com/food/chicken/chicken-thigh-recipes",
+  prepMin:15, cookMin:35, extraMin:0,
+  desc:"Juicy chicken thighs with a golden Parmesan-herb crust, served with sweet burst tomatoes and a lemony pan sauce — easy enough for any weeknight.",
+  ingredientGroups:[
+    {label:"Chicken",items:["8 boneless, skinless chicken thighs (about 2½ lbs)","1 cup freshly grated Parmesan cheese","½ cup GF Italian-seasoned breadcrumbs (Ian's GF brand)","2 tsp garlic powder","1 tsp smoked paprika","Salt & black pepper","2 eggs, beaten","2 tbsp olive oil"]},
+    {label:"Roasted Tomatoes",items:["2 pints cherry tomatoes","3 cloves garlic, smashed","3 tbsp olive oil","2 sprigs fresh thyme","Salt & pepper"]},
+    {label:"Lemon Pan Sauce",items:["2 tbsp butter","¼ cup dry white wine or GF chicken broth","2 tbsp fresh lemon juice","2 tbsp fresh basil or parsley, chopped"]}
+  ],
+  dairyNote:"Freshly grated Parmesan is the star here — use a good wedge rather than the pre-grated container for the best golden crust. The butter in the pan sauce adds richness.",
+  steps:[
+    {text:"Preheat oven to 425°F. On a rimmed baking sheet, toss cherry tomatoes with garlic, olive oil, thyme, salt, and pepper. Roast on the upper rack until burst and caramelized.",timer:20},
+    {text:"While tomatoes roast: mix Parmesan, GF breadcrumbs, garlic powder, paprika, 1 tsp salt, and ½ tsp pepper in a shallow dish.",timer:null},
+    {text:"Dip each chicken thigh in beaten egg, letting excess drip off. Press firmly into the Parmesan coating on both sides.",timer:null},
+    {text:"Heat 2 tbsp olive oil in a large oven-safe skillet over medium-high. Sear chicken smooth-side down until deeply golden. Flip and transfer skillet to the oven.",timer:5},
+    {text:"Bake until chicken is cooked through (internal temp 165°F) and the crust is crispy and golden.",timer:18},
+    {text:"Transfer chicken to a plate. Return skillet to medium heat. Add wine or broth, scraping up browned bits. Add butter and lemon juice; swirl until sauce thickens slightly.",timer:2},
+    {text:"Plate chicken alongside roasted tomatoes. Spoon the pan sauce over everything. Finish with fresh herbs.",timer:null}
+  ]
+},
+// ── WEEK 2 ──────────────────────────────────────────
+{
+  id:5, day:9, week:2,
+  title:"Creamy Ground Beef Stroganoff with GF Egg Noodles",
+  protein:"beef", hasPasta:true,
+  source:"The Roasted Root", sourceUrl:"https://www.theroastedroot.net/gluten-free-dairy-free-ground-beef-stroganoff/",
+  prepMin:15, cookMin:30, extraMin:0,
+  desc:"The ultimate comfort-food bowl: ground beef and mushrooms in a creamy, tangy Dijon-sour cream sauce over wide GF noodles. Ready in 45 minutes.",
+  ingredientGroups:[
+    {label:"Beef & Vegetables",items:["1½ lbs 80/20 ground beef","10 oz cremini or baby bella mushrooms, sliced","1 medium yellow onion, diced","4 cloves garlic, minced","2 tbsp olive oil or butter"]},
+    {label:"Sauce",items:["2 tbsp GF all-purpose flour","2 cups GF beef broth","1 cup sour cream","2 tbsp GF Dijon mustard","1 tbsp GF Worcestershire sauce","½ tsp smoked paprika","Salt & black pepper"]},
+    {label:"Pasta & Finish",items:["12 oz wide GF egg noodles or pappardelle (Jovial or Banza)","2 tbsp butter (for finishing)","Fresh dill or flat-leaf parsley, chopped"]}
+  ],
+  dairyNote:"Full-fat sour cream gives the authentic tang and richness of classic stroganoff. Stir it in off-heat so it doesn't curdle. Finish with butter for extra silkiness.",
+  steps:[
+    {text:"Bring a large pot of salted water to boil. Cook GF noodles per package, then drain and toss with 1 tbsp butter. Set aside.",timer:null},
+    {text:"Heat oil in a large deep skillet over medium-high. Sauté onion until softened and starting to color.",timer:5},
+    {text:"Add mushrooms and garlic with a pinch of salt; cook until mushrooms release their liquid and begin to brown.",timer:6},
+    {text:"Push vegetables to the sides. Add ground beef to the center; season with salt, pepper, and paprika. Cook, breaking it up, until browned.",timer:7},
+    {text:"Sprinkle GF flour over everything; stir constantly and cook out the raw flour taste.",timer:90},
+    {text:"Gradually whisk in the beef broth, scraping up all browned bits from the bottom. Add Dijon and Worcestershire sauce. Bring to a gentle simmer until the sauce thickens.",timer:6},
+    {text:"Remove from heat. Fold in sour cream and remaining 1 tbsp butter until silky. Taste and season. Serve over GF noodles; garnish with fresh dill.",timer:null}
+  ]
+},
+{
+  id:6, day:11, week:2,
+  title:"One-Pan Mediterranean Chicken Pasta",
+  protein:"chicken", hasPasta:true,
+  source:"Iowa Girl Eats (GF)", sourceUrl:"https://iowagirleats.com/one-pan-mediterranean-chicken-pasta-gluten-free/",
+  prepMin:10, cookMin:30, extraMin:0,
+  desc:"Everything cooks in one skillet — the pasta simmers right in the broth and absorbs every bit of flavor from artichokes, capers, and cherry tomatoes. Finished with Parmesan and fresh basil.",
+  ingredientGroups:[
+    {label:"Chicken & Aromatics",items:["1½ lbs boneless skinless chicken breasts, cut into 1-inch pieces","4 cloves garlic, minced","2 tbsp olive oil","Salt & black pepper","Pinch of red pepper flakes"]},
+    {label:"Sauce & Pasta",items:["2 cups GF chicken broth","1 cup water","12 oz GF penne pasta (dry, uncooked — goes in raw)","1 can (14 oz) artichoke hearts, drained and quartered","2 tbsp capers, drained","1 tbsp fresh lemon juice"]},
+    {label:"Finish",items:["1 pint cherry tomatoes, halved","½ cup freshly grated Parmesan","¼ cup fresh basil, thinly sliced","Extra lemon wedges"]}
+  ],
+  dairyNote:"Freshly grated Parmesan finishes the sauce beautifully — it melts right in and thickens the sauce to a glossy, elegant consistency.",
+  steps:[
+    {text:"Heat olive oil in a large, deep skillet over medium-high. Season chicken with salt, pepper, and red pepper flakes. Sauté until golden on the outside (not fully cooked through yet).",timer:3},
+    {text:"Add garlic; stir 30 seconds until fragrant.",timer:null},
+    {text:"Add broth, water, dry GF pasta, artichoke hearts, capers, lemon juice, salt, and pepper. Stir to combine. Bring to a boil.",timer:null},
+    {text:"Cover, reduce to medium heat, and simmer for 2 minutes less than the pasta package directions for al dente. Stir every few minutes to prevent sticking.",timer:null},
+    {text:"Uncover. Add cherry tomatoes. Increase heat to high. Cook, stirring, until the sauce reduces and thickens.",timer:3},
+    {text:"Remove from heat. Stir in Parmesan and fresh basil. Let sit 3 minutes — the sauce will continue thickening.",timer:3},
+    {text:"Serve from the skillet with extra lemon wedges alongside.",timer:null}
+  ]
+},
+{
+  id:7, day:13, week:2,
+  title:"Milk Street Miso-Glazed Broiled Salmon",
+  protein:"salmon", hasPasta:false,
+  source:"Milk Street", sourceUrl:"https://www.177milkstreet.com/recipes/miso-glazed-broiled-salmon",
+  prepMin:10, cookMin:12, extraMin:20, extraLabel:"marinate",
+  desc:"Soy, white miso, mirin, and honey create the most deeply savory-sweet glaze — broiled to a dark, lacquered finish. Serve with sautéed sesame greens.",
+  ingredientGroups:[
+    {label:"Miso Glaze",items:["¼ cup white (shiro) miso paste","5 tsp honey (divided — 4 tsp + 1 tsp)","2 tbsp GF soy sauce or tamari","2 tbsp mirin","1 tsp toasted sesame oil","Pinch of cayenne","2 tbsp water (for finishing sauce)"]},
+    {label:"Salmon",items:["4 center-cut salmon fillets (6 oz each)","Kosher salt (light pinch)"]},
+    {label:"Sesame Sautéed Greens",items:["1 lb baby bok choy, halved lengthwise, OR broccolini","1 tbsp sesame oil","1 tbsp GF soy sauce","1 tsp sesame seeds","1 clove garlic, minced"]},
+    {label:"Serve With",items:["2 cups dry jasmine rice, cooked"]}
+  ],
+  dairyNote:"No dairy in this recipe — the richness comes entirely from the miso glaze and salmon's natural fat.",
+  steps:[
+    {text:"Whisk miso, 4 tsp honey, soy sauce, mirin, sesame oil, and cayenne together. Measure 2 tbsp into a dish; add salmon and turn to coat on all sides. Marinate at room temperature.",timer:20},
+    {text:"Into the remaining miso mixture, whisk remaining 1 tsp honey and 2 tbsp water to make a looser drizzling sauce. Set aside.",timer:null},
+    {text:"Cook jasmine rice per package instructions. Keep warm.",timer:18},
+    {text:"Position an oven rack 6 inches from the broiler element. Preheat broiler to high.",timer:5},
+    {text:"Line a rimmed baking sheet with foil; coat with cooking spray. Place salmon skin-side down on the sheet.",timer:null},
+    {text:"Broil, without flipping, until the glaze is deeply browned and caramelized and the salmon is just cooked through. Watch carefully — the sugars in the glaze can go from perfect to burned quickly.",timer:8},
+    {text:"Meanwhile, heat sesame oil in a skillet. Add garlic 30 sec, then bok choy or broccolini. Stir-fry until tender-crisp, add soy sauce & sesame seeds. Plate salmon over rice with greens. Drizzle reserved miso sauce on top.",timer:5}
+  ]
+},
+{
+  id:8, day:15, week:2,
+  title:"Creamy Beef & Mushroom Pasta Bake",
+  protein:"beef", hasPasta:true,
+  source:"Small Farm Big Life (GF adapted)", sourceUrl:"https://smallfarmbiglife.com/gluten-free-ground-beef-pasta-casserole/",
+  prepMin:20, cookMin:45, extraMin:0,
+  desc:"A deeply satisfying baked pasta casserole: ground beef and mushrooms in a rich tomato-cream sauce with layers of melted cheddar and Monterey Jack over GF penne.",
+  ingredientGroups:[
+    {label:"Beef & Sauce",items:["1½ lbs 80/20 ground beef","10 oz baby bella mushrooms, sliced","1 medium yellow onion, diced","3 cloves garlic, minced","1 can (15 oz) diced tomatoes","1 jar (24 oz) marinara sauce (check GF label)","2 tbsp tomato paste","½ cup GF beef broth","1 tsp Italian seasoning","Salt & pepper"]},
+    {label:"Creamy Layers",items:["4 oz cream cheese, softened","½ cup sour cream","1 cup shredded sharp cheddar (divided)","1 cup shredded Monterey Jack (divided)"]},
+    {label:"Pasta",items:["12 oz GF penne (Jovial or Barilla GF)","Fresh parsley for garnish"]}
+  ],
+  dairyNote:"A full trio of dairy — cream cheese, sour cream, and two melty cheeses — makes this the ultimate comfort bake. Use sharp cheddar for best flavor.",
+  steps:[
+    {text:"Preheat oven to 350°F. Cook GF penne in salted boiling water to just under al dente (it will finish in the oven). Drain and set aside.",timer:null},
+    {text:"In a large oven-safe skillet or Dutch oven over medium-high, cook ground beef until browned. Add onion and garlic; cook until softened.",timer:8},
+    {text:"Add mushrooms; cook until they release their liquid and begin to brown.",timer:5},
+    {text:"Stir in diced tomatoes, marinara, tomato paste, broth, and Italian seasoning. Bring to a simmer; cook until slightly thickened.",timer:8},
+    {text:"Remove from heat. Stir in cream cheese until melted and smooth. Fold in sour cream, half the cheddar, half the Monterey Jack, and the drained pasta.",timer:null},
+    {text:"Transfer to a 9×13-inch baking dish if needed. Top with remaining cheddar and Monterey Jack. Bake uncovered until bubbling and cheese is golden.",timer:25},
+    {text:"Rest before serving. Garnish with fresh parsley.",timer:10}
+  ]
+},
+// ── WEEK 3 ──────────────────────────────────────────
+{
+  id:9, day:17, week:3,
+  title:"Milk Street Broiler Butter Chicken (Murgh Makhani)",
+  protein:"chicken", hasPasta:false,
+  source:"Milk Street", sourceUrl:"https://www.177milkstreet.com/recipes/butter-chicken",
+  prepMin:20, cookMin:40, extraMin:30, extraLabel:"marinate",
+  desc:"Milk Street's brilliant version: chicken thighs marinated in spiced yogurt and charred under the broiler, stirred into a creamy cashew-tomato sauce. Serve with basmati rice.",
+  ingredientGroups:[
+    {label:"Chicken Marinade",items:["1½ lbs boneless skinless chicken thighs","½ cup plain whole-milk yogurt","1 tbsp honey","2 tbsp smoked paprika","1 tbsp ground garam masala","1 tbsp ground cumin","1 tsp ground ginger","1 tsp ground cayenne","1 tsp kosher salt"]},
+    {label:"Makhani Sauce",items:["1 can (28 oz) crushed tomatoes","½ cup raw cashews","1 medium yellow onion, diced","4 cloves garlic, minced","1 tbsp fresh ginger, minced","3 tbsp butter","2 tbsp garam masala","1 tsp ground coriander","Salt to taste"]},
+    {label:"Finish & Serve",items:["¼ cup heavy cream","Fresh cilantro, chopped","2 cups dry basmati rice, cooked"]}
+  ],
+  dairyNote:"Whole-milk yogurt in the marinade helps the chicken char beautifully. Heavy cream finishes the sauce luxuriously — Milk Street uses it in a restrained but impactful pour.",
+  steps:[
+    {text:"Whisk yogurt, honey, paprika, 3 tbsp garam masala, cumin, ginger, cayenne, and 1 tsp salt together. Add chicken; turn to coat. Marinate in the refrigerator.",timer:30},
+    {text:"Blend cashews with ½ cup water until completely smooth. Set aside.",timer:null},
+    {text:"Melt butter in a large pot over medium. Add onion; cook until deeply golden.",timer:10},
+    {text:"Add garlic, ginger, remaining garam masala, and coriander. Stir and cook until very fragrant.",timer:2},
+    {text:"Add crushed tomatoes and cashew cream; stir well. Simmer over medium-low while you broil the chicken.",timer:null},
+    {text:"Position oven rack 6 inches from broiler. Broil chicken thighs (do not wipe off marinade) on a foil-lined sheet until charred in spots and cooked through, flipping once.",timer:15},
+    {text:"Cut or tear chicken into chunks; stir into the sauce with the heavy cream. Simmer 5 minutes. Taste and season. Scatter cilantro on top. Serve over basmati rice.",timer:5}
+  ]
+},
+{
+  id:10, day:19, week:3,
+  title:"Lemon-Dill Salmon with Creamy GF Orzo",
+  protein:"salmon", hasPasta:true,
+  source:"Inspired by Milk Street / Southern Living", sourceUrl:"https://www.177milkstreet.com/recipes",
+  prepMin:15, cookMin:30, extraMin:0,
+  desc:"Pan-seared salmon fillets rest on a bed of creamy GF orzo with spinach, sun-dried tomatoes, and a rich lemon-dill cream sauce.",
+  ingredientGroups:[
+    {label:"Salmon",items:["4 salmon fillets (6 oz each), skin-on","1 tsp garlic powder","½ tsp smoked paprika","Salt & black pepper","2 tbsp olive oil"]},
+    {label:"Creamy Orzo",items:["10 oz GF orzo or small pasta shells (Banza or Tolerant brand)","2 cups GF chicken or vegetable broth","1 cup water","3 cloves garlic, minced","3 tbsp butter","¼ cup sun-dried tomatoes (in oil), drained & sliced","2 cups fresh baby spinach"]},
+    {label:"Cream Sauce",items:["¾ cup heavy cream","Zest and juice of 1 large lemon","3 tbsp fresh dill, chopped","¼ cup grated Parmesan","Salt & black pepper"]}
+  ],
+  dairyNote:"Heavy cream and Parmesan create a luscious, restaurant-quality sauce. Use fresh dill — it makes a real difference here alongside the cream.",
+  steps:[
+    {text:"Melt butter in a large deep skillet over medium. Add garlic; cook 1 minute. Add dry GF orzo; stir to coat in butter and toast very lightly, about 2 minutes.",timer:3},
+    {text:"Add broth and water. Bring to a boil, then reduce heat to medium. Cook uncovered, stirring frequently, until orzo is just tender and most liquid is absorbed.",timer:12},
+    {text:"Stir in sun-dried tomatoes, spinach, heavy cream, lemon zest and juice. Cook, stirring, until spinach wilts and sauce thickens slightly. Add Parmesan and half the dill. Season well. Keep warm on low.",timer:4},
+    {text:"Pat salmon fillets completely dry. Season with garlic powder, paprika, salt, and pepper.",timer:null},
+    {text:"Heat olive oil in a separate skillet over medium-high. Place salmon skin-side up. Cook until the flesh releases easily and is golden.",timer:4},
+    {text:"Flip salmon and cook until the skin is crispy and the fish is cooked to your liking (slightly translucent in the center for medium).",timer:3},
+    {text:"Spoon creamy orzo into shallow bowls. Rest salmon on top, skin-side up. Scatter remaining fresh dill over everything.",timer:null}
+  ]
+},
+{
+  id:11, day:21, week:3,
+  title:"Spicy Miso Ground Beef Rice Noodles",
+  protein:"beef", hasPasta:true,
+  source:"A Day in the Kitchen (GF)", sourceUrl:"https://www.adayinthekitchen.com/spicy-miso-beef-noodles/",
+  prepMin:15, cookMin:20, extraMin:0,
+  desc:"An irresistible Asian-inspired take on Bolognese — ground beef in a spicy miso-tamari sauce with rice noodles, finished with scallions and sesame.",
+  ingredientGroups:[
+    {label:"Beef Sauce",items:["1½ lbs 80/20 ground beef","1 medium yellow onion, diced","4 cloves garlic, minced","1 tbsp fresh ginger, minced","2 tbsp vegetable oil","3 tbsp white miso paste","3 tbsp GF tamari or soy sauce","1 tbsp chili-garlic sauce (adjust to heat preference)","1 tbsp honey","1 can (14 oz) diced tomatoes","1 tsp sesame oil"]},
+    {label:"Noodles & Finish",items:["10 oz wide rice noodles (pad thai-style)","4 scallions, thinly sliced","2 tbsp sesame seeds","Fresh cilantro (optional)","Lime wedges for serving"]}
+  ],
+  dairyNote:"No dairy needed here — the umami comes from miso, tamari, and beef. Optionally, top with a soft-boiled egg for extra richness.",
+  steps:[
+    {text:"Soak rice noodles in a large bowl of very hot water per package directions until pliable but not fully cooked. Drain and set aside.",timer:null},
+    {text:"In a small bowl, whisk miso, tamari, chili-garlic sauce, and honey until smooth. Set aside.",timer:null},
+    {text:"Heat vegetable oil in a large wok or deep skillet over medium-high. Add onion; cook until starting to soften.",timer:3},
+    {text:"Add garlic and ginger; stir until fragrant, about 1 minute.",timer:null},
+    {text:"Add ground beef; break it up and cook until browned with nice caramelized bits on the bottom.",timer:6},
+    {text:"Pour in the miso-tamari sauce and diced tomatoes. Stir to combine and simmer, scraping up browned bits, until sauce thickens.",timer:5},
+    {text:"Add the soaked rice noodles; toss everything together using tongs. Cook until noodles are heated through and have soaked up the sauce. Drizzle sesame oil over the top. Serve topped with scallions, sesame seeds, and lime wedges.",timer:3}
+  ]
+},
+{
+  id:12, day:23, week:3,
+  title:"Milk Street Butter-Herb Roasted Whole Chicken",
+  protein:"chicken", hasPasta:false,
+  source:"Milk Street", sourceUrl:"https://www.177milkstreet.com/recipes/butter-lemon-roasted-chicken-herbs",
+  prepMin:20, cookMin:75, extraMin:0,
+  desc:"A Sunday classic elevated — whole chicken roasted at high heat over a bed of lemon halves and fresh tarragon. A buttery wine-herb jus made from the pan drippings takes it over the top.",
+  ingredientGroups:[
+    {label:"Chicken",items:["1 whole chicken (3½–4 lbs)","3 tbsp unsalted butter, softened","4 sprigs fresh tarragon (or thyme)","2 lemons, halved","1 tbsp olive oil","Kosher salt & black pepper"]},
+    {label:"Herb Jus",items:["½ cup dry white wine (pour half before roasting, half for sauce)","2 tbsp cold unsalted butter, cut into pieces","1 shallot, minced","1 tsp Dijon mustard","2 tbsp fresh flat-leaf parsley, chopped","Salt & pepper"]},
+    {label:"Suggested Sides",items:["Roasted potatoes or steamed rice","Simple green salad"]}
+  ],
+  dairyNote:"Butter does the heavy lifting here — both rubbed under the skin before roasting and whisked into the jus at the end for silky richness. Don't skimp.",
+  steps:[
+    {text:"Preheat oven to 425°F with a rack in the middle. Set a wire rack inside a rimmed baking sheet.",timer:null},
+    {text:"Gently loosen the skin over the chicken breasts and thighs. Rub softened butter under the skin and over the exterior. Season generously all over with kosher salt and pepper.",timer:null},
+    {text:"Stuff tarragon sprigs and lemon halves into the cavity. Tie the legs with kitchen twine and tuck the wing tips under. Set chicken breast-side up on the rack. Drizzle top with olive oil.",timer:null},
+    {text:"Pour ¼ cup of white wine onto the baking sheet (not over the chicken). Roast until the thighs register 175°F on an instant-read thermometer.",timer:75},
+    {text:"Tilt the chicken to drain juices from the cavity back onto the baking sheet. Transfer to a cutting board to rest.",timer:15},
+    {text:"Remove the wire rack. Pour remaining ¼ cup wine onto the hot baking sheet; scrape up all browned bits. Pour the mixture into a small saucepan. Bring to a simmer; reduce by half.",timer:8},
+    {text:"Off heat, whisk in cold butter piece by piece, then Dijon and parsley. Season well. Carve the chicken and serve with the herb jus poured generously over the top.",timer:null}
+  ]
+},
+// ── WEEK 4 ──────────────────────────────────────────
+{
+  id:13, day:25, week:4,
+  title:"Salmon Piccata with GF Penne & Capers",
+  protein:"salmon", hasPasta:true,
+  source:"Kitchen Gone Rogue (GF)", sourceUrl:"https://www.kitchengonerogue.com/salmon-piccata-pasta-dairy-free-gluten-free/",
+  prepMin:15, cookMin:25, extraMin:0,
+  desc:"Restaurant-elegant and done in 40 minutes — pan-seared salmon in a bright lemon-butter-caper sauce over GF penne. Easy enough for a weeknight, impressive enough for guests.",
+  ingredientGroups:[
+    {label:"Salmon",items:["4 salmon fillets (6 oz each), cut in half crosswise","2 tbsp GF all-purpose flour (for dredging)","Salt & black pepper","2 tbsp olive oil"]},
+    {label:"Piccata Sauce",items:["4 tbsp unsalted butter (divided)","3 cloves garlic, minced","¾ cup GF chicken or vegetable broth","Juice of 2 lemons","Zest of 1 lemon","3 tbsp capers, drained","2 tbsp reserved pasta water"]},
+    {label:"Pasta & Finish",items:["12 oz GF penne (Jovial or Banza)","¼ cup fresh flat-leaf parsley, chopped","Lemon slices for garnish","Freshly grated Parmesan — optional"]}
+  ],
+  dairyNote:"Butter is the heart of piccata — use unsalted butter and add it in two stages (one for sautéing, one whisked in at the end) for the silkiest, most lustrous sauce.",
+  steps:[
+    {text:"Cook GF penne in well-salted boiling water per package. Reserve 3 tbsp pasta water before draining. Drain and set aside.",timer:null},
+    {text:"Spread GF flour in a shallow dish; season with salt and pepper. Lightly dust salmon pieces on one side only. Shake off excess.",timer:null},
+    {text:"Heat olive oil in a large skillet over medium-high. Add salmon flour-side down; cook until golden. Flip and cook until just cooked through (do not over-cook). Transfer to a plate.",timer:5},
+    {text:"Reduce heat to medium. Add 2 tbsp butter. Add garlic; sauté until just starting to turn golden.",timer:90},
+    {text:"Add broth, lemon juice, and lemon zest. Stir well, scraping up browned bits. Simmer until reduced by about one-third.",timer:4},
+    {text:"Whisk in remaining 2 tbsp butter a piece at a time. Add capers and reserved pasta water. The sauce should be glossy and slightly thickened.",timer:null},
+    {text:"Add drained pasta to the sauce; toss to coat. Nestle salmon on top. Spoon sauce over salmon. Scatter parsley over everything. Serve with lemon slices. Add Parmesan if desired.",timer:null}
+  ]
+},
+{
+  id:14, day:27, week:4,
+  title:"Cheesy Stuffed Bell Peppers with Ground Beef & Rice",
+  protein:"beef", hasPasta:false,
+  source:"Southern Living", sourceUrl:"https://www.southernliving.com/recipes/stuffed-peppers",
+  prepMin:20, cookMin:50, extraMin:0,
+  desc:"Classic American comfort — tender bell peppers loaded with seasoned ground beef, rice, and tomatoes, topped with a bubbling layer of melted cheddar. Family-table perfection.",
+  ingredientGroups:[
+    {label:"Peppers & Beef",items:["5 large bell peppers (mixed colors), tops sliced off and seeds removed","1½ lbs 80/20 ground beef","1 small yellow onion, finely diced","3 cloves garlic, minced","1 tbsp olive oil"]},
+    {label:"Filling",items:["1½ cups cooked long-grain white rice","1 can (15 oz) diced tomatoes, drained","2 tbsp tomato paste","1 tsp smoked paprika","1 tsp garlic powder","1 tsp Italian seasoning","½ tsp cumin","Salt & black pepper","¼ cup GF beef broth"]},
+    {label:"Cheese Topping",items:["1½ cups shredded sharp cheddar cheese (divided)","Fresh flat-leaf parsley for garnish"]}
+  ],
+  dairyNote:"Generously top each pepper with sharp cheddar before baking — the cheese melts into the filling and creates an irresistible golden crust on top.",
+  steps:[
+    {text:"Preheat oven to 375°F. In a skillet over medium-high, heat olive oil and brown ground beef with onion, garlic, salt, and pepper, breaking it up until cooked through.",timer:8},
+    {text:"Stir in diced tomatoes, tomato paste, broth, paprika, garlic powder, Italian seasoning, and cumin. Simmer until liquid reduces and filling thickens.",timer:5},
+    {text:"Remove from heat. Fold in cooked rice and half the cheddar. Taste and season well.",timer:null},
+    {text:"Arrange bell pepper shells upright in a baking dish. Add ¼ cup water to the bottom of the dish to help steam the peppers.",timer:null},
+    {text:"Spoon filling generously into each pepper, mounding it above the rim. Cover tightly with foil.",timer:null},
+    {text:"Bake covered until peppers are tender.",timer:30},
+    {text:"Uncover. Top each pepper with remaining cheddar. Return to oven until cheese is melted and bubbling. Garnish with parsley.",timer:15}
+  ]
+},
+{
+  id:15, day:29, week:4,
+  title:"Milk Street Lemon-Saffron Chicken with Olives (Tangia-Style)",
+  protein:"chicken", hasPasta:false,
+  source:"Milk Street", sourceUrl:"https://www.177milkstreet.com/recipes/lemon-saffron-chicken-tangia",
+  prepMin:15, cookMin:60, extraMin:0,
+  desc:"A stew of fall-apart tender chicken thighs braised with saffron, turmeric, preserved lemon flavor, and green olives — deeply fragrant and absolutely stunning.",
+  ingredientGroups:[
+    {label:"Chicken & Aromatics",items:["2 lbs boneless skinless chicken thighs","1 large yellow onion, thinly sliced","6 cloves garlic, smashed","1-inch piece fresh ginger, minced","3 tbsp olive oil"]},
+    {label:"Braise",items:["1 tsp ground turmeric","1 tsp ground cumin","½ tsp ground coriander","½ tsp ground cinnamon","Large pinch saffron threads, bloomed in 2 tbsp warm water","1 cup GF chicken broth","Salt & black pepper"]},
+    {label:"Finish",items:["4 tbsp cold unsalted butter, cut into pieces","Zest and juice of 2 lemons","¾ cup pitted green olives (Castelvetrano preferred)","¼ cup fresh cilantro, chopped","Warm GF flatbread or steamed couscous-style GF grain for serving"]}
+  ],
+  dairyNote:"Cold butter whisked in at the very end — classic French technique (beurre monté) — gives the braising liquid a silky, rich, glossy finish that transforms the sauce completely.",
+  steps:[
+    {text:"Season chicken thighs generously with salt and pepper. Heat 2 tbsp olive oil in a Dutch oven over medium-high. Sear chicken until golden brown on both sides. Transfer to a plate.",timer:10},
+    {text:"Reduce heat to medium. Add remaining 1 tbsp olive oil. Cook onion until softened and golden.",timer:8},
+    {text:"Add garlic and ginger; stir until fragrant, about 1 minute.",timer:null},
+    {text:"Add turmeric, cumin, coriander, and cinnamon; stir constantly for 1 minute to toast the spices.",timer:60},
+    {text:"Add bloomed saffron water and chicken broth; scrape up any browned bits. Return chicken to the pot. Bring to a simmer, then cover and cook over medium-low until chicken is extremely tender.",timer:40},
+    {text:"Using tongs, shred or pull apart the chicken into large chunks in the pot. Raise heat to medium and simmer uncovered to concentrate the sauce slightly.",timer:5},
+    {text:"Off heat, stir in cold butter pieces a few at a time until the sauce turns glossy. Stir in lemon zest, lemon juice, and olives. Taste and season. Top with cilantro. Serve with warm GF flatbread or grain.",timer:null}
+  ]
+}
+];
+
+// ═══════════════════════════════════════════════════
+// SHOPPING LISTS
+// ═══════════════════════════════════════════════════
+const SHOPPING = [
+  {
+    label:"Week 1", subtitle:"Days 1, 3, 5, 7",
+    meals:"Browned Butter Lemon Pasta · Beef Bolognese · Honey-Miso Salmon Traybake · Parmesan Chicken",
+    categories:[
+      {name:"Fresh Produce",type:"produce",items:["1 bunch scallions","4 lemons + 2 more for Bolognese","1 bunch fresh flat-leaf parsley","Fresh basil (1 bunch)","2 pints cherry tomatoes","2 medium carrots (Bolognese soffritto)","2 ribs celery (Bolognese soffritto)","2 yellow onions (Bolognese + Chicken)","3 heads garlic","1 lb broccolini (Salmon traybake)","1 orange (Salmon sauce)","2 sprigs fresh thyme (Chicken)","Fresh basil (large bunch)"]},
+      {name:"Proteins",type:"protein",items:["1½ lbs boneless skinless chicken breasts or thighs (Pasta)","1½ lbs 80/20 ground beef (Bolognese)","8 boneless skinless chicken thighs (Parmesan Chicken — Day 7)","4 center-cut salmon fillets, 6 oz each (Traybake — Day 5)"]},
+      {name:"GF Pasta & Grains",type:"pasta-grains",items:["12 oz GF penne or rigatoni — Jovial or Barilla GF (Pasta Day 1)","12 oz GF pappardelle or tagliatelle — Jovial GF (Bolognese Day 3)","2 cups dry jasmine rice (Salmon traybake side)"]},
+      {name:"Dairy",type:"dairy-cat",items:["6 tbsp unsalted butter (Browned Butter Pasta)","2 oz Parmesan wedge (grate fresh — Day 1 & Day 7)","1 cup heavy cream or whole milk (Bolognese)","½ cup GF Italian breadcrumbs — Ian's brand (for Parmesan chicken)","2 eggs (for Parmesan chicken coating)","Butter for pan sauce (Day 7)"]},
+      {name:"Pantry & Sauces",type:"pantry",items:["1 can (28 oz) crushed San Marzano tomatoes","½ cup dry white wine (Bolognese + Chicken pan sauce)","½ cup GF beef broth (Bolognese)","1 bay leaf","White miso paste (small container)","GF soy sauce or tamari (San-J)","Mirin (Japanese rice wine)","Toasted sesame oil","Olive oil (large bottle)","Vegetable oil","Sesame seeds (optional garnish)"]},
+      {name:"Spices & Seasonings",type:"spices",items:["Dried oregano","Ground nutmeg","Smoked paprika","Garlic powder","Red pepper flakes","Cayenne pepper","Salt & black pepper (always)"]}
+    ]
+  },
+  {
+    label:"Week 2", subtitle:"Days 9, 11, 13, 15",
+    meals:"Beef Stroganoff · One-Pan Mediterranean Chicken Pasta · Miso-Glazed Salmon · Beef & Mushroom Pasta Bake",
+    categories:[
+      {name:"Fresh Produce",type:"produce",items:["10 oz cremini or baby bella mushrooms (Stroganoff)","1 medium yellow onion (Stroganoff)","4 garlic heads (4 recipes)","1 pint cherry tomatoes (Mediterranean Chicken Pasta)","Fresh dill (1 bunch — Stroganoff)","Fresh basil (Mediterranean Chicken Pasta)","1 lemon (Mediterranean + Salmon)","1 lb baby bok choy or broccolini (Miso Salmon side)","10 oz baby bella mushrooms (Pasta Bake)","Fresh parsley"]},
+      {name:"Proteins",type:"protein",items:["1½ lbs 80/20 ground beef (Stroganoff)","1½ lbs boneless skinless chicken breasts (Mediterranean Pasta)","4 center-cut salmon fillets, 6 oz each (Miso Glazed)","1½ lbs 80/20 ground beef (Pasta Bake)"]},
+      {name:"GF Pasta & Grains",type:"pasta-grains",items:["12 oz wide GF egg noodles or pappardelle (Stroganoff)","12 oz GF penne (One-Pan Chicken Pasta — dry, uncooked)","2 cups dry jasmine rice (Miso Salmon)","12 oz GF penne (Pasta Bake)"]},
+      {name:"Dairy",type:"dairy-cat",items:["1 cup sour cream (Stroganoff)","4 tbsp butter (Stroganoff + Pasta Bake)","2 oz Parmesan wedge (Mediterranean Chicken Pasta)","4 oz cream cheese (Pasta Bake)","½ cup sour cream (Pasta Bake)","1 cup shredded sharp cheddar (Pasta Bake)","1 cup shredded Monterey Jack (Pasta Bake)"]},
+      {name:"Pantry & Sauces",type:"pantry",items:["2 cups GF beef broth (Stroganoff)","GF Dijon mustard","GF Worcestershire sauce","GF all-purpose flour — Bob's Red Mill 1-to-1","2 cups GF chicken broth (Mediterranean Pasta)","1 can (14 oz) artichoke hearts","2 tbsp capers","1 jar (24 oz) marinara sauce (check GF label)","1 can (15 oz) diced tomatoes","2 tbsp tomato paste","½ cup GF beef broth (Pasta Bake)","White miso paste (replenish)","GF tamari (replenish)","Mirin (replenish)"]},
+      {name:"Spices",type:"spices",items:["Smoked paprika","Italian seasoning","Red pepper flakes","Cayenne pepper","Sesame seeds"]}
+    ]
+  },
+  {
+    label:"Week 3", subtitle:"Days 17, 19, 21, 23",
+    meals:"Butter Chicken · Lemon-Dill Salmon Orzo · Spicy Miso Beef Noodles · Roasted Whole Chicken",
+    categories:[
+      {name:"Fresh Produce",type:"produce",items:["Fresh ginger root (2 knobs — Butter Chicken + Noodles)","4 heads garlic (3 recipes)","Fresh cilantro (large bunch — Butter Chicken + Noodles)","1 large yellow onion (Butter Chicken)","1 medium yellow onion (Miso Beef)","2 cups baby spinach (Salmon Orzo)","Fresh dill (1 bunch — Salmon Orzo)","2 lemons (Salmon Orzo + Roast Chicken)","4 sprigs fresh tarragon (or thyme) — Roast Chicken","1 shallot (Roast Chicken jus)","Fresh parsley (Roast Chicken)","Scallions (Miso Beef garnish)"]},
+      {name:"Proteins",type:"protein",items:["1½ lbs boneless skinless chicken thighs (Butter Chicken — broiled)","4 salmon fillets, 6 oz each (Salmon Orzo)","1½ lbs 80/20 ground beef (Miso Beef Noodles)","1 whole chicken 3½–4 lbs (Roasted Whole Chicken)"]},
+      {name:"GF Pasta & Grains",type:"pasta-grains",items:["10 oz GF orzo or small shells — Banza or Tolerant brand (Salmon Orzo)","10 oz wide rice pad-thai noodles (Miso Beef Noodles)","2 cups dry basmati rice (Butter Chicken)"]},
+      {name:"Dairy",type:"dairy-cat",items:["½ cup plain whole-milk yogurt (Butter Chicken marinade)","¼ cup heavy cream (Butter Chicken finish)","¾ cup heavy cream (Salmon Orzo sauce)","¼ cup grated Parmesan (Salmon Orzo)","3 tbsp butter (Salmon Orzo)","3 tbsp butter (Butter Chicken sauce)","3 tbsp softened butter (Roast Chicken rub)","2 tbsp cold butter, cubed (Roast Chicken jus)"]},
+      {name:"Pantry & Sauces",type:"pantry",items:["1 can (28 oz) crushed tomatoes (Butter Chicken)","½ cup raw cashews (Butter Chicken sauce)","Sun-dried tomatoes in oil (Salmon Orzo)","2 cups GF chicken or vegetable broth (Salmon Orzo)","White miso paste","GF tamari","Chili-garlic sauce","Honey","1 can (14 oz) diced tomatoes (Miso Beef)","Sesame oil","½ cup dry white wine (Roast Chicken)"]},
+      {name:"Spices",type:"spices",items:["Garam masala (large jar — used in Butter Chicken)","Smoked paprika (Butter Chicken)","Ground cumin, coriander, turmeric","Ground cinnamon","Ground cayenne"]}
+    ]
+  },
+  {
+    label:"Week 4", subtitle:"Days 25, 27, 29",
+    meals:"Salmon Piccata · Cheesy Stuffed Bell Peppers · Lemon-Saffron Chicken (Tangia-Style)",
+    categories:[
+      {name:"Fresh Produce",type:"produce",items:["2 heads garlic (Piccata + Peppers + Tangia)","4 lemons (Piccata sauce + Tangia finish)","Fresh flat-leaf parsley (Piccata + Peppers)","5 large bell peppers (mixed colors — Stuffed Peppers)","1 small yellow onion (Stuffed Peppers)","Fresh cilantro (Tangia)","1 large yellow onion (Tangia)","1-inch knob fresh ginger (Tangia)","Fresh flat-leaf parsley"]},
+      {name:"Proteins",type:"protein",items:["4 salmon fillets, 6 oz each (Piccata)","1½ lbs 80/20 ground beef (Stuffed Peppers)","2 lbs boneless skinless chicken thighs (Tangia)"]},
+      {name:"GF Pasta & Grains",type:"pasta-grains",items:["12 oz GF penne — Jovial or Banza (Piccata)","1½ cups dry long-grain white rice (Stuffed Peppers)","GF flatbread or grain for Tangia — Schar GF pita or similar"]},
+      {name:"Dairy",type:"dairy-cat",items:["4 tbsp unsalted butter (Piccata — split for sautéing + finishing sauce)","Parmesan wedge (optional, for Piccata)","1½ cups shredded sharp cheddar (Stuffed Peppers — layered + topping)","4 tbsp cold unsalted butter, cubed (Tangia — beurre monté finish)"]},
+      {name:"Pantry & Sauces",type:"pantry",items:["3 tbsp capers, drained (Piccata)","¾ cup GF chicken or vegetable broth (Piccata)","GF all-purpose flour (Piccata dredge)","1 can (15 oz) diced tomatoes (Stuffed Peppers)","2 tbsp tomato paste","¼ cup GF beef broth (Stuffed Peppers)","1 cup GF chicken broth (Tangia)","¾ cup pitted Castelvetrano green olives (Tangia)","Large pinch saffron threads (Tangia)","Olive oil"]},
+      {name:"Spices",type:"spices",items:["Italian seasoning","Smoked paprika, garlic powder, cumin (Stuffed Peppers)","Ground turmeric, cumin, coriander, cinnamon (Tangia)"]}
+    ]
+  }
+];
+
+// ═══════════════════════════════════════════════════
+// CALENDAR (April 2026 — starts Wednesday = DOW 3)
+// ═══════════════════════════════════════════════════
+const COOK_DAYS={1:1,3:2,5:3,7:4,9:5,11:6,13:7,15:8,17:9,19:10,21:11,23:12,25:13,27:14,29:15};
+const proteinClass=r=>r.hasPasta?'pasta':r.protein;
+
+// ═══════════════════════════════════════════════════
+// TIMERS
+// ═══════════════════════════════════════════════════
+const timers={};
+function startTimer(btn,minutes){
+  const id=btn.dataset.tid;
+  if(timers[id])clearInterval(timers[id]);
+  let rem=minutes*60;
+  btn.className='timer-btn running';
+  btn.querySelector('.timer-display').textContent=fmt(rem);
+  timers[id]=setInterval(()=>{
+    rem--;
+    btn.querySelector('.timer-display').textContent=fmt(rem);
+    if(rem<=0){
+      clearInterval(timers[id]);
+      btn.className='timer-btn done';
+      btn.innerHTML='<span style="font-size:.88rem;font-weight:800">✓ Done!</span>';
+    }
+  },1000);
+}
+function fmt(s){return`${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;}
+
+// ═══════════════════════════════════════════════════
+// RENDER RECIPES
+// ═══════════════════════════════════════════════════
+function renderRecipes(){
+  const grid=document.getElementById('recipes-grid');
+  const nav=document.getElementById('nav-links');
+  let navHTML='';
+
+  grid.innerHTML=RECIPES.map(r=>{
+    const total=r.prepMin+r.cookMin+(r.extraMin||0);
+    const extra=r.extraMin?`<div class="time-badge">⏱ ${r.extraLabel||'extra'} <span>${r.extraMin} min</span></div>`:'';
+    const pc=proteinClass(r);
+    const shortNav=r.title.split('with')[0].split('&')[0].split('—')[0].trim().substring(0,30);
+    navHTML+=`<a class="nav-link ${r.protein}" href="#recipe-${r.id}">${r.id}. ${shortNav}</a>`;
+
+    const ingHTML=r.ingredientGroups.map(g=>
+      `<div class="ing-section-label">${g.label}</div>`+
+      g.items.map(i=>`<div class="ing-item">${i}</div>`).join('')
+    ).join('');
+
+    let tid=0;
+    const stepsHTML=r.steps.map((s,i)=>{
+      let btn='';
+      if(s.timer){
+        const id=`t${r.id}_${i}`;
+        btn=`<button class="timer-btn idle" data-tid="${id}" onclick="startTimer(this,${s.timer})">
+          ⏱ Start <span class="timer-display">${fmt(s.timer*60)}</span></button>`;
+      }
+      return`<div class="step">
+        <div class="step-num">${i+1}</div>
+        <div class="step-content"><div class="step-text">${s.text}</div>${btn}</div>
+      </div>`;
+    }).join('');
+
+    return`<div class="recipe-card" id="recipe-${r.id}" data-protein="${r.protein}" data-pasta="${r.hasPasta}" data-total="${total}">
+      <div class="recipe-header">
+        <div class="recipe-title-area">
+          <div class="recipe-day-label">Day ${r.day} · Week ${r.week}</div>
+          <h3>${r.title}</h3>
+          <p class="recipe-desc">${r.desc}</p>
+          <div class="recipe-tags">
+            <span class="tag ${r.protein}">${r.protein==='chicken'?'🍗 Chicken':r.protein==='beef'?'🥩 Ground Beef':r.protein==='salmon'?'🐟 Salmon':'Protein'}</span>
+            ${r.hasPasta?`<span class="tag pasta">🍝 GF Pasta</span>`:''}
+            <span class="tag gf">✓ Gluten-Free</span>
+            <span class="tag dairy">🧀 Dairy Welcome</span>
+          </div>
+        </div>
+        <div class="recipe-meta-right">
+          <a class="source-btn" href="${r.sourceUrl}" target="_blank" rel="noopener">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm.75 12.5h-1.5v-5h1.5v5zm0-6.5h-1.5V4.5h1.5V6z"/></svg>
+            ${r.source}
+          </a>
+          <div class="time-badges">
+            <div class="time-badge">🔪 Prep <span>${r.prepMin} min</span></div>
+            <div class="time-badge">🔥 Cook <span>${r.cookMin} min</span></div>
+            ${extra}
+            <div class="time-badge" style="font-weight:800;color:var(--text)">⏲ Total <span>${total} min</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="recipe-body">
+        <div class="ingredients-col">
+          <h4>Ingredients · Serves 4–6</h4>
+          ${ingHTML}
+          <div class="dairy-note"><strong>🧀 Dairy Note</strong>${r.dairyNote}</div>
+        </div>
+        <div class="steps-col">
+          <h4>Preparation Steps</h4>
+          ${stepsHTML}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  nav.innerHTML=navHTML;
+}
+
+// ═══════════════════════════════════════════════════
+// RENDER CALENDAR
+// ═══════════════════════════════════════════════════
+function renderCalendar(){
+  const grid=document.getElementById('calendar-grid');
+  const DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  let html=DOW.map(d=>`<div class="cal-header">${d}</div>`).join('');
+  const startDOW=3; // April 2026 starts on Wednesday
+  for(let i=0;i<startDOW;i++)html+=`<div class="cal-day empty"></div>`;
+  for(let d=1;d<=30;d++){
+    if(COOK_DAYS[d]){
+      const r=RECIPES[COOK_DAYS[d]-1];
+      const pc=proteinClass(r);
+      const short=r.title.replace('Milk Street ','').replace('One-Pan ','').split(' with ')[0].split(' &')[0].trim();
+      const label=short.length>22?short.substring(0,20)+'…':short;
+      html+=`<div class="cal-day cook ${pc}" onclick="document.getElementById('recipe-${r.id}').scrollIntoView({behavior:'smooth'})">
+        <div class="cal-num">${d}</div>
+        <div class="cal-label">${label}</div>
+      </div>`;
+    }else{
+      html+=`<div class="cal-day rest"><div class="cal-num">${d}</div><div class="cal-label">rest</div></div>`;
+    }
+  }
+  grid.innerHTML=html;
+}
+
+// ═══════════════════════════════════════════════════
+// FILTER
+// ═══════════════════════════════════════════════════
+function filterRecipes(type,btn){
+  document.querySelectorAll('.pleg').forEach(b=>b.style.opacity='0.55');
+  btn.style.opacity='1';
+  document.querySelectorAll('.recipe-card').forEach(card=>{
+    if(type==='all')card.classList.remove('hidden');
+    else if(type==='pasta')card.classList.toggle('hidden',card.dataset.pasta!=='true');
+    else card.classList.toggle('hidden',card.dataset.protein!==type);
+  });
+}
+document.querySelectorAll('.pleg').forEach(b=>b.style.opacity='1');
+
+// ═══════════════════════════════════════════════════
+// SHOPPING LIST
+// ═══════════════════════════════════════════════════
+let checks={};
+try{checks=JSON.parse(localStorage.getItem('denise_checks')||'{}');}catch(e){}
+function saveChecks(){try{localStorage.setItem('denise_checks',JSON.stringify(checks));}catch(e){}}
+function clearChecks(){checks={};saveChecks();document.querySelectorAll('.shop-item input').forEach(c=>c.checked=false);}
+let ctr=0;
+
+function renderShopping(){
+  const tabs=document.getElementById('shop-tabs');
+  const panels=document.getElementById('shop-panels');
+  tabs.innerHTML=SHOPPING.map((w,i)=>
+    `<button class="shop-tab ${i===0?'active':''}" onclick="switchTab(${i})">${w.label}<br><small style="font-size:.64rem;font-weight:400">${w.subtitle}</small></button>`
+  ).join('');
+  panels.innerHTML=SHOPPING.map((w,wi)=>{
+    const cats=w.categories.map(cat=>{
+      const items=cat.items.map(item=>{
+        const id=`c_${wi}_${ctr++}`;
+        return`<div class="shop-item">
+          <input type="checkbox" id="${id}" ${checks[id]?'checked':''} onchange="checks['${id}']=this.checked;saveChecks()">
+          <label for="${id}">${item}</label>
+        </div>`;
+      }).join('');
+      return`<div class="shop-category">
+        <div class="shop-cat-header ${cat.type}">${cat.name}</div>
+        <div class="shop-items">${items}</div>
+      </div>`;
+    }).join('');
+    return`<div class="shop-panel ${wi===0?'active':''}" data-week="${wi}">
+      <p class="shop-week-meals">${w.meals}</p>
+      <div class="shop-grid">${cats}</div>
+    </div>`;
+  }).join('');
+}
+
+function switchTab(idx){
+  document.querySelectorAll('.shop-tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
+  document.querySelectorAll('.shop-panel').forEach((p,i)=>p.classList.toggle('active',i===idx));
+}
+
+// ═══════════════════════════════════════════════════
+// BACK TO TOP
+// ═══════════════════════════════════════════════════
+window.addEventListener('scroll',()=>{
+  document.getElementById('back-top').classList.toggle('visible',window.scrollY>400);
+});
+
+// INIT
+renderRecipes();
+renderCalendar();
+renderShopping();
+</script>
+</body>
+</html>
