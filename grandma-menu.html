@@ -274,12 +274,12 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);line
 
 <nav id="top-nav">
   <a href="index.html" class="nav-home" aria-label="Back to Home"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Home</a>
-  <div class="nav-brand">🍽 Denise's GF Plan</div>
+  <div class="nav-brand">🍽 Grandma's GF Plan</div>
   <div class="nav-links" id="nav-links"></div>
 </nav>
 
 <section id="hero">
-  <h1>Denise's<br><em>Gluten-Free</em> Dinner Plan</h1>
+  <h1>Grandma's<br><em>Gluten-Free</em> Dinner Plan</h1>
   <p class="hero-sub">Chicken · GF Pasta · Ground Beef · Salmon &nbsp;·&nbsp; One Month · Every Other Day</p>
   <div class="hero-tags">
     <span class="hero-tag gf">✓ Always Gluten-Free</span>
@@ -887,8 +887,8 @@ document.querySelectorAll('.pleg').forEach(b=>b.style.opacity='1');
 // SHOPPING LIST
 // ═══════════════════════════════════════════════════
 let checks={};
-try{checks=JSON.parse(localStorage.getItem('denise_checks')||'{}');}catch(e){}
-function saveChecks(){try{localStorage.setItem('denise_checks',JSON.stringify(checks));}catch(e){}}
+try{checks=JSON.parse(localStorage.getItem('grandma_checks')||'{}');}catch(e){}
+function saveChecks(){try{localStorage.setItem('grandma_checks',JSON.stringify(checks));}catch(e){}}
 function clearChecks(){checks={};saveChecks();document.querySelectorAll('.shop-item input').forEach(c=>c.checked=false);}
 let ctr=0;
 
