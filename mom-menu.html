@@ -206,14 +206,14 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-
 <!-- NAV -->
 <nav id="nav">
   <a href="index.html" class="nav-home" aria-label="Back to Home"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Home</a>
-  <div class="nav-logo">🍽 Kristen's GF Menu</div>
+  <div class="nav-logo">🍽 Mom's GF Menu</div>
   <div class="nav-links" id="nav-links"></div>
 </nav>
 
 <!-- HERO -->
 <section id="hero">
   <div class="wrap">
-    <h1>Kristen's<br><em>Gluten-Free</em><br>Dinner Menu</h1>
+    <h1>Mom's<br><em>Gluten-Free</em><br>Dinner Menu</h1>
     <p class="hero-sub">Chicken · Ground Beef · Salmon · GF Pasta &nbsp;·&nbsp; One Month · Every Other Day · 15 Meals</p>
     <div class="hero-pills">
       <span class="hp gf">✓ Always Gluten-Free</span>
@@ -273,7 +273,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-
 
 <script>
 /* ════════════════════════════════════════════════════════════
-   KRISTEN'S RECIPE DATA — 15 meals
+   Mom'S RECIPE DATA — 15 meals
    5 chicken / 5 ground beef / 5 salmon
    Every recipe: GF always, dairy option + DF swap noted
 ════════════════════════════════════════════════════════════ */
@@ -731,8 +731,8 @@ function fp(type,btn){
 
 /* ─── SHOPPING ─────────────────────────────────────────────── */
 let CK={};
-try{CK=JSON.parse(localStorage.getItem('kristen_gf')||'{}');}catch(e){}
-function save(){try{localStorage.setItem('kristen_gf',JSON.stringify(CK));}catch(e){}}
+try{CK=JSON.parse(localStorage.getItem('Mom_gf')||'{}');}catch(e){}
+function save(){try{localStorage.setItem('Mom_gf',JSON.stringify(CK));}catch(e){}}
 function clearAll(){CK={};save();document.querySelectorAll('.sitem input').forEach(c=>c.checked=false);}
 let ctr=0;
 
